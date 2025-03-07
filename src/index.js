@@ -53,6 +53,15 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
+// Root route for testing
+app.get('/', (req, res) => {
+  res.status(200).json({ 
+    message: 'ETN Watchdog API is running',
+    version: '1.0.0',
+    mongodbConnected: mongoose.connection.readyState === 1
+  });
+});
+
 // Socket.io connection
 io.on('connection', (socket) => {
   console.log('New client connected');
@@ -70,25 +79,37 @@ io.on('connection', (socket) => {
 // Export socket.io instance for use in other modules
 app.set('io', io);
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
+// Function to start the server
+const startServer = () => {
+  const PORT = process.env.PORT || 3000;
+  server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
     
-    // Start the server
-    const PORT = process.env.PORT || 3000;
-    server.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-      
-      // Start blockchain monitoring
-      const provider = new ethers.JsonRpcProvider(process.env.ELECTRONEUM_RPC_URL);
-      blockchainMonitor.startMonitoring(provider, app);
-      
-      // Initialize AI analyzer
-      aiAnalyzer.initialize();
+    // Start blockchain monitoring
+    const provider = new ethers.JsonRpcProvider(process.env.ELECTRONEUM_RPC_URL);
+    blockchainMonitor.startMonitoring(provider, app);
+    
+    // Initialize AI analyzer
+    aiAnalyzer.initialize();
+  });
+};
+
+// Check if we should skip MongoDB connection (for development)
+const skipMongo = process.env.SKIP_MONGODB === 'true';
+
+if (skipMongo) {
+  console.log('⚠️ WARNING: Running without MongoDB connection. Some features will be limited.');
+  startServer();
+} else {
+  // Connect to MongoDB
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => {
+      console.log('Connected to MongoDB');
+      startServer();
+    })
+    .catch((error) => {
+      console.error('MongoDB connection error:', error);
+      console.log('⚠️ WARNING: Failed to connect to MongoDB. Starting server with limited functionality.');
+      startServer();
     });
-  })
-  .catch((error) => {
-    console.error('MongoDB connection error:', error);
-    process.exit(1);
-  }); 
+} 

@@ -1,5 +1,20 @@
 const Alert = require('../../models/Alert');
 
+// In-memory storage for when MongoDB is not available
+const inMemoryAlerts = [];
+
+/**
+ * Check if MongoDB is available
+ * @returns {Boolean} Whether MongoDB is available
+ */
+const isMongoAvailable = () => {
+  try {
+    return require('mongoose').connection.readyState === 1;
+  } catch (error) {
+    return false;
+  }
+};
+
 /**
  * Create a new security alert
  * @param {Object} alertData Alert data
@@ -15,12 +30,31 @@ const createAlert = async (alertData) => {
       severity = 'high';
     }
     
-    const alert = new Alert({
+    const alertWithSeverity = {
       ...alertData,
       severity,
       timestamp: alertData.timestamp || Date.now()
-    });
+    };
     
+    // If MongoDB is not available, store in memory
+    if (!isMongoAvailable()) {
+      const id = inMemoryAlerts.length > 0 
+        ? Math.max(...inMemoryAlerts.map(a => a.id || 0)) + 1 
+        : 1;
+      
+      const inMemoryAlert = {
+        ...alertWithSeverity,
+        id,
+        _id: `mem_${id}`
+      };
+      
+      inMemoryAlerts.push(inMemoryAlert);
+      console.log(`Alert stored in memory: ${inMemoryAlert.type} - ${inMemoryAlert.details}`);
+      return inMemoryAlert;
+    }
+    
+    // Store in MongoDB
+    const alert = new Alert(alertWithSeverity);
     await alert.save();
     return alert;
   } catch (error) {
@@ -36,10 +70,15 @@ const createAlert = async (alertData) => {
  */
 const getAlerts = async (filter = {}) => {
   try {
+    // If MongoDB is not available, return from memory
+    if (!isMongoAvailable()) {
+      return inMemoryAlerts;
+    }
+    
     return await Alert.find(filter).sort({ timestamp: -1 });
   } catch (error) {
     console.error('Error getting alerts:', error);
-    throw error;
+    return inMemoryAlerts; // Fallback to in-memory alerts
   }
 };
 
@@ -50,10 +89,15 @@ const getAlerts = async (filter = {}) => {
  */
 const getAlertById = async (id) => {
   try {
+    // If MongoDB is not available, return from memory
+    if (!isMongoAvailable()) {
+      return inMemoryAlerts.find(a => a._id === id || a.id === parseInt(id));
+    }
+    
     return await Alert.findById(id);
   } catch (error) {
     console.error(`Error getting alert ${id}:`, error);
-    throw error;
+    return inMemoryAlerts.find(a => a._id === id || a.id === parseInt(id));
   }
 };
 
@@ -65,6 +109,16 @@ const getAlertById = async (id) => {
  */
 const updateAlert = async (id, updateData) => {
   try {
+    // If MongoDB is not available, update in memory
+    if (!isMongoAvailable()) {
+      const index = inMemoryAlerts.findIndex(a => a._id === id || a.id === parseInt(id));
+      if (index !== -1) {
+        inMemoryAlerts[index] = { ...inMemoryAlerts[index], ...updateData };
+        return inMemoryAlerts[index];
+      }
+      return null;
+    }
+    
     return await Alert.findByIdAndUpdate(id, updateData, { new: true });
   } catch (error) {
     console.error(`Error updating alert ${id}:`, error);
@@ -80,6 +134,21 @@ const updateAlert = async (id, updateData) => {
  */
 const resolveAlert = async (id, resolvedBy) => {
   try {
+    // If MongoDB is not available, resolve in memory
+    if (!isMongoAvailable()) {
+      const index = inMemoryAlerts.findIndex(a => a._id === id || a.id === parseInt(id));
+      if (index !== -1) {
+        inMemoryAlerts[index] = { 
+          ...inMemoryAlerts[index], 
+          resolved: true,
+          resolvedAt: Date.now(),
+          resolvedBy
+        };
+        return inMemoryAlerts[index];
+      }
+      return null;
+    }
+    
     return await Alert.findByIdAndUpdate(
       id,
       {
@@ -102,6 +171,17 @@ const resolveAlert = async (id, resolvedBy) => {
  */
 const deleteAlert = async (id) => {
   try {
+    // If MongoDB is not available, delete from memory
+    if (!isMongoAvailable()) {
+      const index = inMemoryAlerts.findIndex(a => a._id === id || a.id === parseInt(id));
+      if (index !== -1) {
+        const deleted = inMemoryAlerts[index];
+        inMemoryAlerts.splice(index, 1);
+        return deleted;
+      }
+      return null;
+    }
+    
     return await Alert.findByIdAndDelete(id);
   } catch (error) {
     console.error(`Error deleting alert ${id}:`, error);
@@ -116,10 +196,15 @@ const deleteAlert = async (id) => {
  */
 const getAlertsByType = async (type) => {
   try {
+    // If MongoDB is not available, filter from memory
+    if (!isMongoAvailable()) {
+      return inMemoryAlerts.filter(a => a.type === type);
+    }
+    
     return await Alert.find({ type }).sort({ timestamp: -1 });
   } catch (error) {
     console.error(`Error getting alerts by type ${type}:`, error);
-    throw error;
+    return inMemoryAlerts.filter(a => a.type === type);
   }
 };
 
@@ -130,10 +215,15 @@ const getAlertsByType = async (type) => {
  */
 const getAlertsByAddress = async (address) => {
   try {
+    // If MongoDB is not available, filter from memory
+    if (!isMongoAvailable()) {
+      return inMemoryAlerts.filter(a => a.targetAddress === address);
+    }
+    
     return await Alert.find({ targetAddress: address }).sort({ timestamp: -1 });
   } catch (error) {
     console.error(`Error getting alerts by address ${address}:`, error);
-    throw error;
+    return inMemoryAlerts.filter(a => a.targetAddress === address);
   }
 };
 
@@ -143,10 +233,15 @@ const getAlertsByAddress = async (address) => {
  */
 const getActiveAlerts = async () => {
   try {
+    // If MongoDB is not available, filter from memory
+    if (!isMongoAvailable()) {
+      return inMemoryAlerts.filter(a => !a.resolved);
+    }
+    
     return await Alert.find({ resolved: false }).sort({ timestamp: -1 });
   } catch (error) {
     console.error('Error getting active alerts:', error);
-    throw error;
+    return inMemoryAlerts.filter(a => !a.resolved);
   }
 };
 

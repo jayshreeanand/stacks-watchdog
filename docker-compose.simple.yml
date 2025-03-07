@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - SKIP_MONGODB=true
+      - ELECTRONEUM_RPC_URL=https://rpc.ankr.com/electroneum_testnet
+      - ELECTRONEUM_TESTNET_RPC_URL=https://rpc.ankr.com/electroneum_testnet
+      - NETWORK_CHAIN_ID=5201420
+      - WEB3_PROVIDER_URL=https://rpc.ankr.com/electroneum_testnet
+    volumes:
+      - ./:/app
+      - /app/node_modules 

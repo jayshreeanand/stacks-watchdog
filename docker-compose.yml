@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongo:27017/etn-watchdog
+      - SKIP_MONGODB=false
+      - ELECTRONEUM_RPC_URL=https://rpc.ankr.com/electroneum_testnet
+      - ELECTRONEUM_TESTNET_RPC_URL=https://rpc.ankr.com/electroneum_testnet
+      - NETWORK_CHAIN_ID=5201420
+      - WEB3_PROVIDER_URL=https://rpc.ankr.com/electroneum_testnet
+    depends_on:
+      - mongo
+    volumes:
+      - ./:/app
+      - /app/node_modules
+
+  mongo:
+    image: mongo:4.4
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data: 

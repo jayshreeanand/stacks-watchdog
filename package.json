@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
+    "simple": "node simple-server.js",
     "test": "jest",
     "compile": "npx hardhat compile",
     "deploy": "npx hardhat run scripts/deploy.js --network electroneum",
