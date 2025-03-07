@@ -54,25 +54,6 @@ const Feature = ({ title, text, icon }) => {
   );
 };
 
-const Testimonial = ({ content, author, role }) => {
-  return (
-    <Box
-      p={8}
-      rounded={'xl'}
-      boxShadow={'lg'}
-      bg={useColorModeValue('white', 'gray.800')}
-    >
-      <Text fontSize={'md'} mb={4}>
-        "{content}"
-      </Text>
-      <HStack>
-        <Text fontWeight={'bold'}>{author}</Text>
-        <Text color={useColorModeValue('gray.600', 'gray.400')}>{role}</Text>
-      </HStack>
-    </Box>
-  );
-};
-
 const LandingPage = () => {
   return (
     <Box>
@@ -297,37 +278,6 @@ const LandingPage = () => {
                 </Button>
               </VStack>
             </Box>
-          </SimpleGrid>
-        </Container>
-      </Box>
-
-      {/* Testimonials Section */}
-      <Box py={20} bg={useColorModeValue('white', 'gray.800')}>
-        <Container maxW={'7xl'}>
-          <Heading
-            textAlign={'center'}
-            fontSize={'4xl'}
-            py={10}
-            fontWeight={'bold'}
-          >
-            What Users Say
-          </Heading>
-          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
-            <Testimonial
-              content="ETN Watchdog helped me avoid a potential rug pull by alerting me to suspicious contract behavior. This tool is essential for anyone serious about crypto security."
-              author="Alex M."
-              role="Crypto Investor"
-            />
-            <Testimonial
-              content="The real-time monitoring feature gives me peace of mind. I can now interact with new projects knowing I have an extra layer of security watching over my transactions."
-              author="Sarah K."
-              role="DeFi Enthusiast"
-            />
-            <Testimonial
-              content="As a developer, I appreciate the detailed contract analysis. It helps me understand potential vulnerabilities in my own code and in contracts I interact with."
-              author="Michael T."
-              role="Blockchain Developer"
-            />
           </SimpleGrid>
         </Container>
       </Box>
