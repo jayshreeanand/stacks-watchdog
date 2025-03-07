@@ -67,6 +67,40 @@ ETN Watchdog is a decentralized application that provides real-time security mon
    npm start
    ```
 
+## Running on Testnet
+
+To run ETN Watchdog on the Electroneum testnet instead of mainnet, follow these steps:
+
+1. Update your `.env` file to use testnet configuration:
+
+   ```
+   # Comment out mainnet URLs
+   # ELECTRONEUM_RPC_URL=https://rpc.electroneum.com
+   # WEB3_PROVIDER_URL=https://rpc.electroneum.com
+
+   # Uncomment testnet URLs
+   ELECTRONEUM_RPC_URL=https://testnet-rpc.electroneum.com
+   WEB3_PROVIDER_URL=https://testnet-rpc.electroneum.com
+
+   # Set chain ID to testnet
+   NETWORK_CHAIN_ID=1991
+   ```
+
+2. Get testnet ETN from the Electroneum testnet faucet (if available) or request from the Electroneum team.
+
+3. Deploy the contracts to testnet:
+
+   ```
+   npm run deploy:testnet
+   ```
+
+4. Start the application:
+   ```
+   npm start
+   ```
+
+The application will now connect to the Electroneum testnet instead of mainnet.
+
 ## Usage
 
 1. Access the dashboard at `http://localhost:3000`

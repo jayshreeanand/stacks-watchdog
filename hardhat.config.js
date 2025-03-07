@@ -8,7 +8,12 @@ module.exports = {
     electroneum: {
       url: process.env.ELECTRONEUM_RPC_URL || "https://rpc.electroneum.com",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      chainId: 1990, // Electroneum chain ID
+      chainId: process.env.NETWORK_CHAIN_ID ? parseInt(process.env.NETWORK_CHAIN_ID) : 1990, // Electroneum mainnet chain ID
+    },
+    electroneum_testnet: {
+      url: process.env.ELECTRONEUM_TESTNET_RPC_URL || "https://testnet-rpc.electroneum.com",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      chainId: 1991, // Electroneum testnet chain ID
     },
     hardhat: {
       forking: {
@@ -19,7 +24,8 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
-      electroneum: process.env.ELECTRONEUM_EXPLORER_API_KEY || ""
+      electroneum: process.env.ELECTRONEUM_EXPLORER_API_KEY || "",
+      electroneum_testnet: process.env.ELECTRONEUM_EXPLORER_API_KEY || ""
     },
     customChains: [
       {
@@ -28,6 +34,14 @@ module.exports = {
         urls: {
           apiURL: "https://explorer.electroneum.com/api",
           browserURL: "https://explorer.electroneum.com"
+        }
+      },
+      {
+        network: "electroneum_testnet",
+        chainId: 1991,
+        urls: {
+          apiURL: "https://testnet-explorer.electroneum.com/api",
+          browserURL: "https://testnet-explorer.electroneum.com"
         }
       }
     ]

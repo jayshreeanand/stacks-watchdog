@@ -8,7 +8,11 @@
     "dev": "nodemon src/index.js",
     "test": "jest",
     "compile": "npx hardhat compile",
-    "deploy": "npx hardhat run scripts/deploy.js --network electroneum"
+    "deploy": "npx hardhat run scripts/deploy.js --network electroneum",
+    "deploy:testnet": "npx hardhat run scripts/deploy.js --network electroneum_testnet",
+    "switch:mainnet": "node scripts/switch-network.js mainnet",
+    "switch:testnet": "node scripts/switch-network.js testnet",
+    "test:connection": "node scripts/test-connection.js"
   },
   "keywords": [
     "electroneum",

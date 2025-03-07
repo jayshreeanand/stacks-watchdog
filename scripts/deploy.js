@@ -4,6 +4,7 @@ const hre = require("hardhat");
 
 async function main() {
   console.log("Deploying ETN Watchdog contracts...");
+  console.log(`Network: ${hre.network.name} (Chain ID: ${hre.network.config.chainId})`);
 
   // Get the contract factories
   const TransactionMonitor = await hre.ethers.getContractFactory("TransactionMonitor");
@@ -51,11 +52,15 @@ async function main() {
     network: hre.network.name
   };
 
+  // Determine filename based on network
+  const isTestnet = hre.network.name === 'electroneum_testnet';
+  const filename = isTestnet ? 'deployment-info-testnet.json' : 'deployment-info.json';
+
   fs.writeFileSync(
-    "deployment-info.json",
+    filename,
     JSON.stringify(deploymentInfo, null, 2)
   );
-  console.log("Deployment info saved to deployment-info.json");
+  console.log(`Deployment info saved to ${filename}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

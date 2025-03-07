@@ -16,7 +16,12 @@ const walletDrainerDetectorABI = require('../../artifacts/contracts/WalletDraine
 // Load deployment info
 let deploymentInfo;
 try {
-  deploymentInfo = JSON.parse(fs.readFileSync(path.join(__dirname, '../../deployment-info.json')));
+  // Check if we're on testnet
+  const isTestnet = process.env.NETWORK_CHAIN_ID === '1991';
+  const deploymentFileName = isTestnet ? 'deployment-info-testnet.json' : 'deployment-info.json';
+  
+  deploymentInfo = JSON.parse(fs.readFileSync(path.join(__dirname, '../../' + deploymentFileName)));
+  console.log(`Loaded deployment info for ${isTestnet ? 'testnet' : 'mainnet'}`);
 } catch (error) {
   console.error('Error loading deployment info:', error);
   deploymentInfo = {
@@ -73,6 +78,14 @@ const startMonitoring = async (_provider, _app) => {
   
   try {
     initializeContracts(provider);
+    
+    // Get network information
+    const network = await provider.getNetwork();
+    console.log(`Connected to network: ${network.name} (Chain ID: ${network.chainId})`);
+    
+    // Check if we're on testnet
+    const isTestnet = network.chainId === 1991n;
+    console.log(`Running on ${isTestnet ? 'testnet' : 'mainnet'}`);
     
     // Listen for new blocks
     provider.on('block', async (blockNumber) => {
