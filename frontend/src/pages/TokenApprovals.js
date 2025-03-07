@@ -40,7 +40,7 @@ import {
   FaShieldAlt, 
   FaFilter, 
   FaChevronDown, 
-  FaExternalLink, 
+  FaExternalLinkAlt, 
   FaTrash 
 } from 'react-icons/fa';
 import { useWallet } from '../context/WalletContext';
@@ -331,7 +331,7 @@ const TokenApprovals = () => {
                           <HStack spacing={2}>
                             <Tooltip label="View in Explorer">
                               <Button size="sm" variant="ghost" colorScheme="blue">
-                                <Icon as={FaExternalLink} />
+                                <Icon as={FaExternalLinkAlt} />
                               </Button>
                             </Tooltip>
                             <Tooltip label="Revoke Approval">
