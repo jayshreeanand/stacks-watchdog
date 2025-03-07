@@ -32,12 +32,12 @@ if (network === 'mainnet') {
   console.log('Switching to Electroneum Mainnet...');
   envConfig.ELECTRONEUM_RPC_URL = 'https://rpc.electroneum.com';
   envConfig.WEB3_PROVIDER_URL = 'https://rpc.electroneum.com';
-  envConfig.NETWORK_CHAIN_ID = '1990';
+  envConfig.NETWORK_CHAIN_ID = '52014';
 } else {
   console.log('Switching to Electroneum Testnet...');
-  envConfig.ELECTRONEUM_RPC_URL = 'https://testnet-rpc.electroneum.com';
-  envConfig.WEB3_PROVIDER_URL = 'https://testnet-rpc.electroneum.com';
-  envConfig.NETWORK_CHAIN_ID = '1991';
+  envConfig.ELECTRONEUM_RPC_URL = 'https://rpc.ankr.com/electroneum_testnet';
+  envConfig.WEB3_PROVIDER_URL = 'https://rpc.ankr.com/electroneum_testnet';
+  envConfig.NETWORK_CHAIN_ID = '5201420';
 }
 
 // Write updated configuration back to .env file

@@ -84,7 +84,9 @@ const startMonitoring = async (_provider, _app) => {
     console.log(`Connected to network: ${network.name} (Chain ID: ${network.chainId})`);
     
     // Check if we're on testnet
-    const isTestnet = network.chainId === 1991n;
+    // Convert BigInt to Number for comparison
+    const chainId = Number(network.chainId);
+    const isTestnet = chainId === 1991;
     console.log(`Running on ${isTestnet ? 'testnet' : 'mainnet'}`);
     
     // Listen for new blocks
