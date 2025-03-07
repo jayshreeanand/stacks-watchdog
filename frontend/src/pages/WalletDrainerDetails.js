@@ -41,7 +41,7 @@ import {
   FiX, 
   FiTrash2 
 } from 'react-icons/fi';
-import axios from 'axios';
+import apiService from '../utils/apiService';
 
 // Utils
 import { formatDate, getRiskBadgeProps } from '../utils/formatters';
@@ -59,9 +59,9 @@ const WalletDrainerDetails = () => {
   useEffect(() => {
     const fetchDrainerDetails = async () => {
       try {
-        const response = await axios.get(`/api/walletdrainer/${address}`);
-        setDrainer(response.data);
-        setLoading(false);
+        setLoading(true);
+        const data = await apiService.getWalletDrainerByAddress(address);
+        setDrainer(data);
       } catch (error) {
         console.error(`Error fetching wallet drainer details for ${address}:`, error);
         toast({
@@ -71,38 +71,7 @@ const WalletDrainerDetails = () => {
           duration: 5000,
           isClosable: true,
         });
-        
-        // Mock data for demonstration
-        setDrainer({
-          address: address,
-          name: 'Fake ETN Airdrop',
-          description: 'This contract pretends to be an official Electroneum airdrop but steals user funds when they approve token transfers.',
-          riskLevel: 'high',
-          victims: 12,
-          totalStolen: 45000,
-          lastActive: '2023-03-05T12:30:45Z',
-          createdAt: '2023-02-28T10:15:30Z',
-          isVerified: true,
-          verifiedBy: 'SecurityTeam',
-          verificationNotes: 'Confirmed malicious behavior through code analysis and victim reports.',
-          victims: [
-            {
-              address: '0xf5a3467b6bb35c9619310e213c413c7f614a1d33',
-              amount: 12000,
-              timestamp: '2023-03-05T12:30:45Z',
-            },
-            {
-              address: '0x3a2c7b4e3b3e3b3e3b3e3b3e3b3e3b3e3b3e3b3e',
-              amount: 8000,
-              timestamp: '2023-03-04T09:22:15Z',
-            },
-            {
-              address: '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b',
-              amount: 25000,
-              timestamp: '2023-03-01T14:45:33Z',
-            },
-          ],
-        });
+      } finally {
         setLoading(false);
       }
     };
@@ -112,11 +81,12 @@ const WalletDrainerDetails = () => {
 
   const handleVerify = async () => {
     try {
-      await axios.put(`/api/walletdrainer/${address}/verify`, {
-        verifiedBy: 'CurrentUser', // In a real app, this would be the logged-in user
-        isVerified: !drainer.isVerified,
-        notes: 'Verification status updated via UI',
-      });
+      await apiService.verifyWalletDrainer(
+        address,
+        'CurrentUser', // In a real app, this would be the logged-in user
+        !drainer.isVerified,
+        'Verification status updated via UI'
+      );
       
       setDrainer({
         ...drainer,
@@ -145,7 +115,7 @@ const WalletDrainerDetails = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/api/walletdrainer/${address}`);
+      await apiService.deleteWalletDrainer(address);
       
       toast({
         title: 'Success',

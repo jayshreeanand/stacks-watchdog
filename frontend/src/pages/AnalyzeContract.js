@@ -32,8 +32,8 @@ import {
   FiInfo,
   FiShield
 } from 'react-icons/fi';
-import axios from 'axios';
 import { ethers } from 'ethers';
+import apiService from '../utils/apiService';
 
 const AnalyzeContract = () => {
   const navigate = useNavigate();
@@ -74,14 +74,11 @@ const AnalyzeContract = () => {
     setAnalysisResult(null);
 
     try {
-      const response = await axios.post('/api/walletdrainer/analyze', {
-        contractAddress,
-      });
-      
-      setAnalysisResult(response.data);
+      const result = await apiService.analyzeContract(contractAddress);
+      setAnalysisResult(result);
       
       // If high risk, show a toast notification
-      if (response.data.riskLevel === 'high' || response.data.riskLevel === 'critical') {
+      if (result.riskLevel === 'high' || result.riskLevel === 'critical') {
         toast({
           title: 'High Risk Detected',
           description: 'This contract has been identified as a potential wallet drainer.',
@@ -92,29 +89,7 @@ const AnalyzeContract = () => {
       }
     } catch (error) {
       console.error('Error analyzing contract:', error);
-      setError(error.response?.data?.message || 'Failed to analyze contract. Please try again.');
-      
-      // Mock data for demonstration
-      if (contractAddress === '0x1234567890abcdef1234567890abcdef12345678') {
-        setAnalysisResult({
-          address: contractAddress,
-          riskLevel: 'high',
-          riskScore: 85,
-          name: 'Suspicious Token Contract',
-          isKnownDrainer: false,
-          findings: [
-            { type: 'high', message: 'Contains approval frontrunning vulnerability' },
-            { type: 'high', message: 'Unauthorized token transfer functions detected' },
-            { type: 'medium', message: 'Owner has excessive privileges' },
-            { type: 'low', message: 'Missing input validation' },
-          ],
-          recommendations: [
-            'Do not approve tokens to this contract',
-            'Avoid any interaction with this contract',
-            'Report to the Electroneum security team',
-          ],
-        });
-      }
+      setError(error.message || 'Failed to analyze contract. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -124,7 +99,7 @@ const AnalyzeContract = () => {
     if (!analysisResult) return;
     
     try {
-      await axios.post('/api/walletdrainer', {
+      await apiService.saveWalletDrainer({
         address: analysisResult.address,
         name: analysisResult.name || 'Unknown Contract',
         riskLevel: analysisResult.riskLevel,

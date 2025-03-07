@@ -24,7 +24,8 @@ import {
   Skeleton,
 } from '@chakra-ui/react';
 import { FiAlertTriangle, FiTrendingUp, FiUsers, FiShield } from 'react-icons/fi';
-import axios from 'axios';
+import apiService from '../utils/apiService';
+import { mockDashboardStats } from '../utils/mockData';
 
 // Components
 import StatCard from '../components/Dashboard/StatCard';
@@ -43,48 +44,18 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
+        
+        // Use mock stats for now
         // In a real app, you would fetch actual stats from your API
-        // For now, we'll use mock data
-        setStats({
-          totalDrainers: 156,
-          activeDrainers: 42,
-          totalVictims: 328,
-          totalLost: 1250000,
-        });
+        setStats(mockDashboardStats);
 
         // Fetch recent drainers
-        const response = await axios.get('/api/walletdrainer/recent?limit=5');
-        setRecentDrainers(response.data);
-        setLoading(false);
+        const drainers = await apiService.getRecentWalletDrainers(5);
+        setRecentDrainers(drainers);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
-        // Use mock data for demonstration
-        setRecentDrainers([
-          {
-            address: '0x1234567890abcdef1234567890abcdef12345678',
-            name: 'Fake ETN Airdrop',
-            riskLevel: 'high',
-            victims: 12,
-            totalStolen: 45000,
-            lastActive: '2023-03-05T12:30:45Z',
-          },
-          {
-            address: '0xabcdef1234567890abcdef1234567890abcdef12',
-            name: 'ETN Staking Scam',
-            riskLevel: 'critical',
-            victims: 28,
-            totalStolen: 120000,
-            lastActive: '2023-03-04T18:15:22Z',
-          },
-          {
-            address: '0x7890abcdef1234567890abcdef1234567890abcd',
-            name: 'Fake DEX Frontend',
-            riskLevel: 'medium',
-            victims: 5,
-            totalStolen: 18000,
-            lastActive: '2023-03-03T09:45:11Z',
-          },
-        ]);
+      } finally {
         setLoading(false);
       }
     };

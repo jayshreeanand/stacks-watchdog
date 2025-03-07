@@ -24,7 +24,7 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { FiSearch, FiPlus, FiFilter } from 'react-icons/fi';
-import axios from 'axios';
+import apiService from '../utils/apiService';
 
 // Helper functions
 import { formatAddress, formatDate, getRiskBadgeProps } from '../utils/formatters';
@@ -39,9 +39,9 @@ const WalletDrainers = () => {
   useEffect(() => {
     const fetchDrainers = async () => {
       try {
-        const response = await axios.get('/api/walletdrainer');
-        setDrainers(response.data);
-        setLoading(false);
+        setLoading(true);
+        const data = await apiService.getAllWalletDrainers();
+        setDrainers(data);
       } catch (error) {
         console.error('Error fetching wallet drainers:', error);
         toast({
@@ -51,55 +51,7 @@ const WalletDrainers = () => {
           duration: 5000,
           isClosable: true,
         });
-        
-        // Mock data for demonstration
-        setDrainers([
-          {
-            address: '0x1234567890abcdef1234567890abcdef12345678',
-            name: 'Fake ETN Airdrop',
-            riskLevel: 'high',
-            victims: 12,
-            totalStolen: 45000,
-            lastActive: '2023-03-05T12:30:45Z',
-            isVerified: true,
-          },
-          {
-            address: '0xabcdef1234567890abcdef1234567890abcdef12',
-            name: 'ETN Staking Scam',
-            riskLevel: 'critical',
-            victims: 28,
-            totalStolen: 120000,
-            lastActive: '2023-03-04T18:15:22Z',
-            isVerified: true,
-          },
-          {
-            address: '0x7890abcdef1234567890abcdef1234567890abcd',
-            name: 'Fake DEX Frontend',
-            riskLevel: 'medium',
-            victims: 5,
-            totalStolen: 18000,
-            lastActive: '2023-03-03T09:45:11Z',
-            isVerified: false,
-          },
-          {
-            address: '0x567890abcdef1234567890abcdef1234567890ab',
-            name: 'ETN Token Bridge Scam',
-            riskLevel: 'high',
-            victims: 9,
-            totalStolen: 67000,
-            lastActive: '2023-03-02T14:22:33Z',
-            isVerified: true,
-          },
-          {
-            address: '0x90abcdef1234567890abcdef1234567890abcdef',
-            name: 'Fake Wallet App',
-            riskLevel: 'low',
-            victims: 2,
-            totalStolen: 5000,
-            lastActive: '2023-03-01T08:11:05Z',
-            isVerified: false,
-          },
-        ]);
+      } finally {
         setLoading(false);
       }
     };
