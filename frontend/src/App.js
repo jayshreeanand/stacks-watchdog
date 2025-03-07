@@ -11,13 +11,16 @@ import WalletDrainers from './pages/WalletDrainers';
 import WalletDrainerDetails from './pages/WalletDrainerDetails';
 import AnalyzeContract from './pages/AnalyzeContract';
 import NotFound from './pages/NotFound';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
     <Box minH="100vh" bg="gray.900">
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/app" element={<Layout />}>
           <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="wallet-drainers" element={<WalletDrainers />} />
           <Route path="wallet-drainers/:address" element={<WalletDrainerDetails />} />
           <Route path="analyze" element={<AnalyzeContract />} />

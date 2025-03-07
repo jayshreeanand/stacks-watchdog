@@ -14,7 +14,8 @@ import {
   FiHome, 
   FiAlertTriangle, 
   FiSearch, 
-  FiShield 
+  FiShield,
+  FiExternalLink
 } from 'react-icons/fi';
 
 const NavItem = ({ icon, children, to, ...rest }) => {
@@ -72,14 +73,17 @@ const Sidebar = () => {
         </Text>
       </Flex>
       <VStack spacing={1} align="stretch" mt={6}>
-        <NavItem to="/" icon={FiHome}>
+        <NavItem to="/app/dashboard" icon={FiHome}>
           Dashboard
         </NavItem>
-        <NavItem to="/wallet-drainers" icon={FiAlertTriangle}>
+        <NavItem to="/app/wallet-drainers" icon={FiAlertTriangle}>
           Wallet Drainers
         </NavItem>
-        <NavItem to="/analyze" icon={FiSearch}>
+        <NavItem to="/app/analyze" icon={FiSearch}>
           Analyze Contract
+        </NavItem>
+        <NavItem to="/" icon={FiExternalLink}>
+          Landing Page
         </NavItem>
         <Divider my={4} borderColor="gray.700" />
         <Box px={8} py={4}>
