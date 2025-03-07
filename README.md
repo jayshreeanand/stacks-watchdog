@@ -79,11 +79,11 @@ To run ETN Watchdog on the Electroneum testnet instead of mainnet, follow these 
    # WEB3_PROVIDER_URL=https://rpc.electroneum.com
 
    # Uncomment testnet URLs
-   ELECTRONEUM_RPC_URL=https://testnet-rpc.electroneum.com
-   WEB3_PROVIDER_URL=https://testnet-rpc.electroneum.com
+   ELECTRONEUM_RPC_URL=https://rpc.ankr.com/electroneum_testnet
+   WEB3_PROVIDER_URL=https://rpc.ankr.com/electroneum_testnet
 
    # Set chain ID to testnet
-   NETWORK_CHAIN_ID=1991
+   NETWORK_CHAIN_ID=5201420
    ```
 
 2. Get testnet ETN from the Electroneum testnet faucet (if available) or request from the Electroneum team.
