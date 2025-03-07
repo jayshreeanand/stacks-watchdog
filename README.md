@@ -83,6 +83,30 @@ Customize your security alerts:
 - **Database**: MongoDB for storing historical data, analysis results, and user preferences
 - **Notification System**: Multi-channel alert system for real-time security notifications
 
+
+## Screenshots
+<img width="1006" alt="Screenshot 2025-03-07 at 8 29 39 PM" src="https://github.com/user-attachments/assets/b79b6f1d-7f35-4278-9550-41898868b74c" />
+
+
+<img width="1637" alt="Screenshot 2025-03-07 at 9 37 17 PM" src="https://github.com/user-attachments/assets/6212c502-a98a-4a39-9015-4bd2eeb0ed4a" />
+
+
+<img width="1672" alt="Screenshot 2025-03-07 at 9 37 41 PM" src="https://github.com/user-attachments/assets/51289bb4-cb52-4b71-8428-d6e17bce810c" />
+
+
+<img width="1410" alt="Screenshot 2025-03-07 at 9 39 06 PM" src="https://github.com/user-attachments/assets/e19d9bd4-fe11-4afe-821d-e2474ef3d359" />
+
+
+<img width="1680" alt="Screenshot 2025-03-07 at 9 39 16 PM" src="https://github.com/user-attachments/assets/c760bbb7-f965-45a7-a332-617d3f7988f8" />
+
+<img width="1674" alt="Screenshot 2025-03-07 at 9 39 24 PM" src="https://github.com/user-attachments/assets/2350b9ab-f160-4224-9aa3-e40c6c1d4b35" />
+
+
+<img width="1680" alt="Screenshot 2025-03-07 at 9 39 36 PM" src="https://github.com/user-attachments/assets/f72860d4-d41a-4bc8-b1ce-01910eaed64a" />
+
+<img width="1416" alt="Screenshot 2025-03-07 at 9 39 46 PM" src="https://github.com/user-attachments/assets/b4379959-d583-4d9c-9e82-433f63cd80c7" />
+
+
 ## 🚀 Setup Instructions
 
 ### Prerequisites
