@@ -2,7 +2,14 @@
 // but useful for running the script in a standalone fashion through `node <script>`.
 const hre = require("hardhat");
 
+
+
 async function main() {
+
+  if (!hre.ethers) {
+    throw new Error("Ethers not properly initialized!");
+  }
+
   console.log("Deploying ETN Watchdog contracts...");
   console.log(`Network: ${hre.network.name} (Chain RPC: ${hre.network.config.url}) (Chain ID: ${hre.network.config.chainId})`);
 

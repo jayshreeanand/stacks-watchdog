@@ -1,3 +1,4 @@
+require("@nomicfoundation/hardhat-ethers");
 require("dotenv").config();
 
 // Use a simpler configuration without the hardhat-toolbox
@@ -28,3 +29,4 @@ module.exports = {
     artifacts: "./artifacts"
   }
 }; 
+
