@@ -17,19 +17,21 @@ const walletDrainerDetectorABI = require('../../artifacts/contracts/WalletDraine
 let deploymentInfo;
 try {
   // Check if we're on testnet
-  const isTestnet = process.env.NETWORK_CHAIN_ID === '1991';
+  const isTestnet = process.env.NETWORK_CHAIN_ID === '5201420';
   const deploymentFileName = isTestnet ? 'deployment-info-testnet.json' : 'deployment-info.json';
   
   deploymentInfo = JSON.parse(fs.readFileSync(path.join(__dirname, '../../' + deploymentFileName)));
   console.log(`Loaded deployment info for ${isTestnet ? 'testnet' : 'mainnet'}`);
 } catch (error) {
   console.error('Error loading deployment info:', error);
+  // Use placeholder addresses if deployment info is not available
   deploymentInfo = {
-    registry: process.env.REGISTRY_ADDRESS,
-    transactionMonitor: process.env.TRANSACTION_MONITOR_ADDRESS,
-    rugPullDetector: process.env.RUGPULL_DETECTOR_ADDRESS,
-    walletDrainerDetector: process.env.WALLETDRAINER_DETECTOR_ADDRESS
+    registry: process.env.REGISTRY_ADDRESS || "0x0000000000000000000000000000000000000000",
+    transactionMonitor: process.env.TRANSACTION_MONITOR_ADDRESS || "0x0000000000000000000000000000000000000000",
+    rugPullDetector: process.env.RUGPULL_DETECTOR_ADDRESS || "0x0000000000000000000000000000000000000000",
+    walletDrainerDetector: process.env.WALLETDRAINER_DETECTOR_ADDRESS || "0x0000000000000000000000000000000000000000"
   };
+  console.log('Using placeholder contract addresses. Please deploy contracts for full functionality.');
 }
 
 // Contract instances
@@ -86,8 +88,23 @@ const startMonitoring = async (_provider, _app) => {
     // Check if we're on testnet
     // Convert BigInt to Number for comparison
     const chainId = Number(network.chainId);
-    const isTestnet = chainId === 1991;
+    const isTestnet = chainId === 5201420;
     console.log(`Running on ${isTestnet ? 'testnet' : 'mainnet'}`);
+    
+    // Check if contracts are deployed with real addresses
+    const isPlaceholder = deploymentInfo.registry === "0x0000000000000000000000000000000000000000";
+    if (isPlaceholder) {
+      console.log('WARNING: Using placeholder contract addresses. Some functionality will be limited.');
+      console.log('To deploy contracts, run: npm run deploy:testnet');
+      
+      // Still listen for new blocks but don't process them
+      provider.on('block', async (blockNumber) => {
+        console.log(`New block: ${blockNumber} (not processing due to missing contract deployments)`);
+      });
+      
+      console.log('Blockchain monitoring started in limited mode');
+      return;
+    }
     
     // Listen for new blocks
     provider.on('block', async (blockNumber) => {

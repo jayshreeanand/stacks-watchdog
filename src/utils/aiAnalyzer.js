@@ -1,14 +1,18 @@
 const { ethers } = require('ethers');
-const { LangChain } = require('langchain');
-const fetch = require('node-fetch');
+// Remove the incorrect LangChain import and replace with a comment
+// LangChain is an ESM-only package and requires special handling in CommonJS
+// For now, we'll use a simpler approach without LangChain
 
-// Initialize LangChain (placeholder - in a real implementation, you would use the actual LangChain API)
-let langChain;
+// Use axios instead of node-fetch since node-fetch v3 is ESM-only
+const axios = require('axios');
+
+// Initialize AI analyzer (placeholder)
+let aiModel;
 
 // Initialize the AI analyzer
 const initialize = async () => {
   try {
-    // In a real implementation, you would initialize LangChain or another AI framework here
+    // In a real implementation, you would initialize an AI framework here
     console.log('AI analyzer initialized');
   } catch (error) {
     console.error('Error initializing AI analyzer:', error);

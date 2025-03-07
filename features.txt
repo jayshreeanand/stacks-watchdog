@@ -1,0 +1,40 @@
+Smart Contracts:
+TransactionMonitor.sol: Monitors suspicious transactions on the blockchain
+RugPullDetector.sol: Detects potential rug pulls by analyzing token contracts
+WalletDrainerDetector.sol: Identifies wallet drainer contracts
+ETNWatchdogRegistry.sol: Main registry that coordinates all security monitoring components
+
+
+Backend API:
+Express.js server with MongoDB integration
+Real-time blockchain monitoring with ethers.js
+AI-powered analysis of transactions and contracts
+Socket.io for real-time alerts
+
+
+Database Models:
+Alert: Stores security alerts
+SuspiciousTransaction: Stores suspicious transactions
+TokenAnalysis: Stores token contract analyses
+WalletDrainer: Stores detected wallet drainers
+
+
+API Routes:
+Alert routes for managing security alerts
+Transaction routes for managing suspicious transactions
+Rug pull routes for analyzing token contracts
+Wallet drainer routes for detecting malicious contracts
+
+
+The application provides a comprehensive security monitoring solution for the Electroneum blockchain, with the following key features:
+Real-time Transaction Monitoring: Monitors blockchain transactions in real-time to detect suspicious activity
+AI-Powered Analysis: Uses AI to analyze transactions and contracts for potential security risks
+Rug-Pull Detection: Identifies potential rug-pull risks by analyzing token contract code
+Wallet Drainer Detection: Detects malicious contracts that may drain user wallets
+Alert System: Sends real-time alerts through the API and WebSocket connections
+To use the application:
+Set up your environment variables in a .env file based on .env.example
+Deploy the smart contracts to the Electroneum blockchain using npm run deploy
+Start the backend server with npm start
+Connect to the API to monitor security alerts and analyze contracts
+This application provides a powerful security tool for the Electroneum blockchain community, helping to protect users from scams, rug pulls, and wallet drainers.

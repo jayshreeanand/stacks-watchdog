@@ -33,7 +33,6 @@
     "cors": "^2.8.5",
     "socket.io": "^4.7.2",
     "@openzeppelin/contracts": "^5.0.0",
-    "langchain": "^0.0.167",
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
