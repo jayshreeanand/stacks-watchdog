@@ -4,6 +4,7 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
+import { WalletProvider } from './context/WalletContext';
 
 // Define the theme
 const theme = extendTheme({
@@ -54,7 +55,9 @@ root.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <BrowserRouter>
-        <App />
+        <WalletProvider>
+          <App />
+        </WalletProvider>
       </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>
