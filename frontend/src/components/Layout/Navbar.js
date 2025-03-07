@@ -36,9 +36,7 @@ const Navbar = () => {
       top="0"
       zIndex="sticky"
     >
-      <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-        <Box ml={{ base: 0, md: 60 }} />
-
+      <Flex h={16} alignItems={'center'} justifyContent={'flex-end'}>
         <HStack spacing={3}>
           <IconButton
             size="md"

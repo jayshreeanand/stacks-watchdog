@@ -61,9 +61,10 @@ const Sidebar = () => {
       bg="gray.800"
       borderRight="1px"
       borderRightColor="gray.700"
-      w={{ base: 'full', md: 60 }}
+      w={{ base: 'full', md: '240px' }}
       pos="fixed"
       h="full"
+      zIndex="docked"
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontWeight="bold" color="white">

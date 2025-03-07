@@ -8,7 +8,7 @@ const Layout = () => {
   return (
     <Flex h="100vh">
       <Sidebar />
-      <Box flex="1" overflow="auto">
+      <Box flex="1" ml={{ base: 0, md: "240px" }} overflow="auto">
         <Navbar />
         <Box as="main" p={4} maxW="1600px" mx="auto">
           <Outlet />

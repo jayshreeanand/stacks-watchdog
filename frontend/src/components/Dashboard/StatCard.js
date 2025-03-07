@@ -20,7 +20,7 @@ const StatCard = ({ title, value, icon, color, loading }) => {
       _hover={{ transform: 'translateY(-5px)' }}
     >
       <Flex justifyContent="space-between" alignItems="center">
-        <Box>
+        <Stat>
           <StatLabel color="gray.400" fontSize="sm" fontWeight="medium">
             {title}
           </StatLabel>
@@ -29,7 +29,7 @@ const StatCard = ({ title, value, icon, color, loading }) => {
               {value}
             </StatNumber>
           </Skeleton>
-        </Box>
+        </Stat>
         <Box
           p={2}
           bg={`${color}20`}
