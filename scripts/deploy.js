@@ -4,7 +4,7 @@ const hre = require("hardhat");
 
 async function main() {
   console.log("Deploying ETN Watchdog contracts...");
-  console.log(`Network: ${hre.network.name} (Chain ID: ${hre.network.config.chainId})`);
+  console.log(`Network: ${hre.network.name} (Chain RPC: ${hre.network.config.url}) (Chain ID: ${hre.network.config.chainId})`);
 
   // Get the contract factories
   const TransactionMonitor = await hre.ethers.getContractFactory("TransactionMonitor");
