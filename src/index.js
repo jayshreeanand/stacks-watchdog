@@ -20,14 +20,7 @@ const aiAnalyzer = require('./utils/aiAnalyzer');
 // Create Express app
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: process.env.CORS_ORIGIN || '*',
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key'],
-    credentials: true
-  }
-});
+
 
 // Middleware
 // Middleware
