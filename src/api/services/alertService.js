@@ -1,7 +1,10 @@
 const Alert = require('../../models/Alert');
+const telegramService = require('../../utils/telegramService');
+const UserSettings = require('../../models/UserSettings');
 
 // In-memory storage for when MongoDB is not available
 const inMemoryAlerts = [];
+const inMemoryUserSettings = [];
 
 /**
  * Check if MongoDB is available
@@ -36,6 +39,8 @@ const createAlert = async (alertData) => {
       timestamp: alertData.timestamp || Date.now()
     };
     
+    let savedAlert;
+    
     // If MongoDB is not available, store in memory
     if (!isMongoAvailable()) {
       const id = inMemoryAlerts.length > 0 
@@ -50,17 +55,90 @@ const createAlert = async (alertData) => {
       
       inMemoryAlerts.push(inMemoryAlert);
       console.log(`Alert stored in memory: ${inMemoryAlert.type} - ${inMemoryAlert.details}`);
-      return inMemoryAlert;
+      savedAlert = inMemoryAlert;
+    } else {
+      // Store in MongoDB
+      const alert = new Alert(alertWithSeverity);
+      savedAlert = await alert.save();
     }
     
-    // Store in MongoDB
-    const alert = new Alert(alertWithSeverity);
-    await alert.save();
-    return alert;
+    // Send alert to Telegram if enabled
+    await sendAlertNotifications(savedAlert);
+    
+    return savedAlert;
   } catch (error) {
     console.error('Error creating alert:', error);
     throw error;
   }
+};
+
+/**
+ * Send alert notifications to configured channels
+ * @param {Object} alert The alert to send
+ */
+const sendAlertNotifications = async (alert) => {
+  try {
+    // Check if Telegram notifications are enabled globally
+    const telegramEnabled = process.env.ENABLE_TELEGRAM_NOTIFICATIONS === 'true';
+    
+    if (!telegramEnabled) {
+      console.log('Telegram notifications are disabled globally');
+      return;
+    }
+    
+    // Get users who have enabled Telegram notifications
+    let userSettings = [];
+    
+    if (isMongoAvailable()) {
+      userSettings = await UserSettings.find({ 
+        'notifications.telegram.enabled': true 
+      });
+    } else {
+      userSettings = inMemoryUserSettings.filter(
+        settings => settings.notifications?.telegram?.enabled
+      );
+    }
+    
+    // If no users have Telegram enabled, send to default chat
+    if (userSettings.length === 0) {
+      console.log('No users with Telegram notifications enabled, using default chat');
+      await telegramService.sendAlert(alert);
+      return;
+    }
+    
+    // Send to each user who has enabled Telegram notifications
+    for (const settings of userSettings) {
+      // Check if user wants to receive this type of alert
+      const alertTypeEnabled = settings.notifications?.alertTypes?.[alert.type] !== false;
+      
+      // Check if alert severity meets user's threshold
+      const severityThreshold = settings.notifications?.severityThreshold || 'low';
+      const severityMet = isSeverityMet(alert.severity, severityThreshold);
+      
+      if (alertTypeEnabled && severityMet && settings.notifications?.telegram?.chatId) {
+        await telegramService.sendAlert(alert, settings.notifications.telegram.chatId);
+      }
+    }
+  } catch (error) {
+    console.error('Error sending alert notifications:', error);
+  }
+};
+
+/**
+ * Check if an alert's severity meets or exceeds a threshold
+ * @param {string} alertSeverity The severity of the alert
+ * @param {string} threshold The threshold to check against
+ * @returns {boolean} Whether the severity meets the threshold
+ */
+const isSeverityMet = (alertSeverity, threshold) => {
+  const severityLevels = {
+    'low': 1,
+    'medium': 2,
+    'high': 3,
+    'critical': 4
+  };
+  
+  return (severityLevels[alertSeverity] || 0) >= (severityLevels[threshold] || 0);
 };
 
 /**

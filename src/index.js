@@ -11,6 +11,7 @@ const transactionRoutes = require('./api/routes/transactionRoutes');
 const rugPullRoutes = require('./api/routes/rugPullRoutes');
 const walletDrainerRoutes = require('./api/routes/walletDrainerRoutes');
 const alertRoutes = require('./api/routes/alertRoutes');
+const notificationRoutes = require('./api/routes/notificationRoutes');
 
 // Import services
 const blockchainMonitor = require('./utils/blockchainMonitor');
@@ -47,6 +48,7 @@ app.use('/api/transactions', apiKeyMiddleware, transactionRoutes);
 app.use('/api/rugpull', apiKeyMiddleware, rugPullRoutes);
 app.use('/api/walletdrainer', apiKeyMiddleware, walletDrainerRoutes);
 app.use('/api/alerts', apiKeyMiddleware, alertRoutes);
+app.use('/api/notifications', apiKeyMiddleware, notificationRoutes);
 
 // Health check route
 app.get('/health', (req, res) => {

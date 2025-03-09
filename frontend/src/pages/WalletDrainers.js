@@ -21,10 +21,13 @@ import {
   Skeleton,
   SkeletonText,
   useToast,
+  Icon,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { FiSearch, FiPlus, FiFilter } from 'react-icons/fi';
-import apiService from '../utils/apiService';
+import { FiSearch, FiPlus, FiFilter, FiExternalLink } from 'react-icons/fi';
+import apiService, { getAddressUrl } from '../utils/apiService';
+import { useDataSource } from '../context/DataSourceContext';
+import BlockExplorerLink from '../components/BlockExplorerLink';
 
 // Helper functions
 import { formatAddress, formatDate, getRiskBadgeProps } from '../utils/formatters';
@@ -34,6 +37,7 @@ const WalletDrainers = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [riskFilter, setRiskFilter] = useState('all');
+  const { dataSource } = useDataSource();
   const toast = useToast();
 
   useEffect(() => {
@@ -161,15 +165,24 @@ const WalletDrainers = () => {
               {filteredDrainers.map((drainer) => (
                 <Tr key={drainer.address} _hover={{ bg: 'gray.700' }}>
                   <Td>
-                    <Link
-                      as={RouterLink}
-                      to={`/wallet-drainers/${drainer.address}`}
-                      color="electroneum.400"
-                      fontFamily="monospace"
-                      fontWeight="medium"
-                    >
-                      {formatAddress(drainer.address)}
-                    </Link>
+                    <Flex align="center">
+                      <Link
+                        as={RouterLink}
+                        to={`/app/wallet-drainers/${drainer.address}`}
+                        color="electroneum.400"
+                        fontWeight="medium"
+                        mr={2}
+                      >
+                        {formatAddress(drainer.address)}
+                      </Link>
+                      <BlockExplorerLink 
+                        type="address" 
+                        value={drainer.address} 
+                        showExternalIcon={true}
+                        truncate={false}
+                        label=""
+                      />
+                    </Flex>
                   </Td>
                   <Td>{drainer.name}</Td>
                   <Td>

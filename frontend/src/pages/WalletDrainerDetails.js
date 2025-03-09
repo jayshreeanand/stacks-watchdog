@@ -41,13 +41,16 @@ import {
   FiX, 
   FiTrash2 
 } from 'react-icons/fi';
-import apiService from '../utils/apiService';
+import apiService, { getAddressUrl, getTransactionUrl } from '../utils/apiService';
+import { useDataSource } from '../context/DataSourceContext';
+import BlockExplorerLink from '../components/BlockExplorerLink';
 
 // Utils
 import { formatDate, getRiskBadgeProps } from '../utils/formatters';
 
 const WalletDrainerDetails = () => {
   const { address } = useParams();
+  const { dataSource } = useDataSource();
   const navigate = useNavigate();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -210,17 +213,15 @@ const WalletDrainerDetails = () => {
               <Box>
                 <Text color="gray.400" fontSize="sm">Address</Text>
                 <Flex align="center" mt={1}>
-                  <Text color="white" fontFamily="monospace" fontSize="md">
-                    {address}
+                  <Text fontWeight="bold" fontSize="lg" color="white">
+                    {drainer.address}
                   </Text>
-                  <Link 
-                    href={`https://explorer.electroneum.com/address/${address}`} 
-                    isExternal 
+                  <BlockExplorerLink 
+                    type="address" 
+                    value={drainer.address} 
+                    truncate={false}
                     ml={2}
-                    color="electroneum.400"
-                  >
-                    <Icon as={FiExternalLink} />
-                  </Link>
+                  />
                 </Flex>
               </Box>
               
@@ -283,14 +284,10 @@ const WalletDrainerDetails = () => {
                   {drainer.victims.map((victim, index) => (
                     <Tr key={index}>
                       <Td>
-                        <Link 
-                          href={`https://explorer.electroneum.com/address/${victim.address}`}
-                          isExternal
-                          color="electroneum.400"
-                          fontFamily="monospace"
-                        >
-                          {victim.address.substring(0, 10)}...
-                        </Link>
+                        <BlockExplorerLink 
+                          type="address" 
+                          value={victim.address} 
+                        />
                       </Td>
                       <Td isNumeric>{victim.amount.toLocaleString()}</Td>
                       <Td>{formatDate(victim.timestamp)}</Td>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -28,9 +28,19 @@ import {
   FormLabel,
   Select,
   Checkbox,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from '@chakra-ui/react';
 import { FaShieldAlt, FaExclamationTriangle, FaCheckCircle, FaLock, FaSearch, FaWallet } from 'react-icons/fa';
+import { FiShield, FiAlertTriangle, FiSearch, FiCode } from 'react-icons/fi';
+import { Link as RouterLink } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
+import AddressAnalyzer from '../components/AddressAnalyzer';
+import BlockExplorerLink from '../components/BlockExplorerLink';
+import { useDataSource } from '../context/DataSourceContext';
 
 const SecurityScanner = () => {
   const { account } = useWallet();
@@ -46,6 +56,8 @@ const SecurityScanner = () => {
     checkTokenApprovals: true,
     checkPhishing: true,
   });
+  
+  const { dataSource, getNetworkName } = useDataSource();
   
   // Move useColorModeValue calls outside of conditional rendering
   const textColor = useColorModeValue('gray.600', 'gray.400');
@@ -168,214 +180,137 @@ const SecurityScanner = () => {
   };
 
   return (
-    <Container maxW="7xl" py={8}>
-      <VStack spacing={8} align="stretch">
-        <Box textAlign="center">
-          <Heading size="xl" mb={2}>
-            Security Scanner
-          </Heading>
-          <Text color={textColor}>
-            Scan your wallet for potential security vulnerabilities and get recommendations
+    <Box>
+      <Heading as="h1" size="xl" mb={2} color="white">
+        Security Scanner
+      </Heading>
+      
+      <Flex align="center" mb={6}>
+        <Text color="gray.400">
+          Advanced security tools for the Electroneum blockchain
+        </Text>
+        <BlockExplorerLink 
+          type="explorer" 
+          label={`${getNetworkName()} Explorer`}
+          linkProps={{ 
+            ml: 4,
+            bg: 'gray.700', 
+            px: 3, 
+            py: 1, 
+            borderRadius: 'md',
+            fontSize: 'sm',
+            _hover: { bg: 'gray.600' }
+          }}
+        />
+      </Flex>
+      
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6} mb={8}>
+        <Box
+          bg="gray.800"
+          p={6}
+          borderRadius="lg"
+          boxShadow="md"
+          _hover={{ transform: 'translateY(-5px)', transition: 'transform 0.3s' }}
+        >
+          <Flex align="center" mb={4}>
+            <Icon as={FiShield} boxSize={6} color="electroneum.400" mr={3} />
+            <Heading as="h2" size="md" color="white">
+              Wallet Security Check
+            </Heading>
+          </Flex>
+          <Text color="gray.400" mb={4}>
+            Analyze your wallet for security vulnerabilities, suspicious approvals, and risky interactions.
           </Text>
+          <Button
+            as={RouterLink}
+            to="/app/security-scanner#wallet"
+            rightIcon={<FiSearch />}
+            colorScheme="electroneum"
+            variant="outline"
+          >
+            Scan Wallet
+          </Button>
         </Box>
-
-        <Card variant="outline" bg={cardBg}>
-          <CardHeader>
-            <Heading size="md">Scan Configuration</Heading>
-          </CardHeader>
-          <CardBody>
-            <VStack spacing={6} align="stretch">
-              <FormControl>
-                <FormLabel>Wallet Address</FormLabel>
-                <Input
-                  placeholder={account ? account : "Enter wallet address to scan"}
-                  value={customAddress}
-                  onChange={(e) => setCustomAddress(e.target.value)}
-                  isDisabled={!!account || isScanning}
-                />
-                {account && (
-                  <Text fontSize="sm" color="green.500" mt={1}>
-                    Using connected wallet address
-                  </Text>
-                )}
-              </FormControl>
-
-              <Box>
-                <Text fontWeight="medium" mb={2}>
-                  Scan Options
-                </Text>
-                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={3}>
-                  <Checkbox
-                    isChecked={scanOptions.checkTokenApprovals}
-                    onChange={() => handleOptionChange('checkTokenApprovals')}
-                    isDisabled={isScanning}
-                  >
-                    Check Token Approvals
-                  </Checkbox>
-                  <Checkbox
-                    isChecked={scanOptions.checkInteractions}
-                    onChange={() => handleOptionChange('checkInteractions')}
-                    isDisabled={isScanning}
-                  >
-                    Check Contract Interactions
-                  </Checkbox>
-                  <Checkbox
-                    isChecked={scanOptions.checkPhishing}
-                    onChange={() => handleOptionChange('checkPhishing')}
-                    isDisabled={isScanning}
-                  >
-                    Check Phishing Vulnerability
-                  </Checkbox>
-                  <Checkbox
-                    isChecked={scanOptions.checkPermissions}
-                    onChange={() => handleOptionChange('checkPermissions')}
-                    isDisabled={isScanning}
-                  >
-                    Check Wallet Permissions
-                  </Checkbox>
-                </SimpleGrid>
-              </Box>
-            </VStack>
-          </CardBody>
-          <CardFooter>
-            <Button
-              leftIcon={<Icon as={FaShieldAlt} />}
-              colorScheme="blue"
-              isLoading={isScanning}
-              loadingText="Scanning..."
-              onClick={handleScan}
-              width="full"
-            >
-              Start Security Scan
-            </Button>
-          </CardFooter>
-        </Card>
-
-        {isScanning && (
-          <Box>
-            <Text mb={2} fontWeight="medium">
-              Scanning wallet for vulnerabilities...
-            </Text>
-            <Progress
-              value={scanProgress}
-              size="sm"
-              colorScheme="blue"
-              hasStripe
-              isAnimated
-              borderRadius="md"
-            />
-            <HStack mt={2} justify="space-between">
-              <Text fontSize="sm">Analyzing transactions</Text>
-              <Text fontSize="sm">{Math.round(scanProgress)}%</Text>
-            </HStack>
-          </Box>
-        )}
-
-        {scanComplete && scanResults && (
-          <VStack spacing={6} align="stretch">
-            <Card variant="outline" bg={cardBg}>
-              <CardHeader>
-                <Heading size="md">Scan Results</Heading>
-              </CardHeader>
-              <CardBody>
-                <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
-                  <Stat>
-                    <StatLabel>Security Score</StatLabel>
-                    <StatNumber color={getScoreColor(scanResults.securityScore)}>
-                      {scanResults.securityScore}/100
-                    </StatNumber>
-                    <StatHelpText>
-                      {scanResults.securityScore >= 90
-                        ? 'Excellent'
-                        : scanResults.securityScore >= 70
-                        ? 'Good'
-                        : 'Needs Improvement'}
-                    </StatHelpText>
-                  </Stat>
-                  <Stat>
-                    <StatLabel>Issues Found</StatLabel>
-                    <StatNumber>{scanResults.issues.length}</StatNumber>
-                    <StatHelpText>
-                      {scanResults.issues.filter((i) => i.severity === 'high').length} high,{' '}
-                      {scanResults.issues.filter((i) => i.severity === 'medium').length} medium
-                    </StatHelpText>
-                  </Stat>
-                  <Stat>
-                    <StatLabel>Scan Date</StatLabel>
-                    <StatNumber fontSize="lg">
-                      {new Date(scanResults.scanDate).toLocaleDateString()}
-                    </StatNumber>
-                    <StatHelpText>
-                      {new Date(scanResults.scanDate).toLocaleTimeString()}
-                    </StatHelpText>
-                  </Stat>
-                </SimpleGrid>
-              </CardBody>
-            </Card>
-
-            {scanResults.issues.length > 0 && (
-              <Card variant="outline" bg={cardBg}>
-                <CardHeader>
-                  <Heading size="md">Security Issues</Heading>
-                </CardHeader>
-                <CardBody>
-                  <VStack spacing={4} align="stretch">
-                    {scanResults.issues.map((issue) => (
-                      <Box
-                        key={issue.id}
-                        p={4}
-                        borderWidth="1px"
-                        borderRadius="md"
-                        borderLeftWidth="4px"
-                        borderLeftColor={getSeverityColor(issue.severity) + '.500'}
-                      >
-                        <HStack mb={2}>
-                          <Badge colorScheme={getSeverityColor(issue.severity)}>
-                            {issue.severity.toUpperCase()}
-                          </Badge>
-                          <Badge variant="outline">{issue.affectedAsset}</Badge>
-                        </HStack>
-                        <Heading size="sm" mb={2}>
-                          {issue.title}
-                        </Heading>
-                        <Text mb={2}>{issue.description}</Text>
-                        <Text fontWeight="medium">Recommendation: {issue.recommendation}</Text>
-                      </Box>
-                    ))}
-                  </VStack>
-                </CardBody>
-              </Card>
-            )}
-
-            <Card variant="outline" bg={cardBg}>
-              <CardHeader>
-                <Heading size="md">Recommendations</Heading>
-              </CardHeader>
-              <CardBody>
-                <VStack spacing={3} align="stretch">
-                  {scanResults.recommendations.map((rec, index) => (
-                    <HStack key={index} spacing={3}>
-                      <Icon as={FaCheckCircle} color="green.500" />
-                      <Text>{rec}</Text>
-                    </HStack>
-                  ))}
-                </VStack>
-              </CardBody>
-              <CardFooter>
-                <Button
-                  leftIcon={<Icon as={FaSearch} />}
-                  colorScheme="blue"
-                  onClick={handleScan}
-                  width="full"
-                >
-                  Scan Again
-                </Button>
-              </CardFooter>
-            </Card>
-          </VStack>
-        )}
-      </VStack>
-    </Container>
+        
+        <Box
+          bg="gray.800"
+          p={6}
+          borderRadius="lg"
+          boxShadow="md"
+          _hover={{ transform: 'translateY(-5px)', transition: 'transform 0.3s' }}
+        >
+          <Flex align="center" mb={4}>
+            <Icon as={FiCode} boxSize={6} color="electroneum.400" mr={3} />
+            <Heading as="h2" size="md" color="white">
+              Smart Contract Analyzer
+            </Heading>
+          </Flex>
+          <Text color="gray.400" mb={4}>
+            Analyze smart contracts for security vulnerabilities, rug pull risks, and potential exploits.
+          </Text>
+          <Button
+            as={RouterLink}
+            to="/app/smart-contract-analyzer"
+            rightIcon={<FiCode />}
+            colorScheme="electroneum"
+            variant="outline"
+          >
+            Analyze Contract
+          </Button>
+        </Box>
+      </SimpleGrid>
+      
+      <Tabs variant="enclosed" colorScheme="electroneum" id="wallet">
+        <TabList>
+          <Tab>Address Analyzer</Tab>
+          <Tab>Token Approvals</Tab>
+          <Tab>Transaction History</Tab>
+        </TabList>
+        
+        <TabPanels>
+          <TabPanel px={0}>
+            <AddressAnalyzer />
+          </TabPanel>
+          
+          <TabPanel>
+            <Box bg="gray.800" p={6} borderRadius="md">
+              <Heading as="h2" size="md" color="white" mb={4}>
+                Token Approvals
+              </Heading>
+              
+              <Text color="gray.400" mb={6}>
+                View and manage your token approvals. Revoke unnecessary permissions to improve security.
+              </Text>
+              
+              <Button
+                as={RouterLink}
+                to="/app/token-approvals"
+                rightIcon={<FiAlertTriangle />}
+                colorScheme="electroneum"
+              >
+                Manage Approvals
+              </Button>
+            </Box>
+          </TabPanel>
+          
+          <TabPanel>
+            <Box bg="gray.800" p={6} borderRadius="md">
+              <Heading as="h2" size="md" color="white" mb={4}>
+                Transaction History Analysis
+              </Heading>
+              
+              <Text color="gray.400" mb={6}>
+                Analyze your transaction history for suspicious patterns and potential security risks.
+              </Text>
+              
+              <Text color="gray.500" fontStyle="italic">
+                Connect your wallet to analyze your transaction history.
+              </Text>
+            </Box>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </Box>
   );
 };
 

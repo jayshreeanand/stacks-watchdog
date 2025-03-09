@@ -13,7 +13,12 @@ import {
   Skeleton,
   SkeletonText,
   Box,
+  Icon,
+  Flex,
 } from '@chakra-ui/react';
+import { FiExternalLink } from 'react-icons/fi';
+import { getAddressUrl } from '../../utils/apiService';
+import BlockExplorerLink from '../BlockExplorerLink';
 
 // Helper function to format address
 const formatAddress = (address) => {
@@ -81,15 +86,24 @@ const RecentDrainersTable = ({ drainers, loading }) => {
         {drainers.map((drainer) => (
           <Tr key={drainer.address} _hover={{ bg: 'gray.700' }}>
             <Td>
-              <Link
-                as={RouterLink}
-                to={`/wallet-drainers/${drainer.address}`}
-                color="electroneum.400"
-                fontFamily="monospace"
-                fontWeight="medium"
-              >
-                {formatAddress(drainer.address)}
-              </Link>
+              <Flex align="center">
+                <Link
+                  as={RouterLink}
+                  to={`/app/wallet-drainers/${drainer.address}`}
+                  color="electroneum.400"
+                  fontWeight="medium"
+                  mr={2}
+                >
+                  {formatAddress(drainer.address)}
+                </Link>
+                <BlockExplorerLink 
+                  type="address" 
+                  value={drainer.address} 
+                  showExternalIcon={true}
+                  truncate={false}
+                  label=""
+                />
+              </Flex>
             </Td>
             <Td>{drainer.name}</Td>
             <Td>

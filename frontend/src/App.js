@@ -15,6 +15,7 @@ import LandingPage from './pages/LandingPage';
 import SecurityScanner from './pages/SecurityScanner';
 import NotificationSettings from './pages/NotificationSettings';
 import TokenApprovals from './pages/TokenApprovals';
+import SmartContractAnalyzer from './pages/SmartContractAnalyzer';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="wallet-drainers/:address" element={<WalletDrainerDetails />} />
           <Route path="analyze" element={<AnalyzeContract />} />
           <Route path="security-scanner" element={<SecurityScanner />} />
+          <Route path="smart-contract-analyzer" element={<SmartContractAnalyzer />} />
           <Route path="notification-settings" element={<NotificationSettings />} />
           <Route path="token-approvals" element={<TokenApprovals />} />
           <Route path="*" element={<NotFound />} />

@@ -5,6 +5,13 @@ import { mockApiService } from './mockData';
 let API_BASE_URL = '/api';
 let CURRENT_DATA_SOURCE = 'mock';
 
+// Block explorer URLs
+const EXPLORER_URLS = {
+  mock: process.env.REACT_APP_TESTNET_EXPLORER_URL || 'https://testnet-blockexplorer.electroneum.com/',
+  testnet: process.env.REACT_APP_TESTNET_EXPLORER_URL || 'https://testnet-blockexplorer.electroneum.com/',
+  mainnet: process.env.REACT_APP_MAINNET_EXPLORER_URL || 'https://blockexplorer.electroneum.com/'
+};
+
 // API endpoints
 const ENDPOINTS = {
   WALLET_DRAINERS: `${API_BASE_URL}/walletdrainer`,
@@ -46,11 +53,34 @@ export const setApiBaseUrl = (dataSource) => {
   console.log('Updated endpoints:', ENDPOINTS);
 };
 
+// Get the current block explorer URL
+export const getExplorerUrl = () => {
+  return EXPLORER_URLS[CURRENT_DATA_SOURCE] || EXPLORER_URLS.testnet;
+};
+
+// Get transaction URL in block explorer
+export const getTransactionUrl = (txHash) => {
+  return `${getExplorerUrl()}tx/${txHash}`;
+};
+
+// Get address URL in block explorer
+export const getAddressUrl = (address) => {
+  return `${getExplorerUrl()}address/${address}`;
+};
+
+// Get token URL in block explorer
+export const getTokenUrl = (tokenAddress) => {
+  return `${getExplorerUrl()}token/${tokenAddress}`;
+};
+
 // Get mock data based on current data source
 const getMockData = (type) => {
   // Create distinct mock data for each data source to make it obvious which one is being used
   const mockPrefix = CURRENT_DATA_SOURCE === 'mock' ? '[MOCK]' : 
                     CURRENT_DATA_SOURCE === 'testnet' ? '[TESTNET]' : '[MAINNET]';
+  
+  // Get the appropriate explorer URL
+  const explorerUrl = getExplorerUrl();
   
   switch (type) {
     case 'stats':
@@ -63,7 +93,8 @@ const getMockData = (type) => {
                       CURRENT_DATA_SOURCE === 'testnet' ? 89 : 156,
         totalLost: CURRENT_DATA_SOURCE === 'mock' ? 1250000 : 
                   CURRENT_DATA_SOURCE === 'testnet' ? 350000 : 750000,
-        source: `${mockPrefix} DATA`
+        source: `${mockPrefix} DATA`,
+        explorerUrl: explorerUrl
       };
     case 'drainers':
       return [

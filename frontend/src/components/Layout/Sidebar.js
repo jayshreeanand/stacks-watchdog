@@ -18,7 +18,8 @@ import {
   FiExternalLink,
   FiBell,
   FiLock,
-  FiKey
+  FiKey,
+  FiCode
 } from 'react-icons/fi';
 
 const NavItem = ({ icon, children, to, ...rest }) => {
@@ -84,6 +85,9 @@ const Sidebar = () => {
         </NavItem>
         <NavItem to="/app/analyze" icon={FiSearch}>
           Analyze Contract
+        </NavItem>
+        <NavItem to="/app/smart-contract-analyzer" icon={FiCode}>
+          AI Contract Analyzer
         </NavItem>
         <NavItem to="/app/security-scanner" icon={FiShield}>
           Security Scanner

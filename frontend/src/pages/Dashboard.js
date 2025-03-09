@@ -22,11 +22,13 @@ import {
   Button,
   useColorModeValue,
   Skeleton,
+  HStack,
 } from '@chakra-ui/react';
-import { FiAlertTriangle, FiTrendingUp, FiUsers, FiShield } from 'react-icons/fi';
-import apiService from '../utils/apiService';
+import { FiAlertTriangle, FiTrendingUp, FiUsers, FiShield, FiExternalLink } from 'react-icons/fi';
+import apiService, { getExplorerUrl } from '../utils/apiService';
 import { mockDashboardStats } from '../utils/mockData';
 import { useDataSource } from '../context/DataSourceContext';
+import BlockExplorerLink from '../components/BlockExplorerLink';
 
 // Components
 import StatCard from '../components/Dashboard/StatCard';
@@ -80,7 +82,20 @@ const Dashboard = () => {
         <Heading as="h1" size="xl" color="white">
           Dashboard
         </Heading>
-        <DataSourceSelector />
+        <HStack spacing={4}>
+          <BlockExplorerLink 
+            type="explorer" 
+            label="Block Explorer" 
+            linkProps={{ 
+              bg: 'gray.700', 
+              px: 3, 
+              py: 2, 
+              borderRadius: 'md',
+              _hover: { bg: 'gray.600' }
+            }}
+          />
+          <DataSourceSelector />
+        </HStack>
       </Flex>
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6} mb={8}>
