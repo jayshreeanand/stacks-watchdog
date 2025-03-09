@@ -1,8 +1,13 @@
-# ETN Watchdog: AI Security Bot for Electroneum Blockchain
+# ETN Watchdog: AI Security Monitoring Bot for Electroneum
 
 ETN Watchdog is a comprehensive security monitoring platform for the Electroneum blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time.
 
-![ETN Watchdog](https://via.placeholder.com/800x400?text=ETN+Watchdog+Dashboard)
+Demo URL: https://etn-watchdog.vercel.app/
+
+Backend server URL: https://etn-watchdog-production.up.railway.app/
+
+<img width="600" alt="Screenshot 2025-03-09 at 8 31 50 PM" src="https://github.com/user-attachments/assets/68ead615-de87-45f0-8011-e6c153013653" />
+
 
 ## 🛡️ Key Features
 
@@ -138,6 +143,92 @@ The AI Transaction Analyzer monitors transactions for:
 - **AI Integration**: OpenAI API integration for advanced security analysis
 - **Notification System**: Multi-channel alert system for real-time security notifications
 - **Block Explorer Integration**: Direct integration with Electroneum block explorer
+
+---
+## 🔍 Using the AI Security Features
+
+### Smart Contract Analyzer
+
+1. Navigate to "AI Contract Analyzer" in the sidebar
+2. Enter a contract address or paste contract code
+   - Use the "Load Sample" button to test with a sample contract
+   - Use the "Load Vulnerable Sample" to see how vulnerabilities are detected
+3. Click "Analyze Contract"
+4. Review the detailed security analysis:
+   - Overall risk score and risk level
+   - List of vulnerabilities with severity ratings
+   - Detailed descriptions and recommendations
+   - Links to the contract on the block explorer
+
+### Address Analyzer
+
+1. Go to "Security Scanner" in the sidebar
+2. Use the "Address Analyzer" tab
+3. Enter an Electroneum address
+4. Click "Analyze"
+5. Review the security assessment:
+   - Risk score and risk level
+   - Suspicious activity findings
+   - Recommended security actions
+   - Links to the address on the block explorer
+
+### Transaction Monitoring
+
+The system automatically monitors transactions for suspicious activity:
+
+1. Transactions are analyzed in real-time as they occur
+2. AI models assess each transaction for security risks
+3. Suspicious transactions trigger alerts
+4. Details are displayed in the dashboard and notifications
+
+## 🔄 API Integration
+
+ETN Watchdog provides a REST API for integration with other services:
+
+- **Authentication**: JWT-based authentication for secure API access
+- **Endpoints**: Comprehensive endpoints for accessing security data
+- **Documentation**: Detailed API documentation available at `/api/docs`
+- **Rate Limiting**: Fair usage policies to ensure service availability
+
+
+## Screenshots
+
+Deployed Contracts
+<img width="1043" alt="Screenshot 2025-03-09 at 1 43 59 PM" src="https://github.com/user-attachments/assets/2952d039-7681-4083-b570-aa38b99069bd" />
+
+Features
+<img width="1375" alt="Screenshot 2025-03-09 at 8 31 58 PM" src="https://github.com/user-attachments/assets/c09f5b6e-ec13-4a3a-9f11-630e8ae067e0" />
+
+How it works
+<img width="1403" alt="Screenshot 2025-03-09 at 8 32 06 PM" src="https://github.com/user-attachments/assets/53dd1132-b486-4975-b68d-f84cc5a629a9" />
+
+Dashboard
+<img width="1000" alt="Screenshot 2025-03-09 at 8 58 01 PM" src="https://github.com/user-attachments/assets/f4087a8c-a5e1-4183-bdd8-54b9d7972706" />
+
+AI Smart contract analyzer
+<img width="1000" alt="Screenshot 2025-03-09 at 8 58 22 PM" src="https://github.com/user-attachments/assets/53e7be3a-095d-4410-bc33-ac7a9513e237" />
+
+AI analyzer results
+<img width="1411" alt="Screenshot 2025-03-09 at 8 59 03 PM" src="https://github.com/user-attachments/assets/a3773f19-0dae-431f-8c1b-d06835595989" />
+
+AI security recommendations
+<img width="1427" alt="Screenshot 2025-03-09 at 8 59 10 PM" src="https://github.com/user-attachments/assets/c79f24f8-0596-4edf-a0c3-edaf8ab7ad4c" />
+
+Wallet Scanner
+<img width="1432" alt="Screenshot 2025-03-09 at 8 59 37 PM" src="https://github.com/user-attachments/assets/a982be75-3378-4f99-855e-9d9eaaec42d0" />
+<img width="1418" alt="Screenshot 2025-03-09 at 9 00 10 PM" src="https://github.com/user-attachments/assets/8618b16d-d208-4faa-bce2-5cfc6ac2d530" />
+<img width="1429" alt="Screenshot 2025-03-09 at 9 00 21 PM" src="https://github.com/user-attachments/assets/76fc3df3-aeca-4656-8e36-5b69f7969140" />
+<img width="1408" alt="Screenshot 2025-03-09 at 9 00 33 PM" src="https://github.com/user-attachments/assets/64414112-acf6-4ba9-96fe-60d66ec29bf4" />
+<img width="1435" alt="Screenshot 2025-03-09 at 9 00 43 PM" src="https://github.com/user-attachments/assets/123a4807-28da-4497-8fa0-1325f9fe208e" />
+Wallet security recommendations
+<img width="1416" alt="Screenshot 2025-03-09 at 9 00 55 PM" src="https://github.com/user-attachments/assets/98f0db27-9cee-481f-9318-f3b773c72076" />
+
+Token Approvals Manager
+<img width="1301" alt="Screenshot 2025-03-09 at 9 01 21 PM" src="https://github.com/user-attachments/assets/51fb0462-59d8-4824-8035-acdbb17e6d16" />
+
+Notification Settings
+<img width="1301" alt="Screenshot 2025-03-09 at 9 01 21 PM" src="https://github.com/user-attachments/assets/c48837c6-81ea-455f-bc7c-7e3b04f1c70b" />
+
 
 ## 🚀 Getting Started
 
@@ -294,50 +385,6 @@ To run ETN Watchdog on the Electroneum testnet instead of mainnet, follow these 
    npm run start:all
    ```
 
-## 🔍 Using the AI Security Features
-
-### Smart Contract Analyzer
-
-1. Navigate to "AI Contract Analyzer" in the sidebar
-2. Enter a contract address or paste contract code
-   - Use the "Load Sample" button to test with a sample contract
-   - Use the "Load Vulnerable Sample" to see how vulnerabilities are detected
-3. Click "Analyze Contract"
-4. Review the detailed security analysis:
-   - Overall risk score and risk level
-   - List of vulnerabilities with severity ratings
-   - Detailed descriptions and recommendations
-   - Links to the contract on the block explorer
-
-### Address Analyzer
-
-1. Go to "Security Scanner" in the sidebar
-2. Use the "Address Analyzer" tab
-3. Enter an Electroneum address
-4. Click "Analyze"
-5. Review the security assessment:
-   - Risk score and risk level
-   - Suspicious activity findings
-   - Recommended security actions
-   - Links to the address on the block explorer
-
-### Transaction Monitoring
-
-The system automatically monitors transactions for suspicious activity:
-
-1. Transactions are analyzed in real-time as they occur
-2. AI models assess each transaction for security risks
-3. Suspicious transactions trigger alerts
-4. Details are displayed in the dashboard and notifications
-
-## 🔄 API Integration
-
-ETN Watchdog provides a REST API for integration with other services:
-
-- **Authentication**: JWT-based authentication for secure API access
-- **Endpoints**: Comprehensive endpoints for accessing security data
-- **Documentation**: Detailed API documentation available at `/api/docs`
-- **Rate Limiting**: Fair usage policies to ensure service availability
 
 ## 🤝 Contributing
 
