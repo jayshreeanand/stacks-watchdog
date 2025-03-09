@@ -65,7 +65,8 @@ export const WalletProvider = ({ children }) => {
   // Connect wallet
   const connectWallet = async () => {
     if (!window.ethereum) {
-      throw new Error('MetaMask not detected');
+      console.error('MetaMask or compatible wallet not detected');
+      throw new Error('MetaMask or compatible wallet not detected. Please install MetaMask or another Ethereum-compatible wallet extension and refresh the page.');
     }
 
     setIsConnecting(true);

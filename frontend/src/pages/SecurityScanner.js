@@ -66,7 +66,20 @@ const SecurityScanner = () => {
   const handleScan = () => {
     // Validate if we have an address to scan
     const addressToScan = account || customAddress;
+    
+    // Check if MetaMask is installed if no custom address is provided
     if (!addressToScan) {
+      if (!window.ethereum && !customAddress) {
+        toast({
+          title: 'Wallet not available',
+          description: 'MetaMask or compatible wallet not detected. Please install a wallet extension or enter a custom address to scan.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
+      
       toast({
         title: 'No address provided',
         description: 'Please connect your wallet or enter a custom address to scan',
@@ -83,21 +96,33 @@ const SecurityScanner = () => {
     setScanComplete(false);
     setScanResults(null);
 
-    // Simulate scanning process
-    const interval = setInterval(() => {
-      setScanProgress((prevProgress) => {
-        const newProgress = prevProgress + Math.random() * 10;
-        if (newProgress >= 100) {
-          clearInterval(interval);
-          setIsScanning(false);
-          setScanComplete(true);
-          // Generate mock scan results
-          generateMockResults(addressToScan);
-          return 100;
-        }
-        return newProgress;
+    try {
+      // Simulate scanning process
+      const interval = setInterval(() => {
+        setScanProgress((prevProgress) => {
+          const newProgress = prevProgress + Math.random() * 10;
+          if (newProgress >= 100) {
+            clearInterval(interval);
+            setIsScanning(false);
+            setScanComplete(true);
+            // Generate mock scan results
+            generateMockResults(addressToScan);
+            return 100;
+          }
+          return newProgress;
+        });
+      }, 300);
+    } catch (error) {
+      console.error('Error during wallet scan:', error);
+      setIsScanning(false);
+      toast({
+        title: 'Scan failed',
+        description: error.message || 'An error occurred during the wallet scan',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
       });
-    }, 300);
+    }
   };
 
   const generateMockResults = (address) => {
@@ -196,7 +221,7 @@ const SecurityScanner = () => {
             ml: 4,
             bg: 'gray.700', 
             px: 3, 
-            py: 1, 
+            py: 1,
             borderRadius: 'md',
             fontSize: 'sm',
             _hover: { bg: 'gray.600' }
@@ -222,14 +247,44 @@ const SecurityScanner = () => {
             Analyze your wallet for security vulnerabilities, suspicious approvals, and risky interactions.
           </Text>
           <Button
-            as={RouterLink}
-            to="/app/security-scanner#wallet"
+            onClick={handleScan}
             rightIcon={<FiSearch />}
             colorScheme="electroneum"
             variant="outline"
+            mb={4}
+            isLoading={isScanning}
+            loadingText="Scanning"
           >
             Scan Wallet
           </Button>
+          
+          <FormControl>
+            <Input
+              placeholder="Or enter a custom address to scan"
+              value={customAddress}
+              onChange={(e) => setCustomAddress(e.target.value)}
+              bg="gray.700"
+              border="none"
+              _focus={{ borderColor: "electroneum.400" }}
+              size="sm"
+            />
+          </FormControl>
+          
+          {isScanning && (
+            <Box mt={4}>
+              <Text color="gray.400" fontSize="sm" mb={2}>
+                Scanning wallet... {Math.round(scanProgress)}%
+              </Text>
+              <Progress 
+                value={scanProgress} 
+                size="sm" 
+                colorScheme="electroneum" 
+                borderRadius="md"
+                hasStripe
+                isAnimated
+              />
+            </Box>
+          )}
         </Box>
         
         <Box
@@ -265,6 +320,7 @@ const SecurityScanner = () => {
           <Tab>Address Analyzer</Tab>
           <Tab>Token Approvals</Tab>
           <Tab>Transaction History</Tab>
+          {scanComplete && <Tab>Scan Results</Tab>}
         </TabList>
         
         <TabPanels>
@@ -308,6 +364,85 @@ const SecurityScanner = () => {
               </Text>
             </Box>
           </TabPanel>
+          
+          {scanComplete && (
+            <TabPanel>
+              <Box bg="gray.800" p={6} borderRadius="md">
+                <Heading as="h2" size="md" color="white" mb={4}>
+                  Wallet Security Scan Results
+                </Heading>
+                
+                {scanResults && (
+                  <>
+                    <Flex justify="space-between" align="center" mb={6}>
+                      <Box>
+                        <Text color="gray.400" mb={2}>
+                          Address: {scanResults.address}
+                        </Text>
+                        <Text color="gray.400" fontSize="sm">
+                          Scan completed on {new Date(scanResults.scanDate).toLocaleString()}
+                        </Text>
+                      </Box>
+                      <Stat textAlign="right">
+                        <StatLabel color="gray.400">Security Score</StatLabel>
+                        <StatNumber color={getScoreColor(scanResults.securityScore)}>
+                          {scanResults.securityScore}/100
+                        </StatNumber>
+                      </Stat>
+                    </Flex>
+                    
+                    <Heading as="h3" size="sm" color="white" mb={3}>
+                      Detected Issues
+                    </Heading>
+                    
+                    {scanResults.issues.length > 0 ? (
+                      scanResults.issues.map((issue) => (
+                        <Box 
+                          key={issue.id} 
+                          p={4} 
+                          bg="gray.700" 
+                          borderRadius="md" 
+                          mb={3}
+                          borderLeft="4px solid"
+                          borderLeftColor={getSeverityColor(issue.severity)}
+                        >
+                          <Flex justify="space-between" align="center" mb={2}>
+                            <Heading as="h4" size="xs" color="white">
+                              {issue.title}
+                            </Heading>
+                            <Badge colorScheme={getSeverityColor(issue.severity)}>
+                              {issue.severity}
+                            </Badge>
+                          </Flex>
+                          <Text color="gray.400" fontSize="sm" mb={2}>
+                            {issue.description}
+                          </Text>
+                          <Text color="gray.300" fontSize="sm" fontWeight="bold">
+                            Recommendation: {issue.recommendation}
+                          </Text>
+                        </Box>
+                      ))
+                    ) : (
+                      <Text color="green.400">No issues detected!</Text>
+                    )}
+                    
+                    <Heading as="h3" size="sm" color="white" mt={6} mb={3}>
+                      Security Recommendations
+                    </Heading>
+                    
+                    <Box p={4} bg="gray.700" borderRadius="md">
+                      {scanResults.recommendations.map((rec, index) => (
+                        <Flex key={index} align="center" mb={index < scanResults.recommendations.length - 1 ? 2 : 0}>
+                          <Icon as={FaCheckCircle} color="green.400" mr={2} />
+                          <Text color="gray.300">{rec}</Text>
+                        </Flex>
+                      ))}
+                    </Box>
+                  </>
+                )}
+              </Box>
+            </TabPanel>
+          )}
         </TabPanels>
       </Tabs>
     </Box>
