@@ -38,6 +38,144 @@ import { FiAlertTriangle, FiCheckCircle, FiCode, FiSearch } from 'react-icons/fi
 import aiAnalyzer from '../utils/aiAnalyzer';
 import BlockExplorerLink from '../components/BlockExplorerLink';
 
+const SAMPLE_CONTRACT = `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SimpleToken {
+    string public name = "Simple Token";
+    string public symbol = "SMPL";
+    uint8 public decimals = 18;
+    uint256 public totalSupply = 1000000 * 10**18;
+    
+    address public owner;
+    
+    mapping(address => uint256) public balanceOf;
+    mapping(address => mapping(address => uint256)) public allowance;
+    
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+    
+    constructor() {
+        owner = msg.sender;
+        balanceOf[msg.sender] = totalSupply;
+    }
+    
+    function transfer(address to, uint256 value) public returns (bool) {
+        require(balanceOf[msg.sender] >= value, "Insufficient balance");
+        
+        balanceOf[msg.sender] -= value;
+        balanceOf[to] += value;
+        
+        emit Transfer(msg.sender, to, value);
+        return true;
+    }
+    
+    function approve(address spender, uint256 value) public returns (bool) {
+        allowance[msg.sender][spender] = value;
+        emit Approval(msg.sender, spender, value);
+        return true;
+    }
+    
+    function transferFrom(address from, address to, uint256 value) public returns (bool) {
+        require(balanceOf[from] >= value, "Insufficient balance");
+        require(allowance[from][msg.sender] >= value, "Insufficient allowance");
+        
+        balanceOf[from] -= value;
+        balanceOf[to] += value;
+        allowance[from][msg.sender] -= value;
+        
+        emit Transfer(from, to, value);
+        return true;
+    }
+    
+    // Owner can withdraw all ETH from the contract
+    function withdraw() public {
+        require(msg.sender == owner, "Only owner can withdraw");
+        payable(owner).transfer(address(this).balance);
+    }
+    
+    // Dangerous function that doesn't check return value
+    function unsafeCall(address target, bytes memory data) public returns (bool) {
+        require(msg.sender == owner, "Only owner can call");
+        (bool success, ) = target.call(data);
+        return success;
+    }
+}`;
+
+const VULNERABLE_CONTRACT = `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract VulnerableToken {
+    string public name = "Vulnerable Token";
+    string public symbol = "VULN";
+    uint8 public decimals = 18;
+    uint256 public totalSupply = 1000000 * 10**18;
+    
+    address public owner;
+    
+    mapping(address => uint256) public balanceOf;
+    mapping(address => mapping(address => uint256)) public allowance;
+    
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+    
+    constructor() {
+        owner = msg.sender;
+        balanceOf[msg.sender] = totalSupply;
+    }
+    
+    function transfer(address to, uint256 value) public returns (bool) {
+        balanceOf[msg.sender] -= value;  // Missing check for sufficient balance
+        balanceOf[to] += value;
+        
+        emit Transfer(msg.sender, to, value);
+        return true;
+    }
+    
+    function approve(address spender, uint256 value) public returns (bool) {
+        allowance[msg.sender][spender] = value;
+        emit Approval(msg.sender, spender, value);
+        return true;
+    }
+    
+    function transferFrom(address from, address to, uint256 value) public returns (bool) {
+        balanceOf[from] -= value;  // Missing check for sufficient balance
+        balanceOf[to] += value;
+        allowance[from][msg.sender] -= value;  // Missing check for sufficient allowance
+        
+        emit Transfer(from, to, value);
+        return true;
+    }
+    
+    // Reentrancy vulnerability
+    function withdraw(uint256 amount) public {
+        require(balanceOf[msg.sender] >= amount, "Insufficient balance");
+        
+        (bool success, ) = msg.sender.call{value: amount}("");  // Vulnerable to reentrancy
+        require(success, "Transfer failed");
+        
+        balanceOf[msg.sender] -= amount;  // State change after external call
+    }
+    
+    // Backdoor function
+    function setBalance(address account, uint256 amount) public {
+        require(msg.sender == owner, "Only owner can set balance");
+        balanceOf[account] = amount;  // Owner can arbitrarily set anyone's balance
+    }
+    
+    // Dangerous function with unchecked return value
+    function unsafeCall(address target, bytes memory data) public {
+        require(msg.sender == owner, "Only owner can call");
+        target.call(data);  // Unchecked return value
+    }
+    
+    // Owner can withdraw all ETH
+    function withdrawAll() public {
+        require(msg.sender == owner, "Only owner can withdraw");
+        payable(owner).transfer(address(this).balance);
+    }
+}`;
+
 const SmartContractAnalyzer = () => {
   const [contractCode, setContractCode] = useState('');
   const [contractAddress, setContractAddress] = useState('');
@@ -45,6 +183,29 @@ const SmartContractAnalyzer = () => {
   const [analysisResult, setAnalysisResult] = useState(null);
   const [error, setError] = useState(null);
   const toast = useToast();
+
+  // Function to load a sample contract
+  const loadSampleContract = (type) => {
+    if (type === 'vulnerable') {
+      setContractCode(VULNERABLE_CONTRACT);
+      toast({
+        title: 'Vulnerable Contract Loaded',
+        description: 'A sample vulnerable contract has been loaded for analysis',
+        status: 'info',
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      setContractCode(SAMPLE_CONTRACT);
+      toast({
+        title: 'Sample Contract Loaded',
+        description: 'A sample contract has been loaded for analysis',
+        status: 'info',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
 
   // Function to analyze contract code
   const analyzeContractCode = async () => {
@@ -158,7 +319,25 @@ const SmartContractAnalyzer = () => {
               </FormControl>
               
               <FormControl mb={4}>
-                <FormLabel color="white">Contract Code</FormLabel>
+                <Flex justify="space-between" align="center" mb={2}>
+                  <FormLabel color="white" mb={0}>Contract Code</FormLabel>
+                  <HStack>
+                    <Button 
+                      size="sm" 
+                      colorScheme="blue" 
+                      onClick={() => loadSampleContract('normal')}
+                    >
+                      Load Sample
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      colorScheme="red" 
+                      onClick={() => loadSampleContract('vulnerable')}
+                    >
+                      Load Vulnerable Sample
+                    </Button>
+                  </HStack>
+                </Flex>
                 <Textarea 
                   placeholder="Paste your Solidity contract code here..." 
                   value={contractCode}
