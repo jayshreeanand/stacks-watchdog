@@ -214,6 +214,16 @@ const SmartContractAnalyzer = () => {
                         {analysisResult.riskLevel} Risk
                       </Badge>
                       
+                      {analysisResult.source && (
+                        <Badge 
+                          colorScheme={analysisResult.source === 'openai' ? 'green' : 'gray'} 
+                          variant="outline" 
+                          fontSize="xs"
+                        >
+                          {analysisResult.source === 'openai' ? 'AI Analysis' : 'Mock Data'}
+                        </Badge>
+                      )}
+                      
                       {analysisResult.contractAddress && (
                         <BlockExplorerLink 
                           type="address" 

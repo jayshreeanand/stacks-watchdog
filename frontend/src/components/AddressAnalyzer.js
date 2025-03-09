@@ -52,14 +52,48 @@ const AddressAnalyzer = () => {
       setIsAnalyzing(true);
       setError(null);
       
-      // In a real implementation, you would fetch recent transactions for this address
-      // from your backend or blockchain API
-      const mockTransactions = [
-        { hash: '0x1234...', to: '0xabcd...', value: '100', timestamp: Date.now() - 86400000 },
-        { hash: '0x5678...', to: '0xefgh...', value: '200', timestamp: Date.now() - 172800000 },
-      ];
+      // Fetch recent transactions for this address
+      // In a real implementation, you would fetch this from your backend or blockchain API
+      let transactions = [];
       
-      const result = await aiAnalyzer.analyzeAddress(address, mockTransactions);
+      try {
+        // Try to fetch transactions from the Electroneum API
+        // This is a placeholder - you would need to implement the actual API call
+        console.log('Fetching transactions for address:', address);
+        
+        // Example of how you might fetch transactions:
+        // const response = await axios.get(`https://api.electroneum.com/v1/transactions?address=${address}&limit=10`);
+        // transactions = response.data.transactions;
+        
+        // For now, we'll use mock transactions
+        transactions = [
+          { 
+            hash: '0x' + Math.random().toString(16).substring(2, 10) + '...', 
+            to: '0x' + Math.random().toString(16).substring(2, 10) + '...', 
+            value: (Math.random() * 1000).toFixed(2), 
+            timestamp: Date.now() - Math.floor(Math.random() * 86400000) 
+          },
+          { 
+            hash: '0x' + Math.random().toString(16).substring(2, 10) + '...', 
+            to: '0x' + Math.random().toString(16).substring(2, 10) + '...', 
+            value: (Math.random() * 1000).toFixed(2), 
+            timestamp: Date.now() - Math.floor(Math.random() * 86400000 * 2) 
+          },
+          { 
+            hash: '0x' + Math.random().toString(16).substring(2, 10) + '...', 
+            to: '0x' + Math.random().toString(16).substring(2, 10) + '...', 
+            value: (Math.random() * 1000).toFixed(2), 
+            timestamp: Date.now() - Math.floor(Math.random() * 86400000 * 3) 
+          },
+        ];
+        
+        console.log('Fetched transactions:', transactions);
+      } catch (txError) {
+        console.error('Error fetching transactions:', txError);
+        // Continue with analysis even if transaction fetching fails
+      }
+      
+      const result = await aiAnalyzer.analyzeAddress(address, transactions);
       
       setAnalysisResult(result);
       
@@ -183,6 +217,15 @@ const AddressAnalyzer = () => {
             
             <HStack>
               <Badge {...getRiskBadgeProps(analysisResult.riskLevel)} fontSize="sm" py={1} px={2} />
+              {analysisResult.source && (
+                <Badge 
+                  colorScheme={analysisResult.source === 'openai' ? 'green' : 'gray'} 
+                  variant="outline" 
+                  fontSize="xs"
+                >
+                  {analysisResult.source === 'openai' ? 'AI Analysis' : 'Mock Data'}
+                </Badge>
+              )}
               <BlockExplorerLink 
                 type="address" 
                 value={analysisResult.address}

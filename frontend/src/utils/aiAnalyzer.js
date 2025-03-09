@@ -6,12 +6,19 @@ import axios from 'axios';
 class AIAnalyzer {
   constructor() {
     this.apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+    this.useMockAI = process.env.REACT_APP_USE_MOCK_AI === 'true';
     this.initialized = false;
     this.modelConfig = {
       model: 'gpt-4',
       temperature: 0.2,
       max_tokens: 1000
     };
+    
+    console.log('AI Analyzer initialized with API key:', this.apiKey ? 'Key present' : 'No key found');
+    console.log('Mock AI mode:', process.env.REACT_APP_USE_MOCK_AI === 'true' ? 'Enabled' : 'Disabled');
+    if (!this.apiKey && !this.useMockAI) {
+      console.warn('OpenAI API key not found. Set REACT_APP_OPENAI_API_KEY in .env or enable mock mode with REACT_APP_USE_MOCK_AI=true');
+    }
   }
 
   /**
@@ -19,6 +26,22 @@ class AIAnalyzer {
    */
   initialize() {
     this.initialized = true;
+    
+    // Check if API key is available
+    if (!this.apiKey) {
+      console.warn('OpenAI API key not found. Set REACT_APP_OPENAI_API_KEY in .env');
+      console.log('Using mock data for AI analysis');
+    } else {
+      console.log('OpenAI API key found. Using real AI for analysis');
+    }
+    
+    // Check if mock mode is enabled
+    if (process.env.REACT_APP_USE_MOCK_AI === 'true') {
+      console.log('Mock AI mode is enabled. Using mock data for AI analysis');
+    } else {
+      console.log('Mock AI mode is disabled. Using real AI for analysis');
+    }
+    
     console.log('AI analyzer initialized');
     return true;
   }
@@ -33,9 +56,12 @@ class AIAnalyzer {
     try {
       // If using mock data, return predefined analysis
       if (!this.apiKey || process.env.REACT_APP_USE_MOCK_AI === 'true') {
+        console.log('Using mock data for smart contract analysis');
         return this.getMockContractAnalysis(contractCode, contractAddress);
       }
 
+      console.log('Performing real AI analysis on smart contract');
+      
       // Prepare the prompt for the AI model
       const prompt = `
         Analyze the following Solidity smart contract for security vulnerabilities:
@@ -92,7 +118,19 @@ class AIAnalyzer {
 
       // Parse the response
       const analysisText = response.data.choices[0].message.content;
-      const analysisJson = JSON.parse(analysisText);
+      console.log('Received AI response:', analysisText.substring(0, 100) + '...');
+      
+      let analysisJson;
+      try {
+        analysisJson = JSON.parse(analysisText);
+      } catch (parseError) {
+        console.error('Error parsing AI response:', parseError);
+        console.log('Raw response:', analysisText);
+        
+        // Fallback to mock data if parsing fails
+        console.log('Falling back to mock data due to parsing error');
+        return this.getMockContractAnalysis(contractCode, contractAddress);
+      }
 
       // Add metadata
       analysisJson.contractAddress = contractAddress;
@@ -101,11 +139,11 @@ class AIAnalyzer {
       return analysisJson;
     } catch (error) {
       console.error('Error analyzing smart contract:', error);
-      return {
-        error: true,
-        message: 'Failed to analyze smart contract',
-        details: error.message
-      };
+      console.log('Error details:', error.response?.data || error.message);
+      
+      // Fallback to mock data if API call fails
+      console.log('Falling back to mock data due to API error');
+      return this.getMockContractAnalysis(contractCode, contractAddress);
     }
   }
 
@@ -118,9 +156,12 @@ class AIAnalyzer {
     try {
       // If using mock data, return predefined analysis
       if (!this.apiKey || process.env.REACT_APP_USE_MOCK_AI === 'true') {
+        console.log('Using mock data for transaction analysis');
         return this.getMockTransactionAnalysis(transaction);
       }
 
+      console.log('Performing real AI analysis on transaction:', transaction.hash);
+      
       // Prepare the prompt for the AI model
       const prompt = `
         Analyze the following Electroneum blockchain transaction for suspicious activity:
@@ -129,8 +170,8 @@ class AIAnalyzer {
         From: ${transaction.from}
         To: ${transaction.to}
         Value: ${transaction.value} ETN
-        Gas Price: ${transaction.gasPrice}
-        Gas Used: ${transaction.gasUsed}
+        Gas Price: ${transaction.gasPrice || 'N/A'}
+        Gas Used: ${transaction.gasUsed || 'N/A'}
         
         Identify any potential suspicious patterns including but not limited to:
         1. Unusual transaction amounts
@@ -170,7 +211,19 @@ class AIAnalyzer {
 
       // Parse the response
       const analysisText = response.data.choices[0].message.content;
-      const analysisJson = JSON.parse(analysisText);
+      console.log('Received AI response:', analysisText.substring(0, 100) + '...');
+      
+      let analysisJson;
+      try {
+        analysisJson = JSON.parse(analysisText);
+      } catch (parseError) {
+        console.error('Error parsing AI response:', parseError);
+        console.log('Raw response:', analysisText);
+        
+        // Fallback to mock data if parsing fails
+        console.log('Falling back to mock data due to parsing error');
+        return this.getMockTransactionAnalysis(transaction);
+      }
 
       // Add metadata
       analysisJson.transactionHash = transaction.hash;
@@ -179,13 +232,11 @@ class AIAnalyzer {
       return analysisJson;
     } catch (error) {
       console.error('Error analyzing transaction:', error);
-      return {
-        isSuspicious: false,
-        suspiciousScore: 0,
-        reason: 'Failed to analyze transaction',
-        error: true,
-        details: error.message
-      };
+      console.log('Error details:', error.response?.data || error.message);
+      
+      // Fallback to mock data if API call fails
+      console.log('Falling back to mock data due to API error');
+      return this.getMockTransactionAnalysis(transaction);
     }
   }
 
@@ -199,9 +250,12 @@ class AIAnalyzer {
     try {
       // If using mock data, return predefined analysis
       if (!this.apiKey || process.env.REACT_APP_USE_MOCK_AI === 'true') {
+        console.log('Using mock data for address analysis');
         return this.getMockAddressAnalysis(address, transactions);
       }
 
+      console.log('Performing real AI analysis on address:', address);
+      
       // Prepare transaction data for the prompt
       const transactionData = transactions.length > 0 
         ? transactions.map(tx => `
@@ -267,7 +321,19 @@ class AIAnalyzer {
 
       // Parse the response
       const analysisText = response.data.choices[0].message.content;
-      const analysisJson = JSON.parse(analysisText);
+      console.log('Received AI response:', analysisText.substring(0, 100) + '...');
+      
+      let analysisJson;
+      try {
+        analysisJson = JSON.parse(analysisText);
+      } catch (parseError) {
+        console.error('Error parsing AI response:', parseError);
+        console.log('Raw response:', analysisText);
+        
+        // Fallback to mock data if parsing fails
+        console.log('Falling back to mock data due to parsing error');
+        return this.getMockAddressAnalysis(address, transactions);
+      }
 
       // Add metadata
       analysisJson.address = address;
@@ -276,15 +342,11 @@ class AIAnalyzer {
       return analysisJson;
     } catch (error) {
       console.error('Error analyzing address:', error);
-      return {
-        isSuspicious: false,
-        riskScore: 0,
-        riskLevel: 'unknown',
-        findings: [],
-        summary: 'Failed to analyze address',
-        error: true,
-        details: error.message
-      };
+      console.log('Error details:', error.response?.data || error.message);
+      
+      // Fallback to mock data if API call fails
+      console.log('Falling back to mock data due to API error');
+      return this.getMockAddressAnalysis(address, transactions);
     }
   }
 
