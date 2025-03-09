@@ -48,16 +48,21 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        console.log(`Dashboard fetching data with source: ${dataSource}, isUsingMockData: ${isUsingMockData}`);
         
         // Set whether to force mock data based on data source
         apiService.setForceMockData(isUsingMockData);
         
         // Fetch dashboard stats
+        console.log('Fetching dashboard stats...');
         const dashboardStats = await apiService.getDashboardStats();
+        console.log('Received dashboard stats:', dashboardStats);
         setStats(dashboardStats);
 
         // Fetch recent drainers
+        console.log('Fetching recent drainers...');
         const drainers = await apiService.getRecentWalletDrainers(5);
+        console.log('Received recent drainers:', drainers);
         setRecentDrainers(drainers);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
@@ -67,7 +72,7 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [isUsingMockData]);
+  }, [dataSource, isUsingMockData]);
 
   return (
     <Box>

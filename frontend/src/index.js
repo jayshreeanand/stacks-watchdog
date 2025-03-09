@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
 import { WalletProvider } from './context/WalletContext';
+import { DataSourceProvider } from './context/DataSourceContext';
 
 // Define the theme
 const theme = extendTheme({
@@ -50,14 +51,36 @@ const theme = extendTheme({
   },
 });
 
+// Initialize the app with the data source from localStorage or URL params
+const initializeDataSource = () => {
+  // Check URL parameters first
+  const urlParams = new URLSearchParams(window.location.search);
+  const dataSourceParam = urlParams.get('dataSource');
+  
+  if (dataSourceParam) {
+    console.log(`Data source from URL: ${dataSourceParam}`);
+    localStorage.setItem('etn_watchdog_data_source', dataSourceParam);
+    return;
+  }
+  
+  // Otherwise, use localStorage or default
+  const savedDataSource = localStorage.getItem('etn_watchdog_data_source');
+  console.log(`Data source from localStorage: ${savedDataSource || 'not set (using default)'}`);
+};
+
+// Initialize data source before rendering
+initializeDataSource();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <BrowserRouter>
-        <WalletProvider>
-          <App />
-        </WalletProvider>
+        <DataSourceProvider>
+          <WalletProvider>
+            <App />
+          </WalletProvider>
+        </DataSourceProvider>
       </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>

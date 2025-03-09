@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { setApiBaseUrl } from '../utils/apiService';
 
 // Data source options
 export const DATA_SOURCES = {
@@ -27,15 +28,24 @@ export const DataSourceProvider = ({ children }) => {
     return savedDataSource || DATA_SOURCES.MOCK;
   });
 
+  // Initialize API URL when the app loads
+  useEffect(() => {
+    console.log('DataSourceProvider initialized with data source:', dataSource);
+    setApiBaseUrl(dataSource);
+  }, []);
+
   // Save data source preference to localStorage when it changes
   useEffect(() => {
+    console.log('Data source changed to:', dataSource);
     localStorage.setItem('etn_watchdog_data_source', dataSource);
   }, [dataSource]);
 
   // Function to change data source
   const changeDataSource = (newSource) => {
+    console.log(`Changing data source from ${dataSource} to ${newSource}`);
     if (Object.values(DATA_SOURCES).includes(newSource)) {
       setDataSource(newSource);
+      setApiBaseUrl(newSource);
     } else {
       console.error(`Invalid data source: ${newSource}`);
     }

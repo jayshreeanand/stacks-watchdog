@@ -9,7 +9,8 @@ import {
   Text,
   Icon,
   Badge,
-  useColorModeValue
+  useColorModeValue,
+  useToast
 } from '@chakra-ui/react';
 import { FiDatabase, FiChevronDown, FiCheck } from 'react-icons/fi';
 import { useDataSource, DATA_SOURCES } from '../context/DataSourceContext';
@@ -17,6 +18,7 @@ import { setApiBaseUrl } from '../utils/apiService';
 
 const DataSourceSelector = () => {
   const { dataSource, changeDataSource, getNetworkName } = useDataSource();
+  const toast = useToast();
   
   // Get badge color based on data source
   const getBadgeColor = () => {
@@ -34,11 +36,46 @@ const DataSourceSelector = () => {
   
   // Handle data source change
   const handleDataSourceChange = (newSource) => {
+    if (newSource === dataSource) {
+      console.log(`Already using ${newSource} data source`);
+      return;
+    }
+    
+    console.log(`DataSourceSelector: Changing data source to ${newSource}`);
+    
+    // Change the data source in the context
     changeDataSource(newSource);
+    
+    // Update the API base URL
     setApiBaseUrl(newSource);
     
-    // Reload the page to refresh data
-    window.location.reload();
+    // Show a toast notification
+    toast({
+      title: 'Data Source Changed',
+      description: `Switched to ${getDataSourceName(newSource)}`,
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
+    
+    // Force reload the page to ensure all components update
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+  };
+  
+  // Get data source name
+  const getDataSourceName = (source) => {
+    switch (source) {
+      case DATA_SOURCES.MOCK:
+        return 'Mock Data';
+      case DATA_SOURCES.TESTNET:
+        return 'Electroneum Testnet';
+      case DATA_SOURCES.MAINNET:
+        return 'Electroneum Mainnet';
+      default:
+        return 'Unknown';
+    }
   };
   
   return (

@@ -7,7 +7,7 @@
 export const mockWalletDrainers = [
   {
     address: '0x1234567890abcdef1234567890abcdef12345678',
-    name: 'Fake ETN Airdrop',
+    name: '[MOCK] Fake ETN Airdrop',
     riskLevel: 'high',
     victims: 12,
     totalStolen: 45000,
@@ -20,7 +20,7 @@ export const mockWalletDrainers = [
   },
   {
     address: '0xabcdef1234567890abcdef1234567890abcdef12',
-    name: 'ETN Staking Scam',
+    name: '[MOCK] ETN Staking Scam',
     riskLevel: 'critical',
     victims: 28,
     totalStolen: 120000,
@@ -74,6 +74,7 @@ export const mockDashboardStats = {
   activeDrainers: 42,
   totalVictims: 328,
   totalLost: 1250000,
+  source: 'MOCK DATA'
 };
 
 // Mock contract analysis result
