@@ -194,40 +194,50 @@ ETN Watchdog provides a REST API for integration with other services:
 ## Screenshots
 
 Deployed Contracts
-<img width="1043" alt="Screenshot 2025-03-09 at 1 43 59 PM" src="https://github.com/user-attachments/assets/2952d039-7681-4083-b570-aa38b99069bd" />
+
+<img width="900" alt="Screenshot 2025-03-09 at 1 43 59 PM" src="https://github.com/user-attachments/assets/2952d039-7681-4083-b570-aa38b99069bd" />
 
 Features
-<img width="1375" alt="Screenshot 2025-03-09 at 8 31 58 PM" src="https://github.com/user-attachments/assets/c09f5b6e-ec13-4a3a-9f11-630e8ae067e0" />
+
+<img width="900" alt="Screenshot 2025-03-09 at 8 31 58 PM" src="https://github.com/user-attachments/assets/c09f5b6e-ec13-4a3a-9f11-630e8ae067e0" />
 
 How it works
-<img width="1403" alt="Screenshot 2025-03-09 at 8 32 06 PM" src="https://github.com/user-attachments/assets/53dd1132-b486-4975-b68d-f84cc5a629a9" />
+
+<img width="900" alt="Screenshot 2025-03-09 at 8 32 06 PM" src="https://github.com/user-attachments/assets/53dd1132-b486-4975-b68d-f84cc5a629a9" />
 
 Dashboard
-<img width="1000" alt="Screenshot 2025-03-09 at 8 58 01 PM" src="https://github.com/user-attachments/assets/f4087a8c-a5e1-4183-bdd8-54b9d7972706" />
+
+<img width="900" alt="Screenshot 2025-03-09 at 8 58 01 PM" src="https://github.com/user-attachments/assets/f4087a8c-a5e1-4183-bdd8-54b9d7972706" />
 
 AI Smart contract analyzer
-<img width="1000" alt="Screenshot 2025-03-09 at 8 58 22 PM" src="https://github.com/user-attachments/assets/53e7be3a-095d-4410-bc33-ac7a9513e237" />
+
+<img width="900" alt="Screenshot 2025-03-09 at 8 58 22 PM" src="https://github.com/user-attachments/assets/53e7be3a-095d-4410-bc33-ac7a9513e237" />
 
 AI analyzer results
-<img width="1411" alt="Screenshot 2025-03-09 at 8 59 03 PM" src="https://github.com/user-attachments/assets/a3773f19-0dae-431f-8c1b-d06835595989" />
+
+<img width="900" alt="Screenshot 2025-03-09 at 8 59 03 PM" src="https://github.com/user-attachments/assets/a3773f19-0dae-431f-8c1b-d06835595989" />
 
 AI security recommendations
-<img width="1427" alt="Screenshot 2025-03-09 at 8 59 10 PM" src="https://github.com/user-attachments/assets/c79f24f8-0596-4edf-a0c3-edaf8ab7ad4c" />
+
+<img width="900" alt="Screenshot 2025-03-09 at 8 59 10 PM" src="https://github.com/user-attachments/assets/c79f24f8-0596-4edf-a0c3-edaf8ab7ad4c" />
 
 Wallet Scanner
-<img width="1432" alt="Screenshot 2025-03-09 at 8 59 37 PM" src="https://github.com/user-attachments/assets/a982be75-3378-4f99-855e-9d9eaaec42d0" />
-<img width="1418" alt="Screenshot 2025-03-09 at 9 00 10 PM" src="https://github.com/user-attachments/assets/8618b16d-d208-4faa-bce2-5cfc6ac2d530" />
-<img width="1429" alt="Screenshot 2025-03-09 at 9 00 21 PM" src="https://github.com/user-attachments/assets/76fc3df3-aeca-4656-8e36-5b69f7969140" />
-<img width="1408" alt="Screenshot 2025-03-09 at 9 00 33 PM" src="https://github.com/user-attachments/assets/64414112-acf6-4ba9-96fe-60d66ec29bf4" />
-<img width="1435" alt="Screenshot 2025-03-09 at 9 00 43 PM" src="https://github.com/user-attachments/assets/123a4807-28da-4497-8fa0-1325f9fe208e" />
+
+<img width="900" alt="Screenshot 2025-03-09 at 8 59 37 PM" src="https://github.com/user-attachments/assets/a982be75-3378-4f99-855e-9d9eaaec42d0" />
+<img width="900" alt="Screenshot 2025-03-09 at 9 00 10 PM" src="https://github.com/user-attachments/assets/8618b16d-d208-4faa-bce2-5cfc6ac2d530" />
+<img width="900" alt="Screenshot 2025-03-09 at 9 00 21 PM" src="https://github.com/user-attachments/assets/76fc3df3-aeca-4656-8e36-5b69f7969140" />
+<img width="900" alt="Screenshot 2025-03-09 at 9 00 33 PM" src="https://github.com/user-attachments/assets/64414112-acf6-4ba9-96fe-60d66ec29bf4" />
+<img width="900" alt="Screenshot 2025-03-09 at 9 00 43 PM" src="https://github.com/user-attachments/assets/123a4807-28da-4497-8fa0-1325f9fe208e" />
 Wallet security recommendations
-<img width="1416" alt="Screenshot 2025-03-09 at 9 00 55 PM" src="https://github.com/user-attachments/assets/98f0db27-9cee-481f-9318-f3b773c72076" />
+<img width="900" alt="Screenshot 2025-03-09 at 9 00 55 PM" src="https://github.com/user-attachments/assets/98f0db27-9cee-481f-9318-f3b773c72076" />
 
 Token Approvals Manager
-<img width="1301" alt="Screenshot 2025-03-09 at 9 01 21 PM" src="https://github.com/user-attachments/assets/51fb0462-59d8-4824-8035-acdbb17e6d16" />
+
+<img width="900" alt="Screenshot 2025-03-09 at 9 01 21 PM" src="https://github.com/user-attachments/assets/51fb0462-59d8-4824-8035-acdbb17e6d16" />
 
 Notification Settings
-<img width="1301" alt="Screenshot 2025-03-09 at 9 01 21 PM" src="https://github.com/user-attachments/assets/c48837c6-81ea-455f-bc7c-7e3b04f1c70b" />
+
+<img width="900" alt="Screenshot 2025-03-09 at 9 01 21 PM" src="https://github.com/user-attachments/assets/c48837c6-81ea-455f-bc7c-7e3b04f1c70b" />
 
 
 ## 🚀 Getting Started
@@ -409,8 +419,8 @@ ETN Watchdog is provided for informational purposes only. While we strive to pro
 If you encounter any issues or have questions, please:
 
 - Open an issue on GitHub
-- Contact us at support@etnwatchdog.com
-- Join our community Discord server
+- Contact us at ping.jayshree@gmail.com
+
 
 ---
 
