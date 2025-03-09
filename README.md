@@ -239,6 +239,7 @@ Wallet security recommendations
 <img width="900" alt="Screenshot 2025-03-09 at 9 00 55 PM" src="https://github.com/user-attachments/assets/98f0db27-9cee-481f-9318-f3b773c72076" />
 
 Token Approvals Manager
+<img width="1301" alt="Screenshot 2025-03-09 at 9 01 12 PM" src="https://github.com/user-attachments/assets/090fb5d1-7b9b-4c61-b9ef-65ee8dfcabd3" />
 
 <img width="900" alt="Screenshot 2025-03-09 at 9 01 21 PM" src="https://github.com/user-attachments/assets/51fb0462-59d8-4824-8035-acdbb17e6d16" />
 
