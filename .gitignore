@@ -13,7 +13,6 @@ yarn.lock
 
 # Hardhat
 cache/
-artifacts/
 typechain/
 typechain-types/
 
