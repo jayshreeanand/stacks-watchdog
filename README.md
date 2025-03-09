@@ -8,7 +8,6 @@ Backend server URL: https://etn-watchdog-production.up.railway.app/
 
 <img width="600" alt="Screenshot 2025-03-09 at 8 31 50 PM" src="https://github.com/user-attachments/assets/68ead615-de87-45f0-8011-e6c153013653" />
 
-
 ## 🛡️ Key Features
 
 ### Core Security Features
@@ -145,6 +144,7 @@ The AI Transaction Analyzer monitors transactions for:
 - **Block Explorer Integration**: Direct integration with Electroneum block explorer
 
 ---
+
 ## 🔍 Using the AI Security Features
 
 ### Smart Contract Analyzer
@@ -190,6 +190,13 @@ ETN Watchdog provides a REST API for integration with other services:
 - **Documentation**: Detailed API documentation available at `/api/docs`
 - **Rate Limiting**: Fair usage policies to ensure service availability
 
+## Contract details
+
+Network: electroneum_testnet (Chain RPC: https://rpc.ankr.com/electroneum_testnet) (Chain ID: 5201420)
+TransactionMonitor deployed to: https://testnet-blockexplorer.electroneum.com/address/0xda52b25ddB0e3B9CC393b0690Ac62245Ac772527
+RugPullDetector deployed to: https://testnet-blockexplorer.electroneum.com/address/0x11B57FE348584f042E436c6Bf7c3c3deF171de49
+WalletDrainerDetector deployed to: https://testnet-blockexplorer.electroneum.com/address/0x1294b86822ff4976BfE136cB06CF43eC7FCF2574
+ETNWatchdogRegistry deployed to: https://testnet-blockexplorer.electroneum.com/address/0xA6E41fFD769491a42A6e5Ce453259b93983a22EF
 
 ## Screenshots
 
@@ -238,7 +245,6 @@ Token Approvals Manager
 Notification Settings
 
 <img width="900" alt="Screenshot 2025-03-09 at 9 01 21 PM" src="https://github.com/user-attachments/assets/c48837c6-81ea-455f-bc7c-7e3b04f1c70b" />
-
 
 ## 🚀 Getting Started
 
@@ -395,7 +401,6 @@ To run ETN Watchdog on the Electroneum testnet instead of mainnet, follow these 
    npm run start:all
    ```
 
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -420,7 +425,6 @@ If you encounter any issues or have questions, please:
 
 - Open an issue on GitHub
 - Contact us at ping.jayshree@gmail.com
-
 
 ---
 
