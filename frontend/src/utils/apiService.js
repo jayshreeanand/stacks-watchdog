@@ -106,10 +106,10 @@ const getMockData = (type) => {
                   CURRENT_DATA_SOURCE === 'testnet' ? 5 : 18,
           totalStolen: CURRENT_DATA_SOURCE === 'mock' ? 45000 : 
                       CURRENT_DATA_SOURCE === 'testnet' ? 15000 : 75000,
-          lastActive: '2023-03-05T12:30:45Z',
+          lastActive: '2025-03-05T12:30:45Z',
           isVerified: true,
           description: `${mockPrefix} This contract pretends to be an official Electroneum airdrop but steals user funds when they approve token transfers.`,
-          createdAt: '2023-02-28T10:15:30Z',
+          createdAt: '2025-02-28T10:15:30Z',
           verifiedBy: 'SecurityTeam',
           verificationNotes: 'Confirmed malicious behavior through code analysis and victim reports.',
         },
@@ -121,14 +121,54 @@ const getMockData = (type) => {
                   CURRENT_DATA_SOURCE === 'testnet' ? 8 : 35,
           totalStolen: CURRENT_DATA_SOURCE === 'mock' ? 120000 : 
                       CURRENT_DATA_SOURCE === 'testnet' ? 40000 : 180000,
-          lastActive: '2023-03-04T18:15:22Z',
+          lastActive: '2025-03-04T18:15:22Z',
           isVerified: true,
           description: `${mockPrefix} Fake staking platform that promises high returns but steals deposited ETN tokens.`,
-          createdAt: '2023-02-25T08:30:15Z',
+          createdAt: '2025-02-25T08:30:15Z',
           verifiedBy: 'SecurityTeam',
           verificationNotes: 'Multiple victim reports confirmed. Contract has backdoor functions.',
         },
-        // Add more mock drainers as needed
+        {
+          address: '0x7890abcdef1234567890abcdef1234567890abcd',
+          name: `${mockPrefix} Fake DEX Frontend`,
+          riskLevel: 'medium',
+          victims: CURRENT_DATA_SOURCE === 'mock' ? 5 : 
+                  CURRENT_DATA_SOURCE === 'testnet' ? 3 : 8,
+          totalStolen: CURRENT_DATA_SOURCE === 'mock' ? 18000 : 
+                      CURRENT_DATA_SOURCE === 'testnet' ? 9000 : 27000,
+          lastActive: '2025-03-03T09:45:11Z',
+          isVerified: false,
+          description: `${mockPrefix} Cloned DEX interface that routes transactions through malicious contracts.`,
+          createdAt: '2025-03-01T11:20:45Z',
+        },
+        {
+          address: '0x567890abcdef1234567890abcdef1234567890ab',
+          name: `${mockPrefix} ETN Token Bridge Scam`,
+          riskLevel: 'high',
+          victims: CURRENT_DATA_SOURCE === 'mock' ? 9 : 
+                  CURRENT_DATA_SOURCE === 'testnet' ? 4 : 14,
+          totalStolen: CURRENT_DATA_SOURCE === 'mock' ? 67000 : 
+                      CURRENT_DATA_SOURCE === 'testnet' ? 30000 : 95000,
+          lastActive: '2025-03-02T14:22:33Z',
+          isVerified: true,
+          description: `${mockPrefix} Fake bridge that claims to transfer ETN between chains but steals the tokens.`,
+          createdAt: '2025-02-27T16:40:10Z',
+          verifiedBy: 'CommunityMember',
+          verificationNotes: 'Contract analysis shows no actual bridge functionality.',
+        },
+        {
+          address: '0x90abcdef1234567890abcdef1234567890abcdef',
+          name: `${mockPrefix} Fake Wallet App`,
+          riskLevel: 'low',
+          victims: CURRENT_DATA_SOURCE === 'mock' ? 2 : 
+                  CURRENT_DATA_SOURCE === 'testnet' ? 1 : 3,
+          totalStolen: CURRENT_DATA_SOURCE === 'mock' ? 5000 : 
+                      CURRENT_DATA_SOURCE === 'testnet' ? 2000 : 8000,
+          lastActive: '2025-03-01T08:11:05Z',
+          isVerified: false,
+          description: `${mockPrefix} Mobile app that claims to be an ETN wallet but steals private keys.`,
+          createdAt: '2025-03-01T07:55:30Z',
+        }
       ];
     default:
       return null;
