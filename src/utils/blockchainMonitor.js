@@ -7,6 +7,39 @@ const transactionService = require('../api/services/transactionService');
 const rugPullService = require('../api/services/rugPullService');
 const walletDrainerService = require('../api/services/walletDrainerService');
 
+// Rate limiting utilities
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const MAX_RETRIES = 5;
+const INITIAL_BACKOFF = 2000; // 2 seconds
+
+// Helper function to make RPC calls with retry and backoff
+const callWithBackoff = async (fn, ...args) => {
+  let retries = 0;
+  let backoff = INITIAL_BACKOFF;
+  
+  while (true) {
+    try {
+      return await fn(...args);
+    } catch (error) {
+      // Check if it's a rate limit error
+      const isRateLimit = error.error && 
+        (error.error.message.includes('rate limit') || 
+         error.error.message.includes('Too many requests'));
+      
+      if (!isRateLimit || retries >= MAX_RETRIES) {
+        throw error;
+      }
+      
+      console.log(`Rate limit hit, backing off for ${backoff}ms before retry ${retries + 1}/${MAX_RETRIES}`);
+      await sleep(backoff);
+      
+      // Exponential backoff with jitter
+      backoff = backoff * 1.5 + Math.random() * 1000;
+      retries++;
+    }
+  }
+};
+
 // Load contract ABIs
 const registryABI = require('../../artifacts/contracts/ETNWatchdogRegistry.sol/ETNWatchdogRegistry.json').abi;
 const transactionMonitorABI = require('../../artifacts/contracts/TransactionMonitor.sol/TransactionMonitor.json').abi;
@@ -82,7 +115,7 @@ const startMonitoring = async (_provider, _app) => {
     initializeContracts(provider);
     
     // Get network information
-    const network = await provider.getNetwork();
+    const network = await callWithBackoff(provider.getNetwork.bind(provider));
     console.log(`Connected to network: ${network.name} (Chain ID: ${network.chainId})`);
     
     // Check if we're on testnet
@@ -97,24 +130,46 @@ const startMonitoring = async (_provider, _app) => {
       console.log('WARNING: Using placeholder contract addresses. Some functionality will be limited.');
       console.log('To deploy contracts, run: npm run deploy:testnet');
       
-      // Still listen for new blocks but don't process them
-      provider.on('block', async (blockNumber) => {
-        console.log(`New block: ${blockNumber} (not processing due to missing contract deployments)`);
-      });
-      
+      // Still poll for new blocks but don't process them
       console.log('Blockchain monitoring started in limited mode');
       return;
     }
     
-    // Listen for new blocks
-    provider.on('block', async (blockNumber) => {
+    // Instead of using the event-based approach which can trigger rate limits,
+    // use a polling approach to check for new blocks
+    let lastKnownBlock = await callWithBackoff(provider.getBlockNumber.bind(provider));
+    console.log(`Starting block monitoring from block ${lastKnownBlock}`);
+    
+    // Set up polling for new blocks
+    const blockPollInterval = 15000; // 15 seconds
+    
+    const checkForNewBlocks = async () => {
       try {
-        console.log(`New block: ${blockNumber}`);
-        await processNewBlock(blockNumber);
+        const currentBlock = await callWithBackoff(provider.getBlockNumber.bind(provider));
+        
+        if (currentBlock > lastKnownBlock) {
+          console.log(`New blocks detected: ${lastKnownBlock + 1} to ${currentBlock}`);
+          
+          // Process each new block
+          for (let blockNum = lastKnownBlock + 1; blockNum <= currentBlock; blockNum++) {
+            try {
+              // Add a small delay between block processing to avoid rate limits
+              await sleep(1000);
+              await processNewBlock(blockNum);
+            } catch (error) {
+              console.error(`Error processing block ${blockNum}:`, error);
+            }
+          }
+          
+          lastKnownBlock = currentBlock;
+        }
       } catch (error) {
-        console.error(`Error processing block ${blockNumber}:`, error);
+        console.error('Error checking for new blocks:', error);
       }
-    });
+    };
+    
+    // Start polling for new blocks
+    setInterval(checkForNewBlocks, blockPollInterval);
     
     // Listen for contract events
     setupEventListeners();
@@ -128,7 +183,11 @@ const startMonitoring = async (_provider, _app) => {
 // Process new blocks
 const processNewBlock = async (blockNumber) => {
   try {
-    const block = await provider.getBlock(blockNumber, true);
+    const block = await callWithBackoff(
+      provider.getBlock.bind(provider),
+      blockNumber, 
+      true
+    );
     
     if (!block || !block.transactions) {
       console.log(`No transactions in block ${blockNumber}`);
@@ -158,7 +217,10 @@ const analyzeTransaction = async (tx, blockNumber) => {
     const value = tx.value;
     
     // Check if transaction is suspicious using the contract
-    const [isSuspicious, reason] = await transactionMonitor.isSuspiciousTransaction(from, to, value);
+    const [isSuspicious, reason] = await callWithBackoff(
+      transactionMonitor.isSuspiciousTransaction.bind(transactionMonitor),
+      from, to, value
+    );
     
     if (isSuspicious) {
       console.log(`Suspicious transaction detected: ${tx.hash}`);
@@ -211,12 +273,12 @@ const setupEventListeners = () => {
   let lastProcessedBlock = 0;
   
   // Set up a polling interval to check for events
-  const pollInterval = 30000; // 30 seconds
+  const pollInterval = 60000; // 60 seconds - more conservative to avoid rate limits
   
   const pollForEvents = async () => {
     try {
       // Get the latest block number
-      const latestBlock = await provider.getBlockNumber();
+      const latestBlock = await callWithBackoff(provider.getBlockNumber.bind(provider));
       
       // Skip if we've already processed this block
       if (latestBlock <= lastProcessedBlock) {
@@ -229,10 +291,21 @@ const setupEventListeners = () => {
       const fromBlock = lastProcessedBlock + 1;
       const toBlock = latestBlock;
       
+      // Limit the number of blocks to process in a single poll to avoid rate limits
+      const MAX_BLOCKS_PER_POLL = 5;
+      const actualToBlock = Math.min(fromBlock + MAX_BLOCKS_PER_POLL - 1, toBlock);
+      
+      console.log(`Processing blocks ${fromBlock} to ${actualToBlock} (limited to ${MAX_BLOCKS_PER_POLL} blocks per poll)`);
+      
       try {
         // Query for SecurityAlertRaised events
         const securityAlertFilter = registry.filters.SecurityAlertRaised();
-        const securityAlerts = await registry.queryFilter(securityAlertFilter, fromBlock, toBlock);
+        const securityAlerts = await callWithBackoff(
+          registry.queryFilter.bind(registry),
+          securityAlertFilter, 
+          fromBlock, 
+          actualToBlock
+        );
         
         for (const event of securityAlerts) {
           const [alertId, alertType, targetAddress, details, timestamp] = event.args;
@@ -263,7 +336,12 @@ const setupEventListeners = () => {
       try {
         // Query for SuspiciousTransactionDetected events
         const suspiciousTxFilter = transactionMonitor.filters.SuspiciousTransactionDetected();
-        const suspiciousTxs = await transactionMonitor.queryFilter(suspiciousTxFilter, fromBlock, toBlock);
+        const suspiciousTxs = await callWithBackoff(
+          transactionMonitor.queryFilter.bind(transactionMonitor),
+          suspiciousTxFilter, 
+          fromBlock, 
+          actualToBlock
+        );
         
         for (const event of suspiciousTxs) {
           const [from, to, amount, timestamp, reason] = event.args;
@@ -291,7 +369,12 @@ const setupEventListeners = () => {
       try {
         // Query for TokenAnalyzed events
         const tokenAnalyzedFilter = rugPullDetector.filters.TokenAnalyzed();
-        const tokenAnalyzed = await rugPullDetector.queryFilter(tokenAnalyzedFilter, fromBlock, toBlock);
+        const tokenAnalyzed = await callWithBackoff(
+          rugPullDetector.queryFilter.bind(rugPullDetector),
+          tokenAnalyzedFilter, 
+          fromBlock, 
+          actualToBlock
+        );
         
         for (const event of tokenAnalyzed) {
           const [tokenAddress, isPotentialRugPull, reasons] = event.args;
@@ -334,7 +417,12 @@ const setupEventListeners = () => {
       try {
         // Query for DrainerDetected events
         const drainerDetectedFilter = walletDrainerDetector.filters.DrainerDetected();
-        const drainerDetected = await walletDrainerDetector.queryFilter(drainerDetectedFilter, fromBlock, toBlock);
+        const drainerDetected = await callWithBackoff(
+          walletDrainerDetector.queryFilter.bind(walletDrainerDetector),
+          drainerDetectedFilter, 
+          fromBlock, 
+          actualToBlock
+        );
         
         for (const event of drainerDetected) {
           const [drainerAddress, drainerType, timestamp] = event.args;
@@ -370,14 +458,19 @@ const setupEventListeners = () => {
         // If queryFilter is not supported, we'll rely on block processing instead
       }
       
-      // Update the last processed block
-      lastProcessedBlock = latestBlock;
-      
       // Fallback: Process each block manually if event filtering is not working
       // This ensures we don't miss any transactions even if the RPC doesn't support filters
-      for (let blockNum = fromBlock; blockNum <= toBlock; blockNum++) {
+      for (let blockNum = fromBlock; blockNum <= actualToBlock; blockNum++) {
         try {
-          const block = await provider.getBlock(blockNum, true);
+          // Add a small delay between block requests to avoid rate limiting
+          await sleep(500);
+          
+          const block = await callWithBackoff(
+            provider.getBlock.bind(provider),
+            blockNum, 
+            true
+          );
+          
           if (block && block.transactions) {
             console.log(`Fallback processing: Checking ${block.transactions.length} transactions in block ${blockNum}`);
             
@@ -393,7 +486,11 @@ const setupEventListeners = () => {
                 console.log(`Transaction ${tx.hash} is interacting with our contracts`);
                 
                 // Get the transaction receipt to check for events
-                const receipt = await provider.getTransactionReceipt(tx.hash);
+                const receipt = await callWithBackoff(
+                  provider.getTransactionReceipt.bind(provider),
+                  tx.hash
+                );
+                
                 if (receipt && receipt.logs) {
                   console.log(`Found ${receipt.logs.length} logs in transaction ${tx.hash}`);
                   
@@ -407,6 +504,15 @@ const setupEventListeners = () => {
         } catch (error) {
           console.error(`Error processing block ${blockNum} in fallback mode:`, error);
         }
+      }
+      
+      // Update the last processed block - only update to the blocks we actually processed
+      lastProcessedBlock = actualToBlock;
+      
+      // If we have more blocks to process, schedule another poll immediately
+      if (actualToBlock < toBlock) {
+        console.log(`Still have ${toBlock - actualToBlock} more blocks to process, scheduling immediate poll`);
+        setTimeout(pollForEvents, 100);
       }
     } catch (error) {
       console.error('Error polling for events:', error);
