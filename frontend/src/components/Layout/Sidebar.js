@@ -99,7 +99,7 @@ const Sidebar = () => {
           Notifications
         </NavItem>
         <NavItem to="/" icon={FiExternalLink}>
-          Landing Page
+          Home Page
         </NavItem>
         <Divider my={4} borderColor="gray.700" />
         <Box px={8} py={4}>

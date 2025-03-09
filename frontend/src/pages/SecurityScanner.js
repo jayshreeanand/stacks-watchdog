@@ -50,6 +50,7 @@ const SecurityScanner = () => {
   const [scanComplete, setScanComplete] = useState(false);
   const [scanResults, setScanResults] = useState(null);
   const [customAddress, setCustomAddress] = useState('');
+  const [tabIndex, setTabIndex] = useState(0);
   const [scanOptions, setScanOptions] = useState({
     checkPermissions: true,
     checkInteractions: true,
@@ -107,6 +108,16 @@ const SecurityScanner = () => {
             setScanComplete(true);
             // Generate mock scan results
             generateMockResults(addressToScan);
+            // Set tab index to the scan results tab (index 3)
+            setTabIndex(3);
+            // Show toast notification
+            toast({
+              title: 'Scan complete',
+              description: 'Redirecting to scan results',
+              status: 'success',
+              duration: 3000,
+              isClosable: true,
+            });
             return 100;
           }
           return newProgress;
@@ -263,6 +274,11 @@ const SecurityScanner = () => {
               placeholder="Or enter a custom address to scan"
               value={customAddress}
               onChange={(e) => setCustomAddress(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleScan();
+                }
+              }}
               bg="gray.700"
               border="none"
               _focus={{ borderColor: "electroneum.400" }}
@@ -315,12 +331,25 @@ const SecurityScanner = () => {
         </Box>
       </SimpleGrid>
       
-      <Tabs variant="enclosed" colorScheme="electroneum" id="wallet">
+      <Tabs 
+        variant="enclosed" 
+        colorScheme="electroneum" 
+        id="wallet" 
+        index={tabIndex} 
+        onChange={(index) => setTabIndex(index)}
+      >
         <TabList>
           <Tab>Address Analyzer</Tab>
           <Tab>Token Approvals</Tab>
           <Tab>Transaction History</Tab>
-          {scanComplete && <Tab>Scan Results</Tab>}
+          {scanComplete && (
+            <Tab>
+              Scan Results
+              <Badge ml={2} colorScheme="green" variant="solid">
+                New
+              </Badge>
+            </Tab>
+          )}
         </TabList>
         
         <TabPanels>
@@ -440,6 +469,21 @@ const SecurityScanner = () => {
                     </Box>
                   </>
                 )}
+                
+                <Flex justify="center" mt={8}>
+                  <Button
+                    colorScheme="electroneum"
+                    leftIcon={<FiSearch />}
+                    onClick={() => {
+                      setScanComplete(false);
+                      setScanResults(null);
+                      setTabIndex(0);
+                      setCustomAddress('');
+                    }}
+                  >
+                    Scan Another Address
+                  </Button>
+                </Flex>
               </Box>
             </TabPanel>
           )}
