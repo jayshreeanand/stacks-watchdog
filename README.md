@@ -9,16 +9,18 @@ ETN Watchdog is a comprehensive security monitoring platform for the Electroneum
 ### Core Security Features
 
 - **Real-time Transaction Monitoring**: Continuously monitors Electroneum blockchain transactions to detect suspicious patterns and potential threats
-- **AI-Powered Analysis**: Leverages machine learning algorithms to analyze contracts and transactions for security vulnerabilities
+- **AI-Powered Analysis**: Leverages advanced AI models to analyze contracts and transactions for security vulnerabilities
 - **Rug-Pull Detection**: Identifies potential rug-pull risks by analyzing token contract code, liquidity patterns, and ownership structures
 - **Wallet Drainer Detection**: Detects malicious contracts designed to drain user wallets through sophisticated techniques
 - **Alert System**: Sends real-time notifications through multiple channels when potential threats are detected
 
-### Advanced Security Tools
+### Advanced AI Security Tools
 
+- **AI Smart Contract Analyzer**: Deep analysis of smart contract code using AI to identify vulnerabilities, backdoors, and security risks
+- **AI Address Analyzer**: AI-powered analysis of wallet addresses to detect suspicious activity and potential security threats
+- **AI Transaction Analysis**: Real-time analysis of transactions to identify unusual patterns and potential scams
 - **Security Scanner**: Comprehensive wallet security analysis tool that checks for vulnerabilities, suspicious approvals, and risky interactions
 - **Token Approvals Manager**: View and manage all token spending permissions with risk indicators and one-click revocation
-- **Contract Analysis**: Deep analysis of smart contract code to identify potential vulnerabilities before interaction
 - **Phishing Detection**: Identifies potential phishing attempts targeting your wallet
 
 ### User Experience
@@ -27,6 +29,7 @@ ETN Watchdog is a comprehensive security monitoring platform for the Electroneum
 - **Customizable Notifications**: Configure how and when you want to be alerted about security events
 - **Multi-channel Alerts**: Receive notifications via email, browser, mobile app, or Telegram
 - **Responsive Design**: Seamless experience across desktop, tablet, and mobile devices
+- **Electroneum Block Explorer Integration**: Direct links to the Electroneum block explorer for transactions, addresses, and contracts
 
 ## 📊 Dashboard Sections
 
@@ -38,6 +41,18 @@ The main dashboard provides an at-a-glance view of your security status, includi
 - Recent alerts and notifications
 - Transaction monitoring statistics
 - Network security status
+- Data source selector (Mock/Testnet/Mainnet)
+
+### AI Smart Contract Analyzer
+
+The AI-powered smart contract analyzer provides:
+
+- Deep security analysis of smart contract code
+- Vulnerability detection with severity ratings
+- Detailed explanations of security issues
+- Specific recommendations for fixing vulnerabilities
+- Risk scoring and overall security assessment
+- Sample contracts for testing and learning
 
 ### Wallet Drainers
 
@@ -47,14 +62,16 @@ The wallet drainers section displays:
 - Risk level and threat assessment
 - Number of victims and total value stolen
 - Detailed analysis of each drainer's techniques
+- Direct links to block explorer for verification
 
 ### Security Scanner
 
 The security scanner allows you to:
 
-- Scan any wallet address for vulnerabilities
+- Scan any wallet address for vulnerabilities using AI
 - Identify high-risk token approvals
 - Detect interactions with suspicious contracts
+- Analyze transaction patterns for suspicious activity
 - Receive personalized security recommendations
 
 ### Token Approvals
@@ -75,31 +92,52 @@ Customize your security alerts:
 - Choose alert frequency and risk level sensitivity
 - Enable/disable specific types of security alerts
 
+## 🧠 AI-Powered Security Features
+
+ETN Watchdog leverages advanced AI models to provide cutting-edge security analysis:
+
+### Smart Contract Vulnerability Detection
+
+The AI Smart Contract Analyzer can detect various vulnerabilities including:
+
+- **Reentrancy Vulnerabilities**: Identifies functions vulnerable to reentrancy attacks
+- **Access Control Issues**: Detects improper access controls and authorization flaws
+- **Integer Overflow/Underflow**: Finds potential arithmetic vulnerabilities
+- **Unchecked External Calls**: Identifies unsafe external calls without proper error handling
+- **Front-running Vulnerabilities**: Detects transactions vulnerable to front-running
+- **Logic Errors**: Identifies logical flaws in contract code
+- **Rug Pull Mechanisms**: Detects backdoors and mechanisms that could enable rug pulls
+- **Gas Optimization Issues**: Identifies inefficient code that could lead to high gas costs
+
+### Address Analysis
+
+The AI Address Analyzer examines wallet addresses for:
+
+- **Suspicious Transaction Patterns**: Identifies unusual transaction behavior
+- **Connections to Known Malicious Addresses**: Detects interactions with known scammers
+- **Potential Wallet Drainer Behavior**: Identifies patterns consistent with wallet drainers
+- **Money Laundering Indicators**: Detects patterns that may indicate money laundering
+- **Risk Scoring**: Provides a comprehensive risk score and security assessment
+
+### Transaction Analysis
+
+The AI Transaction Analyzer monitors transactions for:
+
+- **Unusual Transaction Amounts**: Identifies transactions with suspicious values
+- **Suspicious Contract Interactions**: Detects interactions with potentially malicious contracts
+- **Phishing Indicators**: Identifies transactions that may be part of phishing attempts
+- **Scam Patterns**: Detects patterns consistent with known scams
+- **Real-time Alerts**: Provides immediate notifications for high-risk transactions
+
 ## 🏗️ Architecture
 
 - **Smart Contracts**: Solidity contracts deployed on Electroneum blockchain for on-chain monitoring and analysis
 - **Backend API**: Node.js server with AI integration for transaction and contract analysis
 - **Frontend**: React-based dashboard built with Chakra UI for a modern, responsive interface
 - **Database**: MongoDB for storing historical data, analysis results, and user preferences
+- **AI Integration**: OpenAI API integration for advanced security analysis
 - **Notification System**: Multi-channel alert system for real-time security notifications
-
-## Screenshots
-
-<img width="1006" alt="Screenshot 2025-03-07 at 8 29 39 PM" src="https://github.com/user-attachments/assets/b79b6f1d-7f35-4278-9550-41898868b74c" />
-
-<img width="1637" alt="Screenshot 2025-03-07 at 9 37 17 PM" src="https://github.com/user-attachments/assets/6212c502-a98a-4a39-9015-4bd2eeb0ed4a" />
-
-<img width="1672" alt="Screenshot 2025-03-07 at 9 37 41 PM" src="https://github.com/user-attachments/assets/51289bb4-cb52-4b71-8428-d6e17bce810c" />
-
-<img width="1410" alt="Screenshot 2025-03-07 at 9 39 06 PM" src="https://github.com/user-attachments/assets/e19d9bd4-fe11-4afe-821d-e2474ef3d359" />
-
-<img width="1680" alt="Screenshot 2025-03-07 at 9 39 16 PM" src="https://github.com/user-attachments/assets/c760bbb7-f965-45a7-a332-617d3f7988f8" />
-
-<img width="1674" alt="Screenshot 2025-03-07 at 9 39 24 PM" src="https://github.com/user-attachments/assets/2350b9ab-f160-4224-9aa3-e40c6c1d4b35" />
-
-<img width="1680" alt="Screenshot 2025-03-07 at 9 39 36 PM" src="https://github.com/user-attachments/assets/f72860d4-d41a-4bc8-b1ce-01910eaed64a" />
-
-<img width="1416" alt="Screenshot 2025-03-07 at 9 39 46 PM" src="https://github.com/user-attachments/assets/b4379959-d583-4d9c-9e82-433f63cd80c7" />
+- **Block Explorer Integration**: Direct integration with Electroneum block explorer
 
 ## 🚀 Getting Started
 
@@ -108,6 +146,7 @@ Customize your security alerts:
 - Node.js (v14 or higher)
 - npm or yarn
 - MongoDB (optional, for full functionality)
+- OpenAI API key (for AI-powered features)
 
 ### Installation
 
@@ -126,9 +165,19 @@ Customize your security alerts:
    ```
 
 3. Set up environment variables:
+
    ```bash
    cp .env.example .env
    # Edit .env with your configuration
+   ```
+
+4. Configure AI features:
+
+   Add your OpenAI API key to the `.env` file:
+
+   ```
+   REACT_APP_OPENAI_API_KEY=your_openai_api_key_here
+   REACT_APP_USE_MOCK_AI=false  # Set to true to use mock AI responses instead of real API
    ```
 
 ### Running the Application
@@ -169,55 +218,49 @@ You can also switch between data sources directly in the UI:
 
 Note: Switching data sources in the UI will reload the page to refresh the data.
 
-## 🚀 Setup Instructions
+## 🔧 Configuration Options
 
-### Prerequisites
+### Environment Variables
 
-- Node.js (v16+)
-- npm or yarn
-- MongoDB
-- Electroneum wallet with ETN for contract deployment
+The application uses the following environment variables:
 
-### Installation
+#### Backend Configuration
 
-1. Clone the repository:
+```
+# Blockchain Configuration
+ELECTRONEUM_RPC_URL=https://rpc.ankr.com/electroneum_testnet
+ELECTRONEUM_TESTNET_RPC_URL=https://rpc.ankr.com/electroneum_testnet
+PRIVATE_KEY=your_private_key_here
+NETWORK_CHAIN_ID=5201420
 
-   ```
-   git clone https://github.com/yourusername/etn-watchdog.git
-   cd etn-watchdog
-   ```
+# Database Configuration
+MONGODB_URI=your_mongodb_uri_here
+SKIP_MONGODB=false
 
-2. Install dependencies:
+# API Configuration
+PORT=3000
+API_KEY=your_api_key_for_security
 
-   ```
-   npm install
-   cd frontend && npm install
-   ```
+# AI Model Configuration
+OPENAI_API_KEY=your_openai_api_key_here
+```
 
-3. Create a `.env` file based on `.env.example`:
+#### Frontend Configuration
 
-   ```
-   cp .env.example .env
-   ```
+```
+# API URLs
+REACT_APP_MOCK_API_URL=http://localhost:3000/api
+REACT_APP_TESTNET_API_URL=http://localhost:3000/api
+REACT_APP_MAINNET_API_URL=http://localhost:3000/api
 
-   Then fill in your configuration details.
+# Block explorer URLs
+REACT_APP_TESTNET_EXPLORER_URL=https://testnet-blockexplorer.electroneum.com/
+REACT_APP_MAINNET_EXPLORER_URL=https://blockexplorer.electroneum.com/
 
-4. Compile smart contracts:
-
-   ```
-   npm run compile
-   ```
-
-5. Deploy smart contracts:
-
-   ```
-   npm run deploy
-   ```
-
-6. Start the application:
-   ```
-   npm run start:all
-   ```
+# AI Configuration
+REACT_APP_OPENAI_API_KEY=your_openai_api_key_here
+REACT_APP_USE_MOCK_AI=false
+```
 
 ## 🧪 Running on Testnet
 
@@ -251,26 +294,41 @@ To run ETN Watchdog on the Electroneum testnet instead of mainnet, follow these 
    npm run start:all
    ```
 
-The application will now connect to the Electroneum testnet instead of mainnet.
+## 🔍 Using the AI Security Features
 
-## 🔧 Development
+### Smart Contract Analyzer
 
-- `npm run dev`: Start the backend in development mode
-- `npm run frontend:dev`: Start the frontend in development mode
-- `npm run start:all`: Start both backend and frontend
-- `npm test`: Run tests
-- `npm run compile`: Compile smart contracts
-- `npm run lint`: Run linting checks
-- `npm run format`: Format code using Prettier
+1. Navigate to "AI Contract Analyzer" in the sidebar
+2. Enter a contract address or paste contract code
+   - Use the "Load Sample" button to test with a sample contract
+   - Use the "Load Vulnerable Sample" to see how vulnerabilities are detected
+3. Click "Analyze Contract"
+4. Review the detailed security analysis:
+   - Overall risk score and risk level
+   - List of vulnerabilities with severity ratings
+   - Detailed descriptions and recommendations
+   - Links to the contract on the block explorer
 
-## 📱 Mobile App
+### Address Analyzer
 
-A mobile companion app for ETN Watchdog is currently in development. The app will provide:
+1. Go to "Security Scanner" in the sidebar
+2. Use the "Address Analyzer" tab
+3. Enter an Electroneum address
+4. Click "Analyze"
+5. Review the security assessment:
+   - Risk score and risk level
+   - Suspicious activity findings
+   - Recommended security actions
+   - Links to the address on the block explorer
 
-- Push notifications for security alerts
-- On-the-go security monitoring
-- Quick actions for addressing security threats
-- Biometric authentication for enhanced security
+### Transaction Monitoring
+
+The system automatically monitors transactions for suspicious activity:
+
+1. Transactions are analyzed in real-time as they occur
+2. AI models assess each transaction for security risks
+3. Suspicious transactions trigger alerts
+4. Details are displayed in the dashboard and notifications
 
 ## 🔄 API Integration
 
