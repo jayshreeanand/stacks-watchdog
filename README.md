@@ -246,6 +246,10 @@ Notification Settings
 
 <img width="900" alt="Screenshot 2025-03-09 at 9 01 21 PM" src="https://github.com/user-attachments/assets/c48837c6-81ea-455f-bc7c-7e3b04f1c70b" />
 
+<img width="1441" alt="Screenshot 2025-03-09 at 10 10 58 PM" src="https://github.com/user-attachments/assets/46cd82d3-5121-41b7-8fed-90e53111d106" />
+<img width="1454" alt="Screenshot 2025-03-09 at 10 11 07 PM" src="https://github.com/user-attachments/assets/1e36f578-2c41-4a51-bbfe-ab877da07e84" />
+
+
 ## 🚀 Getting Started
 
 ### Prerequisites
