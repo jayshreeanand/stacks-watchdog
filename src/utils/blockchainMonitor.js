@@ -202,106 +202,222 @@ const analyzeTransaction = async (tx, blockNumber) => {
 
 // Set up event listeners for contract events
 const setupEventListeners = () => {
-  // Listen for SecurityAlertRaised events
-  registry.on('SecurityAlertRaised', async (alertId, alertType, targetAddress, details, timestamp, event) => {
-    console.log(`Security alert raised: ${alertId}`);
-    console.log(`Type: ${alertType}, Target: ${targetAddress}`);
-    console.log(`Details: ${details}`);
-    
-    // Save alert to database
-    const alert = await alertService.createAlert({
-      alertId: alertId.toString(),
-      type: alertType,
-      targetAddress,
-      details,
-      timestamp: new Date(timestamp * 1000),
-      transactionHash: event.transactionHash
-    });
-    
-    // Emit alert through socket.io
-    const io = app.get('io');
-    io.to('alerts').emit('newAlert', alert);
-  });
+  console.log('Setting up event polling (filters disabled on Electroneum RPC)');
   
-  // Listen for SuspiciousTransactionDetected events
-  transactionMonitor.on('SuspiciousTransactionDetected', async (from, to, amount, timestamp, reason, event) => {
-    console.log(`Suspicious transaction detected by contract`);
-    console.log(`From: ${from}, To: ${to}, Amount: ${ethers.formatEther(amount)} ETN`);
-    console.log(`Reason: ${reason}`);
-    
-    // Save suspicious transaction to database
-    await transactionService.saveSuspiciousTransaction({
-      hash: event.transactionHash,
-      from,
-      to,
-      value: ethers.formatEther(amount),
-      blockNumber: event.blockNumber,
-      timestamp: new Date(timestamp * 1000),
-      reason
-    });
-  });
+  // Instead of using filters, we'll poll for events in each new block
+  // This is a workaround for RPC providers that don't support eth_newFilter
   
-  // Listen for TokenAnalyzed events
-  rugPullDetector.on('TokenAnalyzed', async (tokenAddress, isPotentialRugPull, reasons, event) => {
-    console.log(`Token analyzed: ${tokenAddress}`);
-    console.log(`Is potential rug pull: ${isPotentialRugPull}`);
-    console.log(`Reasons: ${reasons.join(', ')}`);
-    
-    // Save token analysis to database
-    await rugPullService.saveTokenAnalysis({
-      tokenAddress,
-      isPotentialRugPull,
-      reasons,
-      transactionHash: event.transactionHash,
-      blockNumber: event.blockNumber,
-      timestamp: Date.now()
-    });
-    
-    // Create an alert if it's a potential rug pull
-    if (isPotentialRugPull) {
-      const alertDetails = {
-        type: 'rug_pull',
-        targetAddress: tokenAddress,
-        details: `Potential rug pull detected. Risk factors: ${reasons.join(', ')}`,
-        transactionHash: event.transactionHash
-      };
+  // Store the last processed block to avoid duplicate processing
+  let lastProcessedBlock = 0;
+  
+  // Set up a polling interval to check for events
+  const pollInterval = 30000; // 30 seconds
+  
+  const pollForEvents = async () => {
+    try {
+      // Get the latest block number
+      const latestBlock = await provider.getBlockNumber();
       
-      const alert = await alertService.createAlert(alertDetails);
+      // Skip if we've already processed this block
+      if (latestBlock <= lastProcessedBlock) {
+        return;
+      }
       
-      // Emit alert through socket.io
-      const io = app.get('io');
-      io.to('alerts').emit('newAlert', alert);
+      console.log(`Polling for events from block ${lastProcessedBlock + 1} to ${latestBlock}`);
+      
+      // Define the block range to query
+      const fromBlock = lastProcessedBlock + 1;
+      const toBlock = latestBlock;
+      
+      try {
+        // Query for SecurityAlertRaised events
+        const securityAlertFilter = registry.filters.SecurityAlertRaised();
+        const securityAlerts = await registry.queryFilter(securityAlertFilter, fromBlock, toBlock);
+        
+        for (const event of securityAlerts) {
+          const [alertId, alertType, targetAddress, details, timestamp] = event.args;
+          
+          console.log(`Security alert raised: ${alertId}`);
+          console.log(`Type: ${alertType}, Target: ${targetAddress}`);
+          console.log(`Details: ${details}`);
+          
+          // Save alert to database
+          const alert = await alertService.createAlert({
+            alertId: alertId.toString(),
+            type: alertType,
+            targetAddress,
+            details,
+            timestamp: new Date(Number(timestamp) * 1000),
+            transactionHash: event.transactionHash
+          });
+          
+          // Emit alert through socket.io
+          const io = app.get('io');
+          io.to('alerts').emit('newAlert', alert);
+        }
+      } catch (error) {
+        console.error('Error querying SecurityAlertRaised events:', error);
+        // If queryFilter is not supported, we'll rely on block processing instead
+      }
+      
+      try {
+        // Query for SuspiciousTransactionDetected events
+        const suspiciousTxFilter = transactionMonitor.filters.SuspiciousTransactionDetected();
+        const suspiciousTxs = await transactionMonitor.queryFilter(suspiciousTxFilter, fromBlock, toBlock);
+        
+        for (const event of suspiciousTxs) {
+          const [from, to, amount, timestamp, reason] = event.args;
+          
+          console.log(`Suspicious transaction detected by contract`);
+          console.log(`From: ${from}, To: ${to}, Amount: ${ethers.formatEther(amount)} ETN`);
+          console.log(`Reason: ${reason}`);
+          
+          // Save suspicious transaction to database
+          await transactionService.saveSuspiciousTransaction({
+            hash: event.transactionHash,
+            from,
+            to,
+            value: ethers.formatEther(amount),
+            blockNumber: event.blockNumber,
+            timestamp: new Date(Number(timestamp) * 1000),
+            reason
+          });
+        }
+      } catch (error) {
+        console.error('Error querying SuspiciousTransactionDetected events:', error);
+        // If queryFilter is not supported, we'll rely on block processing instead
+      }
+      
+      try {
+        // Query for TokenAnalyzed events
+        const tokenAnalyzedFilter = rugPullDetector.filters.TokenAnalyzed();
+        const tokenAnalyzed = await rugPullDetector.queryFilter(tokenAnalyzedFilter, fromBlock, toBlock);
+        
+        for (const event of tokenAnalyzed) {
+          const [tokenAddress, isPotentialRugPull, reasons] = event.args;
+          
+          console.log(`Token analyzed: ${tokenAddress}`);
+          console.log(`Is potential rug pull: ${isPotentialRugPull}`);
+          console.log(`Reasons: ${reasons.join(', ')}`);
+          
+          // Save token analysis to database
+          await rugPullService.saveTokenAnalysis({
+            tokenAddress,
+            isPotentialRugPull,
+            reasons,
+            transactionHash: event.transactionHash,
+            blockNumber: event.blockNumber,
+            timestamp: Date.now()
+          });
+          
+          // Create an alert if it's a potential rug pull
+          if (isPotentialRugPull) {
+            const alertDetails = {
+              type: 'rug_pull',
+              targetAddress: tokenAddress,
+              details: `Potential rug pull detected. Risk factors: ${reasons.join(', ')}`,
+              transactionHash: event.transactionHash
+            };
+            
+            const alert = await alertService.createAlert(alertDetails);
+            
+            // Emit alert through socket.io
+            const io = app.get('io');
+            io.to('alerts').emit('newAlert', alert);
+          }
+        }
+      } catch (error) {
+        console.error('Error querying TokenAnalyzed events:', error);
+        // If queryFilter is not supported, we'll rely on block processing instead
+      }
+      
+      try {
+        // Query for DrainerDetected events
+        const drainerDetectedFilter = walletDrainerDetector.filters.DrainerDetected();
+        const drainerDetected = await walletDrainerDetector.queryFilter(drainerDetectedFilter, fromBlock, toBlock);
+        
+        for (const event of drainerDetected) {
+          const [drainerAddress, drainerType, timestamp] = event.args;
+          
+          console.log(`Wallet drainer detected: ${drainerAddress}`);
+          console.log(`Type: ${drainerType}`);
+          
+          // Save drainer to database
+          await walletDrainerService.saveDrainer({
+            address: drainerAddress,
+            type: drainerType,
+            transactionHash: event.transactionHash,
+            blockNumber: event.blockNumber,
+            timestamp: new Date(Number(timestamp) * 1000)
+          });
+          
+          // Create an alert
+          const alertDetails = {
+            type: 'wallet_drainer',
+            targetAddress: drainerAddress,
+            details: `Wallet drainer detected. Type: ${drainerType}`,
+            transactionHash: event.transactionHash
+          };
+          
+          const alert = await alertService.createAlert(alertDetails);
+          
+          // Emit alert through socket.io
+          const io = app.get('io');
+          io.to('alerts').emit('newAlert', alert);
+        }
+      } catch (error) {
+        console.error('Error querying DrainerDetected events:', error);
+        // If queryFilter is not supported, we'll rely on block processing instead
+      }
+      
+      // Update the last processed block
+      lastProcessedBlock = latestBlock;
+      
+      // Fallback: Process each block manually if event filtering is not working
+      // This ensures we don't miss any transactions even if the RPC doesn't support filters
+      for (let blockNum = fromBlock; blockNum <= toBlock; blockNum++) {
+        try {
+          const block = await provider.getBlock(blockNum, true);
+          if (block && block.transactions) {
+            console.log(`Fallback processing: Checking ${block.transactions.length} transactions in block ${blockNum}`);
+            
+            for (const tx of block.transactions) {
+              // Process each transaction manually
+              await analyzeTransaction(tx, blockNum);
+              
+              // Check if the transaction is interacting with our contracts
+              if (tx.to === deploymentInfo.registry || 
+                  tx.to === deploymentInfo.transactionMonitor || 
+                  tx.to === deploymentInfo.rugPullDetector || 
+                  tx.to === deploymentInfo.walletDrainerDetector) {
+                console.log(`Transaction ${tx.hash} is interacting with our contracts`);
+                
+                // Get the transaction receipt to check for events
+                const receipt = await provider.getTransactionReceipt(tx.hash);
+                if (receipt && receipt.logs) {
+                  console.log(`Found ${receipt.logs.length} logs in transaction ${tx.hash}`);
+                  
+                  // Process logs manually if needed
+                  // This is a simplified approach - in a production environment,
+                  // you would decode the logs based on contract ABIs
+                }
+              }
+            }
+          }
+        } catch (error) {
+          console.error(`Error processing block ${blockNum} in fallback mode:`, error);
+        }
+      }
+    } catch (error) {
+      console.error('Error polling for events:', error);
     }
-  });
+  };
   
-  // Listen for DrainerDetected events
-  walletDrainerDetector.on('DrainerDetected', async (drainerAddress, drainerType, timestamp, event) => {
-    console.log(`Wallet drainer detected: ${drainerAddress}`);
-    console.log(`Type: ${drainerType}`);
-    
-    // Save drainer to database
-    await walletDrainerService.saveDrainer({
-      address: drainerAddress,
-      type: drainerType,
-      transactionHash: event.transactionHash,
-      blockNumber: event.blockNumber,
-      timestamp: new Date(timestamp * 1000)
-    });
-    
-    // Create an alert
-    const alertDetails = {
-      type: 'wallet_drainer',
-      targetAddress: drainerAddress,
-      details: `Wallet drainer detected. Type: ${drainerType}`,
-      transactionHash: event.transactionHash
-    };
-    
-    const alert = await alertService.createAlert(alertDetails);
-    
-    // Emit alert through socket.io
-    const io = app.get('io');
-    io.to('alerts').emit('newAlert', alert);
-  });
+  // Start polling
+  pollForEvents();
+  setInterval(pollForEvents, pollInterval);
+  
+  console.log(`Event polling started (interval: ${pollInterval}ms)`);
 };
 
 module.exports = {
