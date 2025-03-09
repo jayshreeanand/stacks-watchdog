@@ -26,10 +26,12 @@ import {
 import { FiAlertTriangle, FiTrendingUp, FiUsers, FiShield } from 'react-icons/fi';
 import apiService from '../utils/apiService';
 import { mockDashboardStats } from '../utils/mockData';
+import { useDataSource } from '../context/DataSourceContext';
 
 // Components
 import StatCard from '../components/Dashboard/StatCard';
 import RecentDrainersTable from '../components/Dashboard/RecentDrainersTable';
+import DataSourceSelector from '../components/DataSourceSelector';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -40,15 +42,19 @@ const Dashboard = () => {
   });
   const [recentDrainers, setRecentDrainers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { dataSource, isUsingMockData } = useDataSource();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         
-        // Use mock stats for now
-        // In a real app, you would fetch actual stats from your API
-        setStats(mockDashboardStats);
+        // Set whether to force mock data based on data source
+        apiService.setForceMockData(isUsingMockData);
+        
+        // Fetch dashboard stats
+        const dashboardStats = await apiService.getDashboardStats();
+        setStats(dashboardStats);
 
         // Fetch recent drainers
         const drainers = await apiService.getRecentWalletDrainers(5);
@@ -61,13 +67,16 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, []);
+  }, [isUsingMockData]);
 
   return (
     <Box>
-      <Heading as="h1" size="xl" mb={6} color="white">
-        Dashboard
-      </Heading>
+      <Flex justify="space-between" align="center" mb={6}>
+        <Heading as="h1" size="xl" color="white">
+          Dashboard
+        </Heading>
+        <DataSourceSelector />
+      </Flex>
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6} mb={8}>
         <StatCard

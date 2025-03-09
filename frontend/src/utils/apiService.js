@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { mockApiService } from './mockData';
 
-// API base URL
-const API_BASE_URL = '/api';
+// API base URL - will be dynamically set based on data source
+let API_BASE_URL = '/api';
 
 // API endpoints
 const ENDPOINTS = {
@@ -12,10 +12,46 @@ const ENDPOINTS = {
   ANALYZE_CONTRACT: `${API_BASE_URL}/walletdrainer/analyze`,
 };
 
+// Function to update the API base URL based on data source
+export const setApiBaseUrl = (dataSource) => {
+  switch (dataSource) {
+    case 'mock':
+      API_BASE_URL = '/api'; // Local mock API
+      break;
+    case 'testnet':
+      API_BASE_URL = process.env.REACT_APP_TESTNET_API_URL || '/api';
+      break;
+    case 'mainnet':
+      API_BASE_URL = process.env.REACT_APP_MAINNET_API_URL || '/api';
+      break;
+    default:
+      API_BASE_URL = '/api';
+  }
+  
+  // Update all endpoints with the new base URL
+  ENDPOINTS.WALLET_DRAINERS = `${API_BASE_URL}/walletdrainer`;
+  ENDPOINTS.RECENT_WALLET_DRAINERS = `${API_BASE_URL}/walletdrainer/recent`;
+  ENDPOINTS.ANALYZE_CONTRACT = `${API_BASE_URL}/walletdrainer/analyze`;
+  // The function endpoint needs to be updated dynamically when called
+};
+
 // API service with fallback to mock data
 const apiService = {
+  // Flag to force using mock data
+  forceMockData: false,
+  
+  // Set whether to force mock data
+  setForceMockData: (force) => {
+    apiService.forceMockData = force;
+  },
+  
   // Get all wallet drainers
   getAllWalletDrainers: async () => {
+    // If forcing mock data, return mock data immediately
+    if (apiService.forceMockData) {
+      return mockApiService.getAllWalletDrainers();
+    }
+    
     try {
       const response = await axios.get(ENDPOINTS.WALLET_DRAINERS);
       // If the API returns an empty array, use mock data
@@ -33,6 +69,11 @@ const apiService = {
   
   // Get recent wallet drainers
   getRecentWalletDrainers: async (limit = 5) => {
+    // If forcing mock data, return mock data immediately
+    if (apiService.forceMockData) {
+      return mockApiService.getRecentWalletDrainers(limit);
+    }
+    
     try {
       const response = await axios.get(`${ENDPOINTS.RECENT_WALLET_DRAINERS}?limit=${limit}`);
       // If the API returns an empty array, use mock data
@@ -50,6 +91,11 @@ const apiService = {
   
   // Get wallet drainer by address
   getWalletDrainerByAddress: async (address) => {
+    // If forcing mock data, return mock data immediately
+    if (apiService.forceMockData) {
+      return mockApiService.getWalletDrainerByAddress(address);
+    }
+    
     try {
       const response = await axios.get(ENDPOINTS.WALLET_DRAINER_BY_ADDRESS(address));
       return response.data;
@@ -57,6 +103,23 @@ const apiService = {
       console.error(`Error fetching wallet drainer for ${address}:`, error);
       console.log('Falling back to mock data');
       return mockApiService.getWalletDrainerByAddress(address);
+    }
+  },
+  
+  // Get dashboard stats
+  getDashboardStats: async () => {
+    // If forcing mock data, return mock data immediately
+    if (apiService.forceMockData) {
+      return mockApiService.getDashboardStats();
+    }
+    
+    try {
+      const response = await axios.get(`${API_BASE_URL}/stats`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error);
+      console.log('Falling back to mock data');
+      return mockApiService.getDashboardStats();
     }
   },
   
