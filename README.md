@@ -2,9 +2,11 @@
 
 Sonic Shield AI is a comprehensive security monitoring platform for the Electroneum blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues.
 
-Demo URL: https://sonic-shield.vercel.app/
+Demo URL (frontend): https://sonic-shield.vercel.app/
 
-Backend server URL: https://sonic-shield-backend.up.railway.app/
+Backend server URL (api server): https://sonic-shield-backend.up.railway.app/
+
+<img width="1473" alt="home" src="https://github.com/user-attachments/assets/9e229904-d0da-4ec5-8398-a6181dd021ac" />
 
 ### Contract Address
 
@@ -15,6 +17,9 @@ Backend server URL: https://sonic-shield-backend.up.railway.app/
 - SWatchdogRegistry deployed to: 0x6e808c5A0A3ed300F3d8B3119D37d20d762E858f
 
 ## 🛡️ Key Features
+
+<img width="1165" alt="features" src="https://github.com/user-attachments/assets/579a1146-3188-41a7-bd40-9dab41449f88" />
+
 
 ### Core Security Features
 
@@ -44,6 +49,8 @@ Backend server URL: https://sonic-shield-backend.up.railway.app/
 ## 📊 Dashboard Sections
 
 ### Main Dashboard
+<img width="1680" alt="dashboard" src="https://github.com/user-attachments/assets/35141357-301d-4d57-96ad-f89b7bad42e0" />
+
 
 The main dashboard provides an at-a-glance view of your security status, including:
 
@@ -54,6 +61,7 @@ The main dashboard provides an at-a-glance view of your security status, includi
 - Data source selector (Mock/Testnet/Mainnet)
 
 ### Vulnerability Scanner Dashboard
+<img width="1418" alt="vulnerability-scanner" src="https://github.com/user-attachments/assets/799e01d9-7978-46ee-b257-44f146309c4a" />
 
 The vulnerability scanner dashboard provides comprehensive contract security analysis:
 
@@ -66,21 +74,12 @@ The vulnerability scanner dashboard provides comprehensive contract security ana
 - One-click sample contract loading
 - Vulnerability statistics and trends
 
-### Learning Center Dashboard
-
-The learning center dashboard offers interactive security education:
-
-- Progress tracking overview
-- Current module status
-- Recommended learning paths
-- Achievement badges display
-- Interactive learning exercises
-- Practice vulnerability detection
-- Real-world case studies
-- Quiz scores and certifications
-- Customized learning recommendations
-
 ### AI Smart Contract Analyzer
+
+<img width="1350" alt="Load sample contract" src="https://github.com/user-attachments/assets/d6d88489-c76f-4b63-8e4e-bc2b3caeacbd" />
+
+<img width="1124" alt="AI smart contract analyzer" src="https://github.com/user-attachments/assets/014dfdd1-c8c0-4e00-a1d5-fcf1a936d6e7" />
+
 
 The AI-powered smart contract analyzer provides:
 
@@ -103,6 +102,9 @@ The wallet drainers section displays:
 
 ### Wallet Security Scanner
 
+<img width="1403" alt="Wallet security scanner" src="https://github.com/user-attachments/assets/348312ae-b39f-4570-bad3-ab51d8704c9d" />
+
+
 The wallet security scanner allows you to:
 
 - Scan any wallet address for vulnerabilities using AI
@@ -113,6 +115,8 @@ The wallet security scanner allows you to:
 
 ### Token Approvals
 
+<img width="1173" alt="tokens approval manager" src="https://github.com/user-attachments/assets/93472437-9335-4942-b83f-d2be74885fff" />
+
 The token approvals manager helps you:
 
 - View all token spending permissions granted by your wallet
@@ -122,12 +126,37 @@ The token approvals manager helps you:
 
 ### Notification Settings
 
+<img width="1249" alt="NOTIFICATION settings" src="https://github.com/user-attachments/assets/824739cf-e88a-4dae-9435-981c17b45937" />
+
 Customize your security alerts:
 
 - Configure multiple notification channels
 - Set alert thresholds for transaction amounts
 - Choose alert frequency and risk level sensitivity
 - Enable/disable specific types of security alerts
+
+  <img width="400" alt="Telegram bot alerts" src="https://github.com/user-attachments/assets/6812b858-d40b-4ffe-a9ee-44ebdaa3e694" />
+
+### Learning Center Dashboard
+
+<img width="1222" alt="interactive learning modules" src="https://github.com/user-attachments/assets/ee5eb8ad-5b04-45ec-bdb0-eb28801365e4" />
+
+The learning center dashboard offers interactive security education:
+
+- Progress tracking overview
+- Current module status
+- Recommended learning paths
+- Achievement badges display
+- Interactive learning exercises
+- Practice vulnerability detection
+- Real-world case studies
+- Quiz scores and certifications
+- Customized learning recommendations
+
+  Learning progress tracker
+  
+<img width="1162" alt="learning-progress" src="https://github.com/user-attachments/assets/1f04b977-61c2-414b-82fc-887f3cea788d" />
+
 
 ## 🧠 AI-Powered Security Features
 
@@ -146,6 +175,8 @@ The AI Smart Contract Analyzer can detect various vulnerabilities including:
 - **Rug Pull Mechanisms**: Detects backdoors and mechanisms that could enable rug pulls
 - **Gas Optimization Issues**: Identifies inefficient code that could lead to high gas costs
 
+<img width="1116" alt="AI smart contract recommendations" src="https://github.com/user-attachments/assets/8ab6410c-e22b-4103-a4a5-057d6951b485" />
+
 ### Address Analysis
 
 The AI Address Analyzer examines wallet addresses for:
@@ -157,6 +188,8 @@ The AI Address Analyzer examines wallet addresses for:
 - **Risk Scoring**: Provides a comprehensive risk score and security assessment
 
 ### Transaction Analysis
+
+<img width="1646" alt="Analyze contract by address" src="https://github.com/user-attachments/assets/52cc8396-31fa-4133-af9c-40244aedcb6a" />
 
 The AI Transaction Analyzer monitors transactions for:
 
@@ -431,6 +464,8 @@ You can also switch between data sources directly in the UI:
    - Sonic Mainnet: Connects to the Sonic mainnet
 
 Note: Switching data sources in the UI will reload the page to refresh the data.
+
+<img width="357" alt="metamask connection" src="https://github.com/user-attachments/assets/a25d1bfa-76ed-49d1-9958-297827096957" />
 
 ## 🔧 Configuration Options
 
