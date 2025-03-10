@@ -5,6 +5,7 @@ Chain Shield AI is an intelligent AI agent for Real time blockchain security mon
 Demo URL (frontend): [https://chain-shield.vercel.app/](https://chain-shield.vercel.app/)
 
 Backend server URL (api server): [https://chain-shield-backend.up.railway.app/](https://chain-shield-backend.up.railway.app/)
+
 <img width="1601" alt="Screenshot 2025-03-10 at 11 51 04 PM" src="https://github.com/user-attachments/assets/bea148b1-8a79-44c7-b080-a98080c43ca1" />
 
 
@@ -79,7 +80,7 @@ Backend server URL (api server): [https://chain-shield-backend.up.railway.app/](
 
 ### Main Dashboard
 
-<img width="1680" alt="dashboard" src="https://github.com/user-attachments/assets/35141357-301d-4d57-96ad-f89b7bad42e0" />
+<img width="1672" alt="Screenshot 2025-03-11 at 12 46 10 AM" src="https://github.com/user-attachments/assets/e5b3cc56-f527-4bf3-9b4c-e71ac19abe91" />
 
 The main dashboard provides an at-a-glance view of your security status, including:
 
@@ -216,7 +217,7 @@ The AI Address Analyzer examines wallet addresses for:
 
 ### Transaction Analysis
 
-<img width="1646" alt="Analyze contract by address" src="https://github.com/user-attachments/assets/52cc8396-31fa-4133-af9c-40244aedcb6a" />
+<img width="1677" alt="Screenshot 2025-03-11 at 12 46 25 AM" src="https://github.com/user-attachments/assets/45193f12-9aed-4737-a7e4-b2389c29baf6" />
 
 The AI Transaction Analyzer monitors transactions for:
 
