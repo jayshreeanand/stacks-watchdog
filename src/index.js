@@ -106,7 +106,12 @@ app.set('io', io);
 // Initialize vulnerability scanner with socket.io for real-time updates
 const initializeVulnerabilityScanner = async () => {
   try {
-    const provider = process.env.ETHEREUM_RPC_URL || 'https://eth-mainnet.g.alchemy.com/v2/demo';
+    // Use Sonic testnet RPC URL from environment variables
+    const provider = process.env.SONIC_TESTNET_RPC_URL;
+    if (!provider) {
+      throw new Error('SONIC_TESTNET_RPC_URL not set in environment variables');
+    }
+    
     const scanner = new VulnerabilityScanner(provider);
     await scanner.initialize();
     
@@ -114,9 +119,9 @@ const initializeVulnerabilityScanner = async () => {
       io.to('vulnerability-scanner').emit('vulnerability-update', data);
     });
     
-    console.log('Vulnerability scanner initialized');
+    console.log('Vulnerability scanner initialized with Sonic testnet');
   } catch (error) {
-    console.error('Failed to initialize vulnerability scanner:', error);
+    console.error('Failed to initialize scanner:', error);
   }
 };
 

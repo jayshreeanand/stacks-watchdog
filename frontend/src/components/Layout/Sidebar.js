@@ -94,7 +94,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           AI Contract Analyzer
         </NavItem>
         <NavItem to="/app/security-scanner" icon={FiShield}>
-          Security Scanner
+          Wallet Security Scanner
         </NavItem>
         <NavItem to="/app/vulnerability-scanner" icon={FiActivity}>
           Vulnerability Scanner
