@@ -6,8 +6,6 @@ Demo URL: https://sonic-watchdog.vercel.app/
 
 Backend server URL: https://sonic-watchdog-production.up.railway.app/
 
-<img width="600" alt="Screenshot 2025-03-09 at 8 31 50 PM" src="https://github.com/user-attachments/assets/68ead615-de87-45f0-8011-e6c153013653" />
-
 ## 🛡️ Key Features
 
 ### Core Security Features
@@ -189,66 +187,6 @@ Sonic Watchdog AI provides a REST API for integration with other services:
 - **Endpoints**: Comprehensive endpoints for accessing security data
 - **Documentation**: Detailed API documentation available at `/api/docs`
 - **Rate Limiting**: Fair usage policies to ensure service availability
-
-## Contract details
-
-Network: Sonic Blaze Testnet (Chain RPC: https://rpc.blaze.soniclabs.com) (Chain ID: 57054)
-TransactionMonitor deployed to: https://testnet.sonicscan.org/address/0xda52b25ddB0e3B9CC393b0690Ac62245Ac772527
-RugPullDetector deployed to: https://testnet.sonicscan.org/address/0x11B57FE348584f042E436c6Bf7c3c3deF171de49
-WalletDrainerDetector deployed to: https://testnet.sonicscan.org/address/0x1294b86822ff4976BfE136cB06CF43eC7FCF2574
-SWatchdogRegistry deployed to: https://testnet.sonicscan.org/address/0xA6E41fFD769491a42A6e5Ce453259b93983a22EF
-
-## Screenshots
-
-Deployed Contracts
-
-<img width="900" alt="Screenshot 2025-03-09 at 1 43 59 PM" src="https://github.com/user-attachments/assets/2952d039-7681-4083-b570-aa38b99069bd" />
-
-Features
-
-<img width="900" alt="Screenshot 2025-03-09 at 8 31 58 PM" src="https://github.com/user-attachments/assets/c09f5b6e-ec13-4a3a-9f11-630e8ae067e0" />
-
-How it works
-
-<img width="900" alt="Screenshot 2025-03-09 at 8 32 06 PM" src="https://github.com/user-attachments/assets/53dd1132-b486-4975-b68d-f84cc5a629a9" />
-
-Dashboard
-
-<img width="900" alt="Screenshot 2025-03-09 at 8 58 01 PM" src="https://github.com/user-attachments/assets/f4087a8c-a5e1-4183-bdd8-54b9d7972706" />
-
-AI Smart contract analyzer
-
-<img width="900" alt="Screenshot 2025-03-09 at 8 58 22 PM" src="https://github.com/user-attachments/assets/53e7be3a-095d-4410-bc33-ac7a9513e237" />
-
-AI analyzer results
-
-<img width="900" alt="Screenshot 2025-03-09 at 8 59 03 PM" src="https://github.com/user-attachments/assets/a3773f19-0dae-431f-8c1b-d06835595989" />
-
-AI security recommendations
-
-<img width="900" alt="Screenshot 2025-03-09 at 8 59 10 PM" src="https://github.com/user-attachments/assets/c79f24f8-0596-4edf-a0c3-edaf8ab7ad4c" />
-
-Wallet Scanner
-
-<img width="900" alt="Screenshot 2025-03-09 at 8 59 37 PM" src="https://github.com/user-attachments/assets/a982be75-3378-4f99-855e-9d9eaaec42d0" />
-<img width="900" alt="Screenshot 2025-03-09 at 9 00 10 PM" src="https://github.com/user-attachments/assets/8618b16d-d208-4faa-bce2-5cfc6ac2d530" />
-<img width="900" alt="Screenshot 2025-03-09 at 9 00 21 PM" src="https://github.com/user-attachments/assets/76fc3df3-aeca-4656-8e36-5b69f7969140" />
-<img width="900" alt="Screenshot 2025-03-09 at 9 00 33 PM" src="https://github.com/user-attachments/assets/64414112-acf6-4ba9-96fe-60d66ec29bf4" />
-<img width="900" alt="Screenshot 2025-03-09 at 9 00 43 PM" src="https://github.com/user-attachments/assets/123a4807-28da-4497-8fa0-1325f9fe208e" />
-Wallet security recommendations
-<img width="900" alt="Screenshot 2025-03-09 at 9 00 55 PM" src="https://github.com/user-attachments/assets/98f0db27-9cee-481f-9318-f3b773c72076" />
-
-Token Approvals Manager
-<img width="1301" alt="Screenshot 2025-03-09 at 9 01 12 PM" src="https://github.com/user-attachments/assets/090fb5d1-7b9b-4c61-b9ef-65ee8dfcabd3" />
-
-<img width="900" alt="Screenshot 2025-03-09 at 9 01 21 PM" src="https://github.com/user-attachments/assets/51fb0462-59d8-4824-8035-acdbb17e6d16" />
-
-Notification Settings
-
-<img width="900" alt="Screenshot 2025-03-09 at 9 01 21 PM" src="https://github.com/user-attachments/assets/c48837c6-81ea-455f-bc7c-7e3b04f1c70b" />
-
-<img width="1441" alt="Screenshot 2025-03-09 at 10 10 58 PM" src="https://github.com/user-attachments/assets/46cd82d3-5121-41b7-8fed-90e53111d106" />
-<img width="1454" alt="Screenshot 2025-03-09 at 10 11 07 PM" src="https://github.com/user-attachments/assets/1e36f578-2c41-4a51-bbfe-ab877da07e84" />
 
 ## 🚀 Getting Started
 
