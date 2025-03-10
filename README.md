@@ -1,6 +1,6 @@
 # Chain Shield AI: AI agent for security monitoring
 
-Chain Shield AI is a comprehensive security monitoring platform for the Sonic blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
+Chain Shield AI is an intelligent AI agent for Real time blockchain security monitoring. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
 
 Demo URL (frontend): [https://chain-shield.vercel.app/](https://chain-shield.vercel.app/)
 
