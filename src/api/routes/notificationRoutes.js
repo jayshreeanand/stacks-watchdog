@@ -225,9 +225,35 @@ router.post('/wallet-scan', async (req, res) => {
       scanTime: Date.now()
     };
     
+    console.log(`[NotificationRoutes] Received wallet scan notification request for address: ${walletAddress}`);
+    
+    // Try to send notification through the notification service
     const result = await notificationService.sendWalletScanNotification(scanData);
     
+    // If notification service fails, try to send directly via Telegram
     if (!result.success) {
+      console.log(`[NotificationRoutes] Notification service failed: ${result.error}. Trying direct Telegram notification.`);
+      
+      // Try to get the default chat ID from environment
+      const defaultChatId = process.env.TELEGRAM_CHAT_ID;
+      
+      if (defaultChatId) {
+        try {
+          const telegramResult = await telegramService.sendWalletScanAlert(scanData, defaultChatId);
+          
+          if (telegramResult.success) {
+            console.log(`[NotificationRoutes] Direct Telegram notification sent successfully to default chat ID`);
+            return res.json({ 
+              success: true, 
+              message: 'Wallet scan notification sent via default chat ID',
+              results: { telegram: true }
+            });
+          }
+        } catch (telegramError) {
+          console.error('[NotificationRoutes] Error sending direct Telegram notification:', telegramError);
+        }
+      }
+      
       return res.status(400).json({ 
         success: false, 
         error: result.error || 'Failed to send wallet scan notification' 
@@ -240,7 +266,53 @@ router.post('/wallet-scan', async (req, res) => {
       results: result.results
     });
   } catch (error) {
-    console.error('Error sending wallet scan notification:', error);
+    console.error('[NotificationRoutes] Error sending wallet scan notification:', error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+/**
+ * @route POST /api/notifications/telegram/test-wallet-scan
+ * @desc Test sending a wallet scan notification directly to Telegram
+ * @access Private
+ */
+router.post('/telegram/test-wallet-scan', async (req, res) => {
+  try {
+    const { walletAddress } = req.body;
+    const chatId = req.body.chatId || process.env.TELEGRAM_CHAT_ID;
+    
+    if (!walletAddress) {
+      return res.status(400).json({ success: false, error: 'Wallet address is required' });
+    }
+    
+    if (!chatId) {
+      return res.status(400).json({ success: false, error: 'Chat ID is required' });
+    }
+    
+    console.log(`[NotificationRoutes] Testing direct wallet scan notification for address: ${walletAddress} to chat ID: ${chatId}`);
+    
+    const scanData = {
+      walletAddress,
+      scanType: 'Test Scan',
+      scanTime: Date.now()
+    };
+    
+    const result = await telegramService.sendWalletScanAlert(scanData, chatId);
+    
+    if (!result.success) {
+      return res.status(400).json({ 
+        success: false, 
+        error: result.error || 'Failed to send test wallet scan notification' 
+      });
+    }
+    
+    res.json({ 
+      success: true, 
+      message: 'Test wallet scan notification sent',
+      result
+    });
+  } catch (error) {
+    console.error('[NotificationRoutes] Error sending test wallet scan notification:', error);
     res.status(500).json({ success: false, error: 'Server error' });
   }
 });

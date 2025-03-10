@@ -71,10 +71,17 @@ const verifyConnectionCode = (code, chatId) => {
  */
 const sendMessage = async (message, chatId = TELEGRAM_DEFAULT_CHAT_ID) => {
   if (!TELEGRAM_BOT_TOKEN) {
-    console.error('Telegram bot token not configured');
+    console.error('[TelegramService] Telegram bot token not configured');
     return { success: false, error: 'Telegram bot token not configured' };
   }
 
+  if (!chatId) {
+    console.error('[TelegramService] Chat ID not provided');
+    return { success: false, error: 'Chat ID not provided' };
+  }
+
+  console.log(`[TelegramService] Sending message to chat ID: ${chatId}`);
+  
   try {
     const response = await axios.post(`${TELEGRAM_API_BASE_URL}/sendMessage`, {
       chat_id: chatId,
@@ -82,10 +89,17 @@ const sendMessage = async (message, chatId = TELEGRAM_DEFAULT_CHAT_ID) => {
       parse_mode: 'HTML',
     });
 
-    console.log('Telegram message sent successfully');
+    console.log('[TelegramService] Message sent successfully');
     return { success: true, data: response.data };
   } catch (error) {
-    console.error('Error sending Telegram message:', error.response?.data || error.message);
+    console.error('[TelegramService] Error sending message:', error.response?.data || error.message);
+    
+    // Log more detailed error information
+    if (error.response) {
+      console.error('[TelegramService] Response status:', error.response.status);
+      console.error('[TelegramService] Response data:', JSON.stringify(error.response.data));
+    }
+    
     return { 
       success: false, 
       error: error.response?.data?.description || error.message 

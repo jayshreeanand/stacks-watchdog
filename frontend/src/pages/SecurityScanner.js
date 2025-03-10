@@ -43,8 +43,9 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Switch,
 } from '@chakra-ui/react';
-import { FaShieldAlt, FaExclamationTriangle, FaCheckCircle, FaLock, FaSearch, FaWallet } from 'react-icons/fa';
+import { FaShieldAlt, FaExclamationTriangle, FaCheckCircle, FaLock, FaSearch, FaWallet, FaTelegram } from 'react-icons/fa';
 import { FiShield, FiAlertTriangle, FiSearch, FiCode } from 'react-icons/fi';
 import { Link as RouterLink } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
@@ -142,11 +143,12 @@ const SecurityScanner = () => {
       // Send wallet scan notification
       try {
         if (sendTelegramNotification) {
+          console.log('Sending Telegram notification for wallet scan...');
           await axios.post('/api/notifications/wallet-scan', {
             walletAddress: addressToScan,
             scanType: 'Security Scan'
           });
-          console.log('Wallet scan notification sent');
+          console.log('Wallet scan notification sent successfully');
         } else {
           console.log('Telegram notification skipped (disabled by user)');
         }
@@ -483,6 +485,60 @@ const SecurityScanner = () => {
       [option]: !scanOptions[option],
     });
   };
+  
+  const handleTelegramNotificationToggle = () => {
+    console.log('Toggling Telegram notification from', sendTelegramNotification, 'to', !sendTelegramNotification);
+    setSendTelegramNotification(!sendTelegramNotification);
+  };
+  
+  const testTelegramNotification = async () => {
+    if (!account && !customAddress) {
+      toast({
+        title: 'No address provided',
+        description: 'Please connect your wallet or enter a custom address to test notifications',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+    
+    const addressToTest = account || customAddress;
+    
+    try {
+      console.log('Testing Telegram notification for wallet scan...');
+      const response = await axios.post('/api/notifications/telegram/test-wallet-scan', {
+        walletAddress: addressToTest
+      });
+      
+      if (response.data.success) {
+        toast({
+          title: 'Test notification sent',
+          description: 'A test notification has been sent to Telegram',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: 'Error',
+          description: response.data.error || 'Failed to send test notification',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      console.error('Error testing Telegram notification:', error);
+      toast({
+        title: 'Error',
+        description: error.response?.data?.error || 'Failed to send test notification',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <Box>
@@ -567,17 +623,40 @@ const SecurityScanner = () => {
             </Text>
           </Flex>
           
-          <Flex mt={2} align="center">
-            <Checkbox 
-              isChecked={sendTelegramNotification} 
-              onChange={() => setSendTelegramNotification(!sendTelegramNotification)}
-              colorScheme="telegram"
-              mr={2}
-            />
-            <Text color="gray.400" fontSize="sm">
+          <FormControl mt={2} display="flex" alignItems="center">
+            <FormLabel 
+              htmlFor="telegram-notification-switch" 
+              mb="0" 
+              color="gray.400" 
+              fontSize="sm"
+              cursor="pointer"
+              onClick={handleTelegramNotificationToggle}
+              flex="1"
+            >
               Send Telegram notification when scan completes
-            </Text>
-          </Flex>
+            </FormLabel>
+            <Switch
+              id="telegram-notification-switch"
+              isChecked={sendTelegramNotification}
+              onChange={handleTelegramNotificationToggle}
+              colorScheme="telegram"
+            />
+          </FormControl>
+          
+          {/* Debug info - remove in production */}
+          <Text fontSize="xs" color="gray.500" mt={1}>
+            Telegram notifications: {sendTelegramNotification ? 'Enabled' : 'Disabled'}
+          </Text>
+          
+          <Button
+            mt={2}
+            size="sm"
+            colorScheme="telegram"
+            leftIcon={<FaTelegram />}
+            onClick={testTelegramNotification}
+          >
+            Test Telegram Notification
+          </Button>
           
           {isScanning && (
             <Box mt={4}>
