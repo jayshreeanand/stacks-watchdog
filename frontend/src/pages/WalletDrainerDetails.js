@@ -32,6 +32,8 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   useDisclosure,
+  SimpleGrid,
+  TableContainer,
 } from '@chakra-ui/react';
 import { 
   FiArrowLeft, 
@@ -173,7 +175,7 @@ const WalletDrainerDetails = () => {
         </Text>
         <Button
           leftIcon={<FiArrowLeft />}
-          colorScheme="electroneum"
+          colorScheme="sonic"
           onClick={() => navigate('/wallet-drainers')}
         >
           Back to Wallet Drainers
@@ -276,7 +278,7 @@ const WalletDrainerDetails = () => {
                 <Thead>
                   <Tr>
                     <Th color="gray.400">Address</Th>
-                    <Th color="gray.400" isNumeric>Amount (ETN)</Th>
+                    <Th color="gray.400" isNumeric>Amount (S)</Th>
                     <Th color="gray.400">Date</Th>
                   </Tr>
                 </Thead>
@@ -289,7 +291,7 @@ const WalletDrainerDetails = () => {
                           value={victim.address} 
                         />
                       </Td>
-                      <Td isNumeric>{victim.amount.toLocaleString()}</Td>
+                      <Td isNumeric>{victim.amount.toLocaleString()} S</Td>
                       <Td>{formatDate(victim.timestamp)}</Td>
                     </Tr>
                   ))}
@@ -309,11 +311,25 @@ const WalletDrainerDetails = () => {
               Summary
             </Heading>
             
-            <SimpleStats 
-              victims={drainer.victims?.length || 0}
-              totalStolen={drainer.totalStolen}
-              lastActive={drainer.lastActive}
-            />
+            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6} mb={8}>
+              <Stat>
+                <StatLabel color="gray.400">Risk Level</StatLabel>
+                <StatNumber>
+                  <Badge {...getRiskBadgeProps(drainer.riskLevel)} />
+                </StatNumber>
+                <StatHelpText>Based on analysis</StatHelpText>
+              </Stat>
+              <Stat>
+                <StatLabel color="gray.400">Victims</StatLabel>
+                <StatNumber>{drainer.victims?.length || 0}</StatNumber>
+                <StatHelpText>Affected wallets</StatHelpText>
+              </Stat>
+              <Stat>
+                <StatLabel color="gray.400">Total S Stolen</StatLabel>
+                <StatNumber>{drainer.totalStolen.toLocaleString()} S</StatNumber>
+                <StatHelpText>Estimated value</StatHelpText>
+              </Stat>
+            </SimpleGrid>
           </Box>
 
           <Box bg="gray.800" p={6} borderRadius="lg" boxShadow="md">
@@ -373,31 +389,6 @@ const WalletDrainerDetails = () => {
         </AlertDialogOverlay>
       </AlertDialog>
     </Box>
-  );
-};
-
-// Simple stats component
-const SimpleStats = ({ victims, totalStolen, lastActive }) => {
-  return (
-    <Grid templateColumns="repeat(1, 1fr)" gap={4}>
-      <Stat>
-        <StatLabel color="gray.400">Total Victims</StatLabel>
-        <StatNumber color="white">{victims}</StatNumber>
-      </Stat>
-      
-      <Stat>
-        <StatLabel color="gray.400">Total ETN Stolen</StatLabel>
-        <StatNumber color="white">{totalStolen.toLocaleString()}</StatNumber>
-      </Stat>
-      
-      <Stat>
-        <StatLabel color="gray.400">Last Activity</StatLabel>
-        <StatNumber color="white" fontSize="lg">{formatDate(lastActive)}</StatNumber>
-        <StatHelpText color="gray.500">
-          {new Date(lastActive).toLocaleTimeString()}
-        </StatHelpText>
-      </Stat>
-    </Grid>
   );
 };
 

@@ -67,9 +67,9 @@ const TokenApprovals = () => {
     {
       id: 1,
       token: {
-        symbol: 'ETN',
-        name: 'Electroneum',
-        logo: 'https://cryptologos.cc/logos/electroneum-etn-logo.png',
+        symbol: 'S',
+        name: 'Sonic',
+        logo: 'https://cryptologos.cc/logos/sonic-s-logo.png',
         address: '0x4a8f5f96d5436e43112c2fbc6a9f70da9e4e16d4',
       },
       spender: {

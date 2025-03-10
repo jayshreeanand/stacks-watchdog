@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title WalletDrainerDetector
- * @dev Contract for detecting wallet drainers on Electroneum blockchain
+ * @dev Contract for detecting wallet drainers on Sonic blockchain
  */
 contract WalletDrainerDetector is Ownable {
     // Events

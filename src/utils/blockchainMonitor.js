@@ -41,7 +41,7 @@ const callWithBackoff = async (fn, ...args) => {
 };
 
 // Load contract ABIs
-const registryABI = require('../../artifacts/contracts/ETNWatchdogRegistry.sol/ETNWatchdogRegistry.json').abi;
+const registryABI = require('../../artifacts/contracts/SWatchdogRegistry.sol/SWatchdogRegistry.json').abi;
 const transactionMonitorABI = require('../../artifacts/contracts/TransactionMonitor.sol/TransactionMonitor.json').abi;
 const rugPullDetectorABI = require('../../artifacts/contracts/RugPullDetector.sol/RugPullDetector.json').abi;
 const walletDrainerDetectorABI = require('../../artifacts/contracts/WalletDrainerDetector.sol/WalletDrainerDetector.json').abi;
@@ -224,7 +224,7 @@ const analyzeTransaction = async (tx, blockNumber) => {
     
     if (isSuspicious) {
       console.log(`Suspicious transaction detected: ${tx.hash}`);
-      console.log(`From: ${from}, To: ${to}, Value: ${ethers.formatEther(value)} ETN`);
+      console.log(`From: ${from}, To: ${to}, Value: ${ethers.formatEther(value)} S`);
       console.log(`Reason: ${reason}`);
       
       // Save suspicious transaction to database
@@ -264,7 +264,7 @@ const analyzeTransaction = async (tx, blockNumber) => {
 
 // Set up event listeners for contract events
 const setupEventListeners = () => {
-  console.log('Setting up event polling (filters disabled on Electroneum RPC)');
+  console.log('Setting up event polling (filters disabled on Sonic RPC)');
   
   // Instead of using filters, we'll poll for events in each new block
   // This is a workaround for RPC providers that don't support eth_newFilter
@@ -347,7 +347,7 @@ const setupEventListeners = () => {
           const [from, to, amount, timestamp, reason] = event.args;
           
           console.log(`Suspicious transaction detected by contract`);
-          console.log(`From: ${from}, To: ${to}, Amount: ${ethers.formatEther(amount)} ETN`);
+          console.log(`From: ${from}, To: ${to}, Amount: ${ethers.formatEther(amount)} S`);
           console.log(`Reason: ${reason}`);
           
           // Save suspicious transaction to database

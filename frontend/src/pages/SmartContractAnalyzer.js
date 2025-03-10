@@ -294,7 +294,7 @@ const SmartContractAnalyzer = () => {
         Paste your contract code or enter a contract address to get started.
       </Text>
       
-      <Tabs variant="enclosed" colorScheme="electroneum" mb={8}>
+      <Tabs variant="enclosed" colorScheme="sonic" mb={8}>
         <TabList>
           <Tab>Analyze Code</Tab>
           <Tab>Results</Tab>
@@ -312,8 +312,8 @@ const SmartContractAnalyzer = () => {
                   bg="gray.700"
                   color="white"
                   borderColor="gray.600"
-                  _hover={{ borderColor: 'electroneum.400' }}
-                  _focus={{ borderColor: 'electroneum.400', boxShadow: '0 0 0 1px var(--chakra-colors-electroneum-400)' }}
+                  _hover={{ borderColor: 'sonic.400' }}
+                  _focus={{ borderColor: 'sonic.400', boxShadow: '0 0 0 1px var(--chakra-colors-sonic-400)' }}
                 />
                 <FormHelperText>If you provide an address, it will be included in the analysis report</FormHelperText>
               </FormControl>
@@ -346,15 +346,15 @@ const SmartContractAnalyzer = () => {
                   bg="gray.700"
                   color="white"
                   borderColor="gray.600"
-                  _hover={{ borderColor: 'electroneum.400' }}
-                  _focus={{ borderColor: 'electroneum.400', boxShadow: '0 0 0 1px var(--chakra-colors-electroneum-400)' }}
+                  _hover={{ borderColor: 'sonic.400' }}
+                  _focus={{ borderColor: 'sonic.400', boxShadow: '0 0 0 1px var(--chakra-colors-sonic-400)' }}
                   fontFamily="monospace"
                 />
               </FormControl>
               
               <Button 
                 leftIcon={<FiCode />}
-                colorScheme="electroneum" 
+                colorScheme="sonic" 
                 onClick={analyzeContractCode}
                 isLoading={isAnalyzing}
                 loadingText="Analyzing..."
@@ -376,7 +376,7 @@ const SmartContractAnalyzer = () => {
           <TabPanel>
             {isAnalyzing ? (
               <Box textAlign="center" py={10}>
-                <Spinner size="xl" color="electroneum.500" mb={4} />
+                <Spinner size="xl" color="sonic.500" mb={4} />
                 <Text color="white">Analyzing smart contract...</Text>
                 <Text color="gray.400" fontSize="sm" mt={2}>This may take a few moments</Text>
               </Box>
@@ -498,7 +498,7 @@ const SmartContractAnalyzer = () => {
                           <Text color="gray.300" mb={2}>{vuln.description}</Text>
                           <Divider my={2} borderColor="gray.600" />
                           <Text color="white" fontWeight="bold" mb={1}>Recommendation:</Text>
-                          <Text color="electroneum.300">{vuln.recommendation}</Text>
+                          <Text color="sonic.300">{vuln.recommendation}</Text>
                         </Box>
                       ))}
                     </VStack>

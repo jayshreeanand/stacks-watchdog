@@ -48,7 +48,7 @@ const Navbar = () => {
   // View address in explorer
   const viewInExplorer = () => {
     if (account) {
-      window.open(`https://explorer.electroneum.com/address/${account}`, '_blank');
+      window.open(`https://explorer.sonic.com/address/${account}`, '_blank');
     }
   };
 
@@ -83,6 +83,11 @@ const Navbar = () => {
       duration: 3000,
       isClosable: true,
     });
+  };
+
+  const handleViewOnExplorer = () => {
+    if (!account) return;
+    window.open(`https://testnet.sonicscan.org/address/${account}`, '_blank');
   };
 
   return (
@@ -120,7 +125,7 @@ const Navbar = () => {
                 as={Button}
                 size="sm"
                 rounded="md"
-                colorScheme="electroneum"
+                colorScheme="sonic"
                 leftIcon={<Icon as={FiUser} />}
               >
                 {formatAddress(account)}
@@ -151,17 +156,26 @@ const Navbar = () => {
               </MenuList>
             </Menu>
           ) : (
-            <Button
-              size="sm"
-              rounded="md"
-              colorScheme="electroneum"
-              leftIcon={<Icon as={FiShield} />}
-              onClick={handleConnectWallet}
-              isLoading={isConnecting}
-              loadingText="Connecting"
-            >
-              Connect Wallet
-            </Button>
+            <Menu>
+              <MenuButton
+                as={Button}
+                variant="ghost"
+                colorScheme="sonic"
+                leftIcon={<Icon as={FiShield} />}
+              >
+                Connect Wallet
+              </MenuButton>
+              <MenuList>
+                <MenuItem
+                  colorScheme="sonic"
+                  onClick={handleConnectWallet}
+                  isLoading={isConnecting}
+                  loadingText="Connecting"
+                >
+                  Connect Wallet
+                </MenuItem>
+              </MenuList>
+            </Menu>
           )}
         </HStack>
       </Flex>

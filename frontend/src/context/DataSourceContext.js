@@ -22,11 +22,9 @@ export const useDataSource = () => {
 
 // Provider component
 export const DataSourceProvider = ({ children }) => {
-  // Get initial data source from localStorage or default to mock
-  const [dataSource, setDataSource] = useState(() => {
-    const savedDataSource = localStorage.getItem('etn_watchdog_data_source');
-    return savedDataSource || DATA_SOURCES.MOCK;
-  });
+  // Check if there's a data source in localStorage
+  const savedDataSource = localStorage.getItem('sonic_watchdog_data_source');
+  const [dataSource, setDataSource] = useState(savedDataSource || 'mock');
 
   // Initialize API URL when the app loads
   useEffect(() => {
@@ -37,31 +35,28 @@ export const DataSourceProvider = ({ children }) => {
   // Save data source preference to localStorage when it changes
   useEffect(() => {
     console.log('Data source changed to:', dataSource);
-    localStorage.setItem('etn_watchdog_data_source', dataSource);
+    localStorage.setItem('sonic_watchdog_data_source', dataSource);
   }, [dataSource]);
 
   // Function to change data source
-  const changeDataSource = (newSource) => {
-    console.log(`Changing data source from ${dataSource} to ${newSource}`);
-    if (Object.values(DATA_SOURCES).includes(newSource)) {
-      setDataSource(newSource);
-      setApiBaseUrl(newSource);
-    } else {
-      console.error(`Invalid data source: ${newSource}`);
-    }
+  const changeDataSource = (newDataSource) => {
+    if (newDataSource === dataSource) return;
+    
+    setDataSource(newDataSource);
+    localStorage.setItem('sonic_watchdog_data_source', newDataSource);
+    
+    // Reload the page to apply the new data source
+    window.location.reload();
   };
 
-  // Get the current network name for display
+  // Function to get the network name based on data source
   const getNetworkName = () => {
-    switch (dataSource) {
-      case DATA_SOURCES.MOCK:
-        return 'Mock Data';
-      case DATA_SOURCES.TESTNET:
-        return 'Electroneum Testnet';
-      case DATA_SOURCES.MAINNET:
-        return 'Electroneum Mainnet';
-      default:
-        return 'Unknown Network';
+    if (dataSource === 'mock') {
+      return 'Mock Data';
+    } else if (dataSource === 'testnet') {
+      return 'Sonic Blaze Testnet';
+    } else {
+      return 'Sonic Mainnet';
     }
   };
 

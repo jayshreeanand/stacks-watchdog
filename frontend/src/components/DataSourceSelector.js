@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Menu,
   MenuButton,
@@ -10,15 +10,20 @@ import {
   Icon,
   Badge,
   useColorModeValue,
-  useToast
+  useToast,
+  Box,
+  HStack,
+  VStack
 } from '@chakra-ui/react';
-import { FiDatabase, FiChevronDown, FiCheck } from 'react-icons/fi';
+import { FiDatabase, FiChevronDown, FiCheck, FiCode, FiGlobe } from 'react-icons/fi';
 import { useDataSource, DATA_SOURCES } from '../context/DataSourceContext';
 import { setApiBaseUrl } from '../utils/apiService';
 
 const DataSourceSelector = () => {
   const { dataSource, changeDataSource, getNetworkName } = useDataSource();
   const toast = useToast();
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
   
   // Get badge color based on data source
   const getBadgeColor = () => {
@@ -70,53 +75,94 @@ const DataSourceSelector = () => {
       case DATA_SOURCES.MOCK:
         return 'Mock Data';
       case DATA_SOURCES.TESTNET:
-        return 'Electroneum Testnet';
+        return 'Sonic Blaze Testnet';
       case DATA_SOURCES.MAINNET:
-        return 'Electroneum Mainnet';
+        return 'Sonic Mainnet';
       default:
         return 'Unknown';
     }
   };
   
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+  
+  const handleSelect = (newSource) => {
+    handleDataSourceChange(newSource);
+    setIsOpen(false);
+  };
+  
+  const getStatusColor = () => {
+    switch (dataSource) {
+      case DATA_SOURCES.MOCK:
+        return 'gray';
+      case DATA_SOURCES.TESTNET:
+        return 'orange';
+      case DATA_SOURCES.MAINNET:
+        return 'green';
+      default:
+        return 'gray';
+    }
+  };
+  
   return (
-    <Menu>
-      <MenuButton
-        as={Button}
-        rightIcon={<FiChevronDown />}
-        leftIcon={<FiDatabase />}
-        variant="outline"
+    <Box position="relative" ref={menuRef}>
+      <Button
+        onClick={toggleMenu}
         size="sm"
-        borderColor={useColorModeValue('gray.300', 'gray.600')}
-        _hover={{ bg: useColorModeValue('gray.100', 'gray.700') }}
+        variant="ghost"
+        rightIcon={<FiChevronDown />}
+        _hover={{ bg: 'gray.700' }}
       >
-        <Flex align="center">
-          <Text mr={2}>Data Source</Text>
-          <Badge colorScheme={getBadgeColor()} variant="solid" fontSize="xs">
-            {getNetworkName()}
-          </Badge>
-        </Flex>
-      </MenuButton>
-      <MenuList>
-        <MenuItem 
-          onClick={() => handleDataSourceChange(DATA_SOURCES.MOCK)}
-          icon={dataSource === DATA_SOURCES.MOCK ? <Icon as={FiCheck} color="green.500" /> : null}
+        <HStack spacing={2}>
+          <Box 
+            w="10px" 
+            h="10px" 
+            borderRadius="full" 
+            bg={getStatusColor()} 
+          />
+          <Text>{getNetworkName()}</Text>
+        </HStack>
+      </Button>
+      
+      {isOpen && (
+        <Box
+          position="absolute"
+          right="0"
+          mt="2"
+          w="200px"
+          bg="gray.800"
+          borderRadius="md"
+          boxShadow="lg"
+          zIndex="dropdown"
+          p="2"
         >
-          Mock Data
-        </MenuItem>
-        <MenuItem 
-          onClick={() => handleDataSourceChange(DATA_SOURCES.TESTNET)}
-          icon={dataSource === DATA_SOURCES.TESTNET ? <Icon as={FiCheck} color="green.500" /> : null}
-        >
-          Electroneum Testnet
-        </MenuItem>
-        <MenuItem 
-          onClick={() => handleDataSourceChange(DATA_SOURCES.MAINNET)}
-          icon={dataSource === DATA_SOURCES.MAINNET ? <Icon as={FiCheck} color="green.500" /> : null}
-        >
-          Electroneum Mainnet
-        </MenuItem>
-      </MenuList>
-    </Menu>
+          <VStack align="stretch" spacing="1">
+            <MenuItem
+              isActive={dataSource === DATA_SOURCES.MOCK}
+              onClick={() => handleSelect(DATA_SOURCES.MOCK)}
+              icon={<FiDatabase />}
+            >
+              Mock Data
+            </MenuItem>
+            <MenuItem
+              isActive={dataSource === DATA_SOURCES.TESTNET}
+              onClick={() => handleSelect(DATA_SOURCES.TESTNET)}
+              icon={<FiCode />}
+            >
+              Sonic Blaze Testnet
+            </MenuItem>
+            <MenuItem
+              isActive={dataSource === DATA_SOURCES.MAINNET}
+              onClick={() => handleSelect(DATA_SOURCES.MAINNET)}
+              icon={<FiGlobe />}
+            >
+              Sonic Mainnet
+            </MenuItem>
+          </VStack>
+        </Box>
+      )}
+    </Box>
   );
 };
 

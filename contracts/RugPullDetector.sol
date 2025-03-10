@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /**
  * @title RugPullDetector
- * @dev Contract for detecting potential rug pulls on Electroneum blockchain
+ * @dev Contract for detecting potential rug pulls on Sonic blockchain
  */
 contract RugPullDetector is Ownable {
     // Events

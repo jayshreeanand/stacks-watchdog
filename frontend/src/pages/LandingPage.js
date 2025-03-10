@@ -16,6 +16,7 @@ import {
   VStack,
   HStack,
   Badge,
+  Divider,
 } from '@chakra-ui/react';
 import { FaShieldAlt, FaSearch, FaExclamationTriangle, FaBell, FaChartLine, FaLock } from 'react-icons/fa';
 
@@ -81,7 +82,7 @@ const LandingPage = () => {
                   position={'relative'}
                   color={'blue.400'}
                 >
-                  ETN Watchdog
+                  Sonic Watchdog AI
                 </Text>
                 <br />
                 <Text as={'span'} color={useColorModeValue('gray.900', 'gray.100')}>
@@ -90,8 +91,8 @@ const LandingPage = () => {
               </Heading>
               <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize={'xl'}>
                 Protect your assets with real-time blockchain security monitoring. 
-                ETN Watchdog detects suspicious transactions, potential rug pulls, 
-                and wallet drainers on the Electroneum blockchain.
+                Sonic Watchdog AI detects suspicious transactions, potential rug pulls, 
+                and wallet drainers on the Sonic blockchain.
               </Text>
               <Stack
                 spacing={{ base: 4, sm: 6 }}
@@ -232,7 +233,7 @@ const LandingPage = () => {
               <Box>
                 <Heading size="md" mb={2}>1. Connect Your Wallet</Heading>
                 <Text color={useColorModeValue('gray.600', 'gray.400')}>
-                  Securely connect your Electroneum wallet to our platform to start monitoring your transactions.
+                  Securely connect your Sonic wallet to our platform to start monitoring your transactions.
                 </Text>
               </Box>
               <Box>
@@ -300,7 +301,7 @@ const LandingPage = () => {
                 Start Protecting Your Assets Today
               </Heading>
               <Text color={'white'} fontSize={{ base: 'md', md: 'lg' }}>
-                Join thousands of users who trust ETN Watchdog to keep their blockchain assets secure.
+                Join thousands of users who trust Sonic Watchdog AI to keep their blockchain assets secure.
               </Text>
               <Button
                 as={RouterLink}
@@ -331,7 +332,7 @@ const LandingPage = () => {
           justify={{ base: 'center', md: 'space-between' }}
           align={{ base: 'center', md: 'center' }}
         >
-          <Text>© 2023 ETN Watchdog. All rights reserved</Text>
+          <Text>© 2023 Sonic Watchdog AI. All rights reserved</Text>
           <Stack direction={'row'} spacing={6}>
             <Link href={'#'}>Privacy</Link>
             <Link href={'#'}>Terms</Link>

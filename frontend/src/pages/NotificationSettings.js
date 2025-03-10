@@ -28,6 +28,7 @@ import {
   SliderThumb,
   SliderMark,
   Tooltip,
+  Flex,
 } from '@chakra-ui/react';
 import { FaBell, FaEnvelope, FaMobile, FaDesktop, FaShieldAlt, FaSave } from 'react-icons/fa';
 import { useWallet } from '../context/WalletContext';
@@ -284,7 +285,7 @@ const NotificationSettings = () => {
           <CardBody>
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
               <FormControl>
-                <FormLabel>Transaction Amount Threshold (ETN)</FormLabel>
+                <FormLabel>Transaction Amount Threshold (S)</FormLabel>
                 <Box pt={6} pb={2}>
                   <Slider
                     id="transaction-slider"
@@ -314,7 +315,7 @@ const NotificationSettings = () => {
                       color="white"
                       placement="top"
                       isOpen={showTooltip}
-                      label={`${sliderValue} ETN`}
+                      label={`${sliderValue} S`}
                     >
                       <SliderThumb boxSize={6}>
                         <Box color="blue.500" as={FaBell} />
@@ -322,8 +323,15 @@ const NotificationSettings = () => {
                     </Tooltip>
                   </Slider>
                 </Box>
-                <Text mt={2} fontSize="sm" color="gray.500">
-                  You will be notified of transactions larger than {sliderValue} ETN
+                <Flex justify="space-between" mt={2}>
+                  <Text>0 S</Text>
+                  <Badge colorScheme="blue" p={1} borderRadius="md">
+                    {sliderValue} S
+                  </Badge>
+                  <Text>10,000 S</Text>
+                </Flex>
+                <Text fontSize="sm" color="gray.500" mt={2}>
+                  You will be notified of transactions larger than {sliderValue} S
                 </Text>
               </FormControl>
 

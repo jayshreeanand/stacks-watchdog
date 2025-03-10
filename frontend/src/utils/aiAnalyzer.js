@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 /**
- * AI-powered security analysis utilities for ETN Watchdog
+ * AI-powered security analysis utilities for Sonic Watchdog AI
  */
 class AIAnalyzer {
   constructor() {
@@ -164,28 +164,30 @@ class AIAnalyzer {
       
       // Prepare the prompt for the AI model
       const prompt = `
-        Analyze the following Electroneum blockchain transaction for suspicious activity:
+        Analyze the following Sonic blockchain transaction for suspicious activity:
         
         Transaction Hash: ${transaction.hash}
         From: ${transaction.from}
         To: ${transaction.to}
-        Value: ${transaction.value} ETN
-        Gas Price: ${transaction.gasPrice || 'N/A'}
-        Gas Used: ${transaction.gasUsed || 'N/A'}
+        Value: ${transaction.value} S
+        Data: ${transaction.data ? transaction.data.substring(0, 100) + '...' : 'None'}
+        Gas Used: ${transaction.gasUsed}
+        Timestamp: ${transaction.timestamp}
         
-        Identify any potential suspicious patterns including but not limited to:
-        1. Unusual transaction amounts
-        2. Known malicious addresses
-        3. Suspicious contract interactions
-        4. Potential money laundering patterns
-        5. Phishing or scam indicators
+        Provide a security analysis of this transaction, including:
+        1. Is this transaction suspicious? Why or why not?
+        2. What is the likely purpose of this transaction?
+        3. Are there any security concerns with this transaction?
+        4. What actions should the user take, if any?
         
-        Format your response as a JSON object with the following structure:
+        Format your response as JSON with the following fields:
         {
-          "isSuspicious": true|false,
-          "suspiciousScore": 0-100,
-          "reason": "Detailed explanation of why the transaction is suspicious or not",
-          "recommendedAction": "What action should be taken"
+          "isSuspicious": boolean,
+          "riskLevel": "low" | "medium" | "high" | "critical",
+          "analysis": "detailed analysis here",
+          "likelyPurpose": "purpose here",
+          "securityConcerns": ["concern 1", "concern 2"],
+          "recommendedActions": ["action 1", "action 2"]
         }
       `;
 
@@ -261,14 +263,14 @@ class AIAnalyzer {
         ? transactions.map(tx => `
           Hash: ${tx.hash}
           To: ${tx.to}
-          Value: ${tx.value} ETN
+          Value: ${tx.value} S
           Timestamp: ${tx.timestamp}
         `).join('\n')
         : 'No transaction data provided';
 
       // Prepare the prompt for the AI model
       const prompt = `
-        Analyze the following Electroneum blockchain address for suspicious activity:
+        Analyze the following Sonic blockchain address for suspicious activity:
         
         Address: ${address}
         

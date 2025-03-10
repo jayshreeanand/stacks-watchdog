@@ -166,12 +166,12 @@ const SecurityScanner = () => {
       scanDate: new Date().toISOString(),
       securityScore: securityScore,
       networkInfo: {
-        name: 'Electroneum Mainnet',
+        name: 'Sonic Mainnet',
         chainId: '1',
         lastActivity: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
       },
       balances: [
-        { token: 'ETN', balance: (Math.random() * 1000).toFixed(2), value: (Math.random() * 10000).toFixed(2) },
+        { token: 'S', balance: (Math.random() * 1000).toFixed(2), value: (Math.random() * 10000).toFixed(2) },
         { token: 'USDT', balance: (Math.random() * 5000).toFixed(2), value: (Math.random() * 5000).toFixed(2) },
         { token: 'WETH', balance: (Math.random() * 10).toFixed(4), value: (Math.random() * 20000).toFixed(2) },
       ],
@@ -195,7 +195,7 @@ const SecurityScanner = () => {
         {
           id: 'wd2',
           address: drainerAddresses[1],
-          name: 'ETN Swap Scam',
+          name: 'S Swap Scam',
           type: 'Phishing Drainer',
           riskLevel: 'high',
           detectedAt: new Date(2025, 2, 1).toISOString(),
@@ -274,9 +274,9 @@ const SecurityScanner = () => {
         {
           id: 'di2',
           drainerAddress: drainerAddresses[1],
-          drainerName: 'ETN Swap Scam',
+          drainerName: 'S Swap Scam',
           interactionType: 'Swap',
-          asset: 'ETN',
+          asset: 'S',
           amount: '50',
           timestamp: new Date(2025, 2, 1).toISOString(),
           transactionHash: '0x5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d',
@@ -289,7 +289,7 @@ const SecurityScanner = () => {
           drainerAddress: drainerAddresses[3],
           drainerName: 'NFT Approval Scam',
           interactionType: 'NFT Approval',
-          asset: 'ETN NFT Collection',
+          asset: 'S NFT Collection',
           amount: 'All NFTs',
           timestamp: new Date(2025, 1, 23).toISOString(),
           transactionHash: '0x6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e',
@@ -314,7 +314,7 @@ const SecurityScanner = () => {
           title: 'Interaction with Flagged Contract',
           description: `You have interacted with a contract flagged for malicious activity: 0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063`,
           recommendation: 'Avoid further interactions with this contract and revoke any approvals',
-          affectedAsset: 'ETN',
+          affectedAsset: 'S',
           detectedAt: new Date(2025, 2, 3).toISOString(),
         },
         {
@@ -332,7 +332,7 @@ const SecurityScanner = () => {
           title: 'Vulnerable Transaction Patterns',
           description: 'Your transaction patterns might make you susceptible to front-running attacks',
           recommendation: 'Consider using private transactions or transaction batching',
-          affectedAsset: 'ETN',
+          affectedAsset: 'S',
           detectedAt: new Date(2025, 1, 28).toISOString(),
         },
         {
@@ -350,7 +350,7 @@ const SecurityScanner = () => {
           title: 'Frequent Small Transactions',
           description: 'You have many small transactions which may lead to unnecessary gas fees',
           recommendation: 'Batch transactions when possible to save on gas fees',
-          affectedAsset: 'ETN',
+          affectedAsset: 'S',
           detectedAt: new Date(2025, 1, 20).toISOString(),
         },
       ],
@@ -358,7 +358,7 @@ const SecurityScanner = () => {
         {
           hash: '0x3a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b',
           type: 'Transfer',
-          asset: 'ETN',
+          asset: 'S',
           amount: '25.5',
           timestamp: new Date(2025, 2, 6).toISOString(),
           to: '0x9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b',
@@ -378,7 +378,7 @@ const SecurityScanner = () => {
         {
           hash: '0x2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b',
           type: 'Swap',
-          asset: 'ETN → WETH',
+          asset: 'S → WETH',
           amount: '100 → 0.05',
           timestamp: new Date(2025, 2, 1).toISOString(),
           to: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
@@ -392,7 +392,7 @@ const SecurityScanner = () => {
         'Enable multi-signature for critical operations',
         'Regularly check for phishing attempts and suspicious websites',
         'Monitor your wallet activity with a blockchain explorer',
-        'Use a dedicated security tool like ETN Watchdog regularly',
+        'Use a dedicated security tool like Sonic Watchdog AI regularly',
         'Consider using a time-lock for large transactions',
         'Verify smart contract addresses before interacting with them',
         'Keep your private keys secure and never share them',
@@ -458,7 +458,7 @@ const SecurityScanner = () => {
       
       <Flex align="center" mb={6}>
         <Text color="gray.400">
-          Advanced security tools for the Electroneum blockchain
+          Advanced security tools for the Sonic blockchain
         </Text>
         <BlockExplorerLink 
           type="explorer" 
@@ -484,7 +484,7 @@ const SecurityScanner = () => {
           _hover={{ transform: 'translateY(-5px)', transition: 'transform 0.3s' }}
         >
           <Flex align="center" mb={4}>
-            <Icon as={FiShield} boxSize={6} color="electroneum.400" mr={3} />
+            <Icon as={FiShield} boxSize={6} color="sonic.400" mr={3} />
             <Heading as="h2" size="md" color="white">
               Wallet Security Check
             </Heading>
@@ -495,7 +495,7 @@ const SecurityScanner = () => {
           <Button
             onClick={handleScan}
             rightIcon={<FiSearch />}
-            colorScheme="electroneum"
+            colorScheme="sonic"
             variant="outline"
             mb={4}
             isLoading={isScanning}
@@ -516,7 +516,7 @@ const SecurityScanner = () => {
               }}
               bg="gray.700"
               border="none"
-              _focus={{ borderColor: "electroneum.400" }}
+              _focus={{ borderColor: "sonic.400" }}
               size="sm"
             />
           </FormControl>
@@ -529,7 +529,7 @@ const SecurityScanner = () => {
               <Progress 
                 value={scanProgress} 
                 size="sm" 
-                colorScheme="electroneum" 
+                colorScheme="sonic" 
                 borderRadius="md"
                 hasStripe
                 isAnimated
@@ -546,7 +546,7 @@ const SecurityScanner = () => {
           _hover={{ transform: 'translateY(-5px)', transition: 'transform 0.3s' }}
         >
           <Flex align="center" mb={4}>
-            <Icon as={FiCode} boxSize={6} color="electroneum.400" mr={3} />
+            <Icon as={FiCode} boxSize={6} color="sonic.400" mr={3} />
             <Heading as="h2" size="md" color="white">
               Smart Contract Analyzer
             </Heading>
@@ -558,7 +558,7 @@ const SecurityScanner = () => {
             as={RouterLink}
             to="/app/smart-contract-analyzer"
             rightIcon={<FiCode />}
-            colorScheme="electroneum"
+            colorScheme="sonic"
             variant="outline"
           >
             Analyze Contract
@@ -568,7 +568,7 @@ const SecurityScanner = () => {
       
       <Tabs 
         variant="enclosed" 
-        colorScheme="electroneum" 
+        colorScheme="sonic" 
         id="wallet" 
         index={tabIndex} 
         onChange={(index) => setTabIndex(index)}
@@ -606,7 +606,7 @@ const SecurityScanner = () => {
                 as={RouterLink}
                 to="/app/token-approvals"
                 rightIcon={<FiAlertTriangle />}
-                colorScheme="electroneum"
+                colorScheme="sonic"
               >
                 Manage Approvals
               </Button>
@@ -674,7 +674,7 @@ const SecurityScanner = () => {
                               bg="gray.700" 
                               borderRadius="md"
                               borderLeft="4px solid"
-                              borderLeftColor="electroneum.400"
+                              borderLeftColor="sonic.400"
                             >
                               <Stat>
                                 <StatLabel color="gray.400">{balance.token}</StatLabel>
@@ -1012,7 +1012,7 @@ const SecurityScanner = () => {
                     
                     <Flex justify="center" mt={8}>
                       <Button
-                        colorScheme="electroneum"
+                        colorScheme="sonic"
                         leftIcon={<FiSearch />}
                         onClick={() => {
                           setScanComplete(false);

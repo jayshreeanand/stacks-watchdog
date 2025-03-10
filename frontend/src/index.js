@@ -7,32 +7,20 @@ import './index.css';
 import { WalletProvider } from './context/WalletContext';
 import { DataSourceProvider } from './context/DataSourceContext';
 
-// Define the theme
+// Define custom theme
 const theme = extendTheme({
   colors: {
-    brand: {
-      50: '#e6f7ff',
-      100: '#b3e0ff',
-      200: '#80caff',
-      300: '#4db3ff',
-      400: '#1a9dff',
-      500: '#0080ff', // Primary color
-      600: '#0066cc',
-      700: '#004d99',
-      800: '#003366',
-      900: '#001a33',
-    },
-    electroneum: {
-      50: '#f2f9ff',
-      100: '#d9ecff',
-      200: '#b3d9ff',
-      300: '#8cc6ff',
-      400: '#66b3ff',
-      500: '#3399ff', // Electroneum blue
-      600: '#0080ff',
-      700: '#0066cc',
-      800: '#004d99',
-      900: '#003366',
+    sonic: {
+      50: '#e6f0ff',
+      100: '#cce0ff',
+      200: '#99c2ff',
+      300: '#66a3ff',
+      400: '#3385ff',
+      500: '#0066ff', // Sonic blue
+      600: '#0052cc',
+      700: '#003d99',
+      800: '#002966',
+      900: '#001433',
     },
     alert: {
       low: '#38A169',     // Green
@@ -51,25 +39,17 @@ const theme = extendTheme({
   },
 });
 
-// Initialize the app with the data source from localStorage or URL params
-const initializeDataSource = () => {
-  // Check URL parameters first
-  const urlParams = new URLSearchParams(window.location.search);
-  const dataSourceParam = urlParams.get('dataSource');
-  
-  if (dataSourceParam) {
-    console.log(`Data source from URL: ${dataSourceParam}`);
-    localStorage.setItem('etn_watchdog_data_source', dataSourceParam);
-    return;
-  }
-  
-  // Otherwise, use localStorage or default
-  const savedDataSource = localStorage.getItem('etn_watchdog_data_source');
-  console.log(`Data source from localStorage: ${savedDataSource || 'not set (using default)'}`);
-};
+// Check for data source in URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+const dataSourceParam = urlParams.get('dataSource');
 
-// Initialize data source before rendering
-initializeDataSource();
+if (dataSourceParam) {
+  localStorage.setItem('sonic_watchdog_data_source', dataSourceParam);
+}
+
+// Get data source from localStorage or default to mock
+const savedDataSource = localStorage.getItem('sonic_watchdog_data_source');
+const initialDataSource = savedDataSource || 'mock';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

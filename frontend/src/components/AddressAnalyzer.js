@@ -57,12 +57,12 @@ const AddressAnalyzer = () => {
       let transactions = [];
       
       try {
-        // Try to fetch transactions from the Electroneum API
+        // Try to fetch transactions from the Sonic API
         // This is a placeholder - you would need to implement the actual API call
         console.log('Fetching transactions for address:', address);
         
         // Example of how you might fetch transactions:
-        // const response = await axios.get(`https://api.electroneum.com/v1/transactions?address=${address}&limit=10`);
+        // const response = await axios.get(`https://api.sonic.com/v1/transactions?address=${address}&limit=10`);
         // transactions = response.data.transactions;
         
         // For now, we'll use mock transactions
@@ -161,7 +161,7 @@ const AddressAnalyzer = () => {
       </Heading>
       
       <Text color="gray.400" mb={6}>
-        Analyze any Electroneum address for suspicious activity and security risks.
+        Analyze any Sonic address for suspicious activity and security risks.
       </Text>
       
       <Box mb={6}>
@@ -175,13 +175,13 @@ const AddressAnalyzer = () => {
               bg="gray.700"
               color="white"
               borderColor="gray.600"
-              _hover={{ borderColor: 'electroneum.400' }}
-              _focus={{ borderColor: 'electroneum.400', boxShadow: '0 0 0 1px var(--chakra-colors-electroneum-400)' }}
+              _hover={{ borderColor: 'sonic.400' }}
+              _focus={{ borderColor: 'sonic.400', boxShadow: '0 0 0 1px var(--chakra-colors-sonic-400)' }}
               mr={2}
             />
             <Button 
               leftIcon={<FiSearch />}
-              colorScheme="electroneum" 
+              colorScheme="sonic" 
               onClick={analyzeAddress}
               isLoading={isAnalyzing}
               loadingText="Analyzing..."
@@ -190,7 +190,7 @@ const AddressAnalyzer = () => {
               Analyze
             </Button>
           </Flex>
-          <FormHelperText>Enter any Electroneum address to analyze for suspicious activity</FormHelperText>
+          <FormHelperText>Enter any Sonic address to analyze for suspicious activity</FormHelperText>
         </FormControl>
       </Box>
       
@@ -204,7 +204,7 @@ const AddressAnalyzer = () => {
       
       {isAnalyzing ? (
         <Box textAlign="center" py={6}>
-          <Spinner size="xl" color="electroneum.500" mb={4} />
+          <Spinner size="xl" color="sonic.500" mb={4} />
           <Text color="white">Analyzing address...</Text>
           <Text color="gray.400" fontSize="sm" mt={2}>This may take a few moments</Text>
         </Box>
@@ -294,7 +294,7 @@ const AddressAnalyzer = () => {
               <List spacing={2}>
                 {analysisResult.recommendedActions.map((action, index) => (
                   <ListItem key={index} color="gray.300">
-                    <ListIcon as={FiShield} color="electroneum.400" />
+                    <ListIcon as={FiShield} color="sonic.400" />
                     {action}
                   </ListItem>
                 ))}

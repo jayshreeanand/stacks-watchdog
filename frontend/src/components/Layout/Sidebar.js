@@ -9,6 +9,7 @@ import {
   Link,
   Divider,
   Image,
+  CloseButton,
 } from '@chakra-ui/react';
 import { 
   FiHome, 
@@ -38,10 +39,10 @@ const NavItem = ({ icon, children, to, ...rest }) => {
           borderRadius="lg"
           role="group"
           cursor="pointer"
-          bg={isActive ? 'electroneum.500' : 'transparent'}
+          bg={isActive ? 'sonic.500' : 'transparent'}
           color={isActive ? 'white' : 'gray.300'}
           _hover={{
-            bg: 'electroneum.400',
+            bg: 'sonic.400',
             color: 'white',
           }}
           {...rest}
@@ -60,7 +61,7 @@ const NavItem = ({ icon, children, to, ...rest }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
   return (
     <Box
       bg="gray.800"
@@ -72,9 +73,10 @@ const Sidebar = () => {
       zIndex="docked"
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontWeight="bold" color="white">
-          ETN Watchdog
+        <Text fontSize="2xl" fontWeight="bold">
+          Sonic Watchdog
         </Text>
+        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       <VStack spacing={1} align="stretch" mt={6}>
         <NavItem to="/app/dashboard" icon={FiHome}>
@@ -104,10 +106,10 @@ const Sidebar = () => {
         <Divider my={4} borderColor="gray.700" />
         <Box px={8} py={4}>
           <Text color="gray.400" fontSize="sm">
-            ETN Watchdog v0.1.0
+            Sonic Watchdog v0.1.0
           </Text>
           <Text color="gray.500" fontSize="xs" mt={1}>
-            Protecting the Electroneum ecosystem
+            Protecting the Sonic ecosystem
           </Text>
         </Box>
       </VStack>

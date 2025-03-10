@@ -181,7 +181,7 @@ const AnalyzeContract = () => {
               fontFamily="monospace"
             />
             <Button
-              colorScheme="electroneum"
+              colorScheme="sonic"
               leftIcon={<FiSearch />}
               onClick={handleAnalyze}
               isLoading={loading}
@@ -201,7 +201,7 @@ const AnalyzeContract = () => {
         {loading && (
           <Box my={6}>
             <Text color="gray.300" mb={2}>Analyzing contract...</Text>
-            <Progress size="sm" isIndeterminate colorScheme="electroneum" />
+            <Progress size="sm" isIndeterminate colorScheme="sonic" />
           </Box>
         )}
         
@@ -288,7 +288,7 @@ const AnalyzeContract = () => {
                   <List spacing={2}>
                     {analysisResult.recommendations.map((rec, index) => (
                       <ListItem key={index} display="flex" alignItems="center">
-                        <ListIcon as={FiShield} color="electroneum.400" />
+                        <ListIcon as={FiShield} color="sonic.400" />
                         <Text color="white">{rec}</Text>
                       </ListItem>
                     ))}

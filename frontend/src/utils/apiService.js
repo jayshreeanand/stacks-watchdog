@@ -6,10 +6,10 @@ let API_BASE_URL = '/api';
 let CURRENT_DATA_SOURCE = 'mock';
 
 // Block explorer URLs
-const EXPLORER_URLS = {
-  mock: process.env.REACT_APP_TESTNET_EXPLORER_URL || 'https://testnet-blockexplorer.electroneum.com/',
-  testnet: process.env.REACT_APP_TESTNET_EXPLORER_URL || 'https://testnet-blockexplorer.electroneum.com/',
-  mainnet: process.env.REACT_APP_MAINNET_EXPLORER_URL || 'https://blockexplorer.electroneum.com/'
+export const explorerUrls = {
+  mock: process.env.REACT_APP_TESTNET_EXPLORER_URL || 'https://testnet.sonicscan.org/',
+  testnet: process.env.REACT_APP_TESTNET_EXPLORER_URL || 'https://testnet.sonicscan.org/',
+  mainnet: process.env.REACT_APP_MAINNET_EXPLORER_URL || 'https://sonicscan.org/'
 };
 
 // API endpoints
@@ -55,7 +55,7 @@ export const setApiBaseUrl = (dataSource) => {
 
 // Get the current block explorer URL
 export const getExplorerUrl = () => {
-  return EXPLORER_URLS[CURRENT_DATA_SOURCE] || EXPLORER_URLS.testnet;
+  return explorerUrls[CURRENT_DATA_SOURCE] || explorerUrls.testnet;
 };
 
 // Get transaction URL in block explorer
@@ -100,7 +100,7 @@ const getMockData = (type) => {
       return [
         {
           address: '0x1234567890abcdef1234567890abcdef12345678',
-          name: `${mockPrefix} Fake ETN Airdrop`,
+          name: `${mockPrefix} Fake Sonic Airdrop`,
           riskLevel: 'high',
           victims: CURRENT_DATA_SOURCE === 'mock' ? 12 : 
                   CURRENT_DATA_SOURCE === 'testnet' ? 5 : 18,
@@ -108,14 +108,14 @@ const getMockData = (type) => {
                       CURRENT_DATA_SOURCE === 'testnet' ? 15000 : 75000,
           lastActive: '2025-03-05T12:30:45Z',
           isVerified: true,
-          description: `${mockPrefix} This contract pretends to be an official Electroneum airdrop but steals user funds when they approve token transfers.`,
+          description: `${mockPrefix} This contract pretends to be an official Sonic airdrop but steals user funds when they approve token transfers.`,
           createdAt: '2025-02-28T10:15:30Z',
           verifiedBy: 'SecurityTeam',
           verificationNotes: 'Confirmed malicious behavior through code analysis and victim reports.',
         },
         {
           address: '0xabcdef1234567890abcdef1234567890abcdef12',
-          name: `${mockPrefix} ETN Staking Scam`,
+          name: `${mockPrefix} Sonic Staking Scam`,
           riskLevel: 'critical',
           victims: CURRENT_DATA_SOURCE === 'mock' ? 28 : 
                   CURRENT_DATA_SOURCE === 'testnet' ? 8 : 35,
@@ -123,7 +123,7 @@ const getMockData = (type) => {
                       CURRENT_DATA_SOURCE === 'testnet' ? 40000 : 180000,
           lastActive: '2025-03-04T18:15:22Z',
           isVerified: true,
-          description: `${mockPrefix} Fake staking platform that promises high returns but steals deposited ETN tokens.`,
+          description: `${mockPrefix} Fake staking platform that promises high returns but steals deposited Sonic tokens.`,
           createdAt: '2025-02-25T08:30:15Z',
           verifiedBy: 'SecurityTeam',
           verificationNotes: 'Multiple victim reports confirmed. Contract has backdoor functions.',
@@ -143,7 +143,7 @@ const getMockData = (type) => {
         },
         {
           address: '0x567890abcdef1234567890abcdef1234567890ab',
-          name: `${mockPrefix} ETN Token Bridge Scam`,
+          name: `${mockPrefix} Sonic Token Bridge Scam`,
           riskLevel: 'high',
           victims: CURRENT_DATA_SOURCE === 'mock' ? 9 : 
                   CURRENT_DATA_SOURCE === 'testnet' ? 4 : 14,
@@ -166,7 +166,7 @@ const getMockData = (type) => {
                       CURRENT_DATA_SOURCE === 'testnet' ? 2000 : 8000,
           lastActive: '2025-03-01T08:11:05Z',
           isVerified: false,
-          description: `${mockPrefix} Mobile app that claims to be an ETN wallet but steals private keys.`,
+          description: `${mockPrefix} Mobile app that claims to be an Sonic wallet but steals private keys.`,
           createdAt: '2025-03-01T07:55:30Z',
         }
       ];

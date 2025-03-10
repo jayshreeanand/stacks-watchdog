@@ -8,11 +8,11 @@ const { ethers } = require('ethers');
 const TransactionMonitorArtifact = require('../artifacts/contracts/TransactionMonitor.sol/TransactionMonitor.json');
 const RugPullDetectorArtifact = require('../artifacts/contracts/RugPullDetector.sol/RugPullDetector.json');
 const WalletDrainerDetectorArtifact = require('../artifacts/contracts/WalletDrainerDetector.sol/WalletDrainerDetector.json');
-const ETNWatchdogRegistryArtifact = require('../artifacts/contracts/ETNWatchdogRegistry.sol/ETNWatchdogRegistry.json');
+const SWatchdogRegistryArtifact = require('../artifacts/contracts/SWatchdogRegistry.sol/SWatchdogRegistry.json');
 
 async function main() {
   try {
-    console.log("Deploying ETN Watchdog contracts to testnet...");
+    console.log("Deploying Sonic Watchdog contracts to testnet...");
     
     // Create provider and wallet
     const provider = new ethers.JsonRpcProvider(process.env.ELECTRONEUM_TESTNET_RPC_URL);
@@ -31,10 +31,10 @@ async function main() {
     
     // Check balance
     const balance = await provider.getBalance(address);
-    console.log(`Account balance: ${ethers.formatEther(balance)} ETN`);
+    console.log(`Account balance: ${ethers.formatEther(balance)} S`);
     
     if (balance === 0n) {
-      throw new Error("Account has no ETN. Please fund your account before deploying.");
+      throw new Error("Account has no Sonic (S) token. Please fund your account before deploying.");
     }
     
     // Deploy TransactionMonitor
@@ -78,11 +78,11 @@ async function main() {
     const walletDrainerDetectorAddress = await walletDrainerDetector.getAddress();
     console.log(`WalletDrainerDetector deployed to: ${walletDrainerDetectorAddress}`);
     
-    // Deploy ETNWatchdogRegistry
-    console.log("Deploying ETNWatchdogRegistry...");
+    // Deploy SWatchdogRegistry
+    console.log("Deploying SWatchdogRegistry...");
     const registryFactory = new ethers.ContractFactory(
-      ETNWatchdogRegistryArtifact.abi,
-      ETNWatchdogRegistryArtifact.bytecode,
+      SWatchdogRegistryArtifact.abi,
+      SWatchdogRegistryArtifact.bytecode,
       wallet
     );
     
@@ -93,7 +93,7 @@ async function main() {
     );
     await registry.waitForDeployment();
     const registryAddress = await registry.getAddress();
-    console.log(`ETNWatchdogRegistry deployed to: ${registryAddress}`);
+    console.log(`SWatchdogRegistry deployed to: ${registryAddress}`);
     
     console.log("Deployment complete!");
     
@@ -104,7 +104,7 @@ async function main() {
       walletDrainerDetector: walletDrainerDetectorAddress,
       registry: registryAddress,
       chainId: Number(network.chainId),
-      network: "electroneum_testnet"
+      network: "sonic_testnet"
     };
     
     fs.writeFileSync(

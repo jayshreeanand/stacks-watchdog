@@ -24,7 +24,7 @@ import {
   Skeleton,
   HStack,
 } from '@chakra-ui/react';
-import { FiAlertTriangle, FiTrendingUp, FiUsers, FiShield, FiExternalLink } from 'react-icons/fi';
+import { FiAlertTriangle, FiTrendingUp, FiUsers, FiShield, FiExternalLink, FiBell, FiDollarSign, FiUser } from 'react-icons/fi';
 import apiService, { getExplorerUrl } from '../utils/apiService';
 import { mockDashboardStats } from '../utils/mockData';
 import { useDataSource } from '../context/DataSourceContext';
@@ -41,6 +41,9 @@ const Dashboard = () => {
     activeDrainers: 0,
     totalVictims: 0,
     totalLost: 0,
+    securityScore: 0,
+    alertCount: 0,
+    monitoredWallets: 0,
   });
   const [recentDrainers, setRecentDrainers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -121,9 +124,9 @@ const Dashboard = () => {
           loading={loading}
         />
         <StatCard
-          title="Total ETN Lost"
-          value={`${stats.totalLost.toLocaleString()} ETN`}
-          icon={FiTrendingUp}
+          title="Total S Lost"
+          value={`${stats.totalLost.toLocaleString()} S`}
+          icon={FiDollarSign}
           color="purple.500"
           loading={loading}
         />
@@ -144,7 +147,7 @@ const Dashboard = () => {
             as={RouterLink}
             to="/wallet-drainers"
             size="sm"
-            colorScheme="electroneum"
+            colorScheme="sonic"
           >
             View All
           </Button>

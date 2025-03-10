@@ -22,6 +22,7 @@ import {
   SkeletonText,
   useToast,
   Icon,
+  TableContainer,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { FiSearch, FiPlus, FiFilter, FiExternalLink } from 'react-icons/fi';
@@ -83,7 +84,7 @@ const WalletDrainers = () => {
         <Button
           as={RouterLink}
           to="/analyze"
-          colorScheme="electroneum"
+          colorScheme="sonic"
           leftIcon={<FiPlus />}
         >
           Analyze New Contract
@@ -108,7 +109,7 @@ const WalletDrainers = () => {
             border="1px solid"
             borderColor="gray.700"
             _hover={{ borderColor: 'gray.600' }}
-            _focus={{ borderColor: 'electroneum.500', boxShadow: '0 0 0 1px var(--chakra-colors-electroneum-500)' }}
+            _focus={{ borderColor: 'sonic.500', boxShadow: '0 0 0 1px var(--chakra-colors-sonic-500)' }}
           />
         </InputGroup>
 
@@ -122,7 +123,7 @@ const WalletDrainers = () => {
               border="1px solid"
               borderColor="gray.700"
               _hover={{ borderColor: 'gray.600' }}
-              _focus={{ borderColor: 'electroneum.500' }}
+              _focus={{ borderColor: 'sonic.500' }}
               w={{ base: '100%', md: '150px' }}
             >
               <option value="all">All Risks</option>
@@ -149,59 +150,59 @@ const WalletDrainers = () => {
             No wallet drainers found matching your criteria.
           </Text>
         ) : (
-          <Table variant="simple" color="gray.200">
-            <Thead>
-              <Tr>
-                <Th color="gray.400">Address</Th>
-                <Th color="gray.400">Name</Th>
-                <Th color="gray.400">Risk Level</Th>
-                <Th color="gray.400" isNumeric>Victims</Th>
-                <Th color="gray.400" isNumeric>Total Stolen (ETN)</Th>
-                <Th color="gray.400">Last Active</Th>
-                <Th color="gray.400">Status</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {filteredDrainers.map((drainer) => (
-                <Tr key={drainer.address} _hover={{ bg: 'gray.700' }}>
-                  <Td>
-                    <Flex align="center">
-                      <Link
-                        as={RouterLink}
-                        to={`/app/wallet-drainers/${drainer.address}`}
-                        color="electroneum.400"
-                        fontWeight="medium"
-                        mr={2}
-                      >
-                        {formatAddress(drainer.address)}
-                      </Link>
-                      <BlockExplorerLink 
-                        type="address" 
-                        value={drainer.address} 
-                        showExternalIcon={true}
-                        truncate={false}
-                        label=""
-                      />
-                    </Flex>
-                  </Td>
-                  <Td>{drainer.name}</Td>
-                  <Td>
-                    <Badge {...getRiskBadgeProps(drainer.riskLevel)} />
-                  </Td>
-                  <Td isNumeric>{drainer.victims}</Td>
-                  <Td isNumeric>{drainer.totalStolen.toLocaleString()}</Td>
-                  <Td>{formatDate(drainer.lastActive)}</Td>
-                  <Td>
-                    <Badge
-                      colorScheme={drainer.isVerified ? 'green' : 'gray'}
-                    >
-                      {drainer.isVerified ? 'Verified' : 'Unverified'}
-                    </Badge>
-                  </Td>
+          <TableContainer mt={6}>
+            <Table variant="simple">
+              <Thead>
+                <Tr>
+                  <Th>Address</Th>
+                  <Th>Type</Th>
+                  <Th>Risk Level</Th>
+                  <Th isNumeric>Victims</Th>
+                  <Th color="gray.400" isNumeric>Total Stolen (S)</Th>
+                  <Th>Actions</Th>
                 </Tr>
-              ))}
-            </Tbody>
-          </Table>
+              </Thead>
+              <Tbody>
+                {filteredDrainers.map((drainer) => (
+                  <Tr key={drainer.address} _hover={{ bg: 'gray.700' }}>
+                    <Td>
+                      <Flex align="center">
+                        <Link
+                          as={RouterLink}
+                          to={`/app/wallet-drainers/${drainer.address}`}
+                          color="sonic.400"
+                          fontWeight="medium"
+                          mr={2}
+                        >
+                          {formatAddress(drainer.address)}
+                        </Link>
+                        <BlockExplorerLink 
+                          type="address" 
+                          value={drainer.address} 
+                          showExternalIcon={true}
+                          truncate={false}
+                          label=""
+                        />
+                      </Flex>
+                    </Td>
+                    <Td>{drainer.name}</Td>
+                    <Td>
+                      <Badge {...getRiskBadgeProps(drainer.riskLevel)} />
+                    </Td>
+                    <Td isNumeric>{drainer.victims}</Td>
+                    <Td isNumeric>{drainer.totalStolen.toLocaleString()}</Td>
+                    <Td>
+                      <Badge
+                        colorScheme={drainer.isVerified ? 'green' : 'gray'}
+                      >
+                        {drainer.isVerified ? 'Verified' : 'Unverified'}
+                      </Badge>
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
         )}
       </Box>
     </Box>

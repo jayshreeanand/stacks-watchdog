@@ -78,7 +78,7 @@ const RecentDrainersTable = ({ drainers, loading }) => {
           <Th color="gray.400">Name</Th>
           <Th color="gray.400">Risk Level</Th>
           <Th color="gray.400" isNumeric>Victims</Th>
-          <Th color="gray.400" isNumeric>Total Stolen (ETN)</Th>
+          <Th color="gray.400" isNumeric>Total Stolen (S)</Th>
           <Th color="gray.400">Last Active</Th>
         </Tr>
       </Thead>
@@ -90,7 +90,7 @@ const RecentDrainersTable = ({ drainers, loading }) => {
                 <Link
                   as={RouterLink}
                   to={`/app/wallet-drainers/${drainer.address}`}
-                  color="electroneum.400"
+                  color="sonic.400"
                   fontWeight="medium"
                   mr={2}
                 >

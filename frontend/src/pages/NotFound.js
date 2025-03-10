@@ -20,7 +20,7 @@ const NotFound = () => {
       textAlign="center"
       px={4}
     >
-      <Icon as={FiAlertTriangle} boxSize={16} color="electroneum.500" mb={6} />
+      <Icon as={FiAlertTriangle} boxSize={16} color="sonic.500" mb={6} />
       
       <Heading as="h1" size="2xl" color="white" mb={4}>
         404 - Page Not Found
@@ -33,7 +33,7 @@ const NotFound = () => {
       <Button
         as={RouterLink}
         to="/"
-        colorScheme="electroneum"
+        colorScheme="sonic"
         size="lg"
         leftIcon={<FiHome />}
       >

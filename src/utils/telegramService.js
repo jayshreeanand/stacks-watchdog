@@ -47,7 +47,7 @@ const formatAlertMessage = (alert) => {
   const emoji = getAlertEmoji(alert.type);
   const riskLevel = alert.riskLevel ? `[${alert.riskLevel.toUpperCase()}] ` : '';
   
-  let message = `${emoji} <b>${riskLevel}ETN Watchdog Alert</b>\n\n`;
+  let message = `${emoji} <b>${riskLevel}Sonic Watchdog Alert</b>\n\n`;
   message += `<b>Type:</b> ${formatAlertType(alert.type)}\n`;
   
   if (alert.targetAddress) {
@@ -129,7 +129,7 @@ const sendAlert = async (alert, chatId) => {
  */
 const testConnection = async (chatId = TELEGRAM_DEFAULT_CHAT_ID) => {
   const message = `
-<b>🔔 ETN Watchdog Telegram Bot Test</b>
+<b>🔔 Sonic Watchdog Telegram Bot Test</b>
 
 Your Telegram alerts are now set up correctly!
 You will receive security alerts in this chat.

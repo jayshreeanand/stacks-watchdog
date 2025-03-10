@@ -5,7 +5,7 @@ import { getAddressUrl, getTransactionUrl, getTokenUrl, getExplorerUrl } from '.
 import { useDataSource } from '../context/DataSourceContext';
 
 /**
- * BlockExplorerLink component for linking to the Electroneum block explorer
+ * BlockExplorerLink component for linking to the Sonic block explorer
  * 
  * @param {Object} props - Component props
  * @param {string} props.type - Type of link: 'address', 'transaction', 'token', or 'explorer'
@@ -57,14 +57,14 @@ const BlockExplorerLink = ({
   const networkName = dataSource === 'mainnet' ? 'Mainnet' : 'Testnet';
   
   return (
-    <Tooltip label={`View on Electroneum ${networkName} Explorer`} hasArrow>
+    <Tooltip label={`View on Sonic ${networkName} Explorer`} hasArrow>
       <Flex align="center" display="inline-flex" {...rest}>
         <Link
           href={url}
           isExternal
-          color="electroneum.400"
+          color="sonic.400"
           fontWeight="medium"
-          _hover={{ textDecoration: 'underline', color: 'electroneum.500' }}
+          _hover={{ textDecoration: 'underline', color: 'sonic.500' }}
           {...linkProps}
         >
           {displayValue}
@@ -75,7 +75,7 @@ const BlockExplorerLink = ({
             ml={1} 
             boxSize={3} 
             color="gray.500" 
-            _groupHover={{ color: 'electroneum.400' }}
+            _groupHover={{ color: 'sonic.400' }}
             {...iconProps}
           />
         )}
