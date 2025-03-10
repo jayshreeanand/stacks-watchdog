@@ -20,42 +20,9 @@ Backend server URL (api server): [https://sonic-shield-backend.up.railway.app/](
 
 ### System Architecture Flow
 
-```mermaid
-graph TD
-    subgraph Blockchain
-        SC[Smart Contracts] --> |Events| BL[Blockchain]
-        BL --> |Transactions| SC
-    end
+<img width="1462" alt="flow_chart" src="https://github.com/user-attachments/assets/43372fad-d6ef-4e93-9941-03c5394e0db0" />
 
-    subgraph Backend
-        API[Node.js API Server] --> |Monitors| BL
-        API --> |Stores| DB[(MongoDB)]
-        API --> |Queries| AI[OpenAI GPT]
-        WS[WebSocket Server] --> |Real-time Updates| API
-    end
-
-    subgraph Frontend
-        UI[React Dashboard] --> |API Requests| API
-        UI --> |WebSocket| WS
-        UI --> |Contract Data| BE[Block Explorer]
-    end
-
-    subgraph Notifications
-        NS[Notification Service] --> |Alerts| TG[Telegram Bot]
-        NS --> |Alerts| EM[Email]
-        API --> |Triggers| NS
-    end
-
-    subgraph Security Analysis
-        AI --> |Contract Analysis| VS[Vulnerability Scanner]
-        AI --> |Transaction Analysis| TA[Transaction Analyzer]
-        AI --> |Address Analysis| AA[Address Analyzer]
-        VS --> |Results| API
-        TA --> |Results| API
-        AA --> |Results| API
-    end
-```
-
+  
 1. **Smart Contract Monitoring**:
 
    - Smart contracts emit events on the Sonic blockchain
