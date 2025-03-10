@@ -1,33 +1,35 @@
 # Sonic Shield AI: AI powered security for Sonic
 
-Sonic Shield AI is a comprehensive security monitoring platform for the Electroneum blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues.
+Sonic Shield AI is a comprehensive security monitoring platform for the Electroneum blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
 
-Demo URL (frontend): https://sonic-shield.vercel.app/
+Demo URL (frontend): [https://sonic-shield.vercel.app/](https://sonic-shield.vercel.app/)
 
-Backend server URL (api server): https://sonic-shield-backend.up.railway.app/
+Backend server URL (api server): [https://sonic-shield-backend.up.railway.app/](https://sonic-shield-backend.up.railway.app/)
 
 <img width="1473" alt="home" src="https://github.com/user-attachments/assets/9e229904-d0da-4ec5-8398-a6181dd021ac" />
 
-### Contract Address
+## 🏗️ Architecture
 
-- Network: sonic_testnet (Chain RPC: https://rpc.blaze.soniclabs.com) (Chain ID: 57054)
-- TransactionMonitor deployed to: 0x5870daE1dA84864fBC2A7fbDF2B599aB3CEf2183
-- RugPullDetector deployed to: 0x151910d2B019d38623eE7DE0f7705b5F819792c8
-- WalletDrainerDetector deployed to: 0xc91bc914DF0C8b76b1DED07823e259c8B04b0Fd6
-- SWatchdogRegistry deployed to: 0x6e808c5A0A3ed300F3d8B3119D37d20d762E858f
+- **Smart Contracts**: Solidity contracts deployed on Sonic blockchain for on-chain monitoring and analysis
+- **Backend API**: Node.js server with AI integration for transaction and contract analysis
+- **Frontend**: React-based dashboard built with Chakra UI for a modern, responsive interface
+- **Database**: MongoDB for storing historical data, analysis results, and user preferences
+- **AI Integration**: OpenAI API integration for advanced security analysis
+- **Notification System**: Multi-channel alert system for real-time security notifications
+- **Block Explorer Integration**: Direct integration with Sonic block explorer
 
-## 🛡️ Key Features
+## Key Features
 
 <img width="1165" alt="features" src="https://github.com/user-attachments/assets/579a1146-3188-41a7-bd40-9dab41449f88" />
-
 
 ### Core Security Features
 
 - **Real-time Transaction Monitoring**: Continuously monitors Sonic blockchain transactions to detect suspicious patterns and potential threats
-- **AI-Powered Analysis**: Leverages advanced AI models to analyze contracts and transactions for security vulnerabilities
+- **AI-Powered Analysis**: Leverages advanced AI models (GPT 4.5) to analyze contracts and transactions for security vulnerabilities
 - **Rug-Pull Detection**: Identifies potential rug-pull risks by analyzing token contract code, liquidity patterns, and ownership structures
 - **Wallet Drainer Detection**: Detects malicious contracts designed to drain user wallets through sophisticated techniques
-- **Alert System**: Sends real-time notifications through multiple channels when potential threats are detected
+- **Alert System**: Sends real-time notifications through multiple channels like telegram bots, email when potential threats are detected
+- **Learning Modules**: Gamified learning modules for various common security risks and precautions to help users understand risks better.
 
 ### Advanced AI Security Tools
 
@@ -46,11 +48,11 @@ Backend server URL (api server): https://sonic-shield-backend.up.railway.app/
 - **Responsive Design**: Seamless experience across desktop, tablet, and mobile devices
 - **Sonic Block Explorer Integration**: Direct links to the Sonic block explorer for transactions, addresses, and contracts
 
-## 📊 Dashboard Sections
+## Dashboard Sections
 
 ### Main Dashboard
-<img width="1680" alt="dashboard" src="https://github.com/user-attachments/assets/35141357-301d-4d57-96ad-f89b7bad42e0" />
 
+<img width="1680" alt="dashboard" src="https://github.com/user-attachments/assets/35141357-301d-4d57-96ad-f89b7bad42e0" />
 
 The main dashboard provides an at-a-glance view of your security status, including:
 
@@ -58,9 +60,10 @@ The main dashboard provides an at-a-glance view of your security status, includi
 - Recent alerts and notifications
 - Transaction monitoring statistics
 - Network security status
-- Data source selector (Mock/Testnet/Mainnet)
+- Data source selector (Mock/Testnet)
 
 ### Vulnerability Scanner Dashboard
+
 <img width="1418" alt="vulnerability-scanner" src="https://github.com/user-attachments/assets/799e01d9-7978-46ee-b257-44f146309c4a" />
 
 The vulnerability scanner dashboard provides comprehensive contract security analysis:
@@ -79,7 +82,6 @@ The vulnerability scanner dashboard provides comprehensive contract security ana
 <img width="1350" alt="Load sample contract" src="https://github.com/user-attachments/assets/d6d88489-c76f-4b63-8e4e-bc2b3caeacbd" />
 
 <img width="1124" alt="AI smart contract analyzer" src="https://github.com/user-attachments/assets/014dfdd1-c8c0-4e00-a1d5-fcf1a936d6e7" />
-
 
 The AI-powered smart contract analyzer provides:
 
@@ -103,7 +105,6 @@ The wallet drainers section displays:
 ### Wallet Security Scanner
 
 <img width="1403" alt="Wallet security scanner" src="https://github.com/user-attachments/assets/348312ae-b39f-4570-bad3-ab51d8704c9d" />
-
 
 The wallet security scanner allows you to:
 
@@ -135,7 +136,7 @@ Customize your security alerts:
 - Choose alert frequency and risk level sensitivity
 - Enable/disable specific types of security alerts
 
-  <img width="400" alt="Telegram bot alerts" src="https://github.com/user-attachments/assets/6812b858-d40b-4ffe-a9ee-44ebdaa3e694" />
+<img width="400" alt="Telegram bot alerts" src="https://github.com/user-attachments/assets/6812b858-d40b-4ffe-a9ee-44ebdaa3e694" />
 
 ### Learning Center Dashboard
 
@@ -153,12 +154,11 @@ The learning center dashboard offers interactive security education:
 - Quiz scores and certifications
 - Customized learning recommendations
 
-  Learning progress tracker
-  
+Learning progress tracker
+
 <img width="1162" alt="learning-progress" src="https://github.com/user-attachments/assets/1f04b977-61c2-414b-82fc-887f3cea788d" />
 
-
-## 🧠 AI-Powered Security Features
+## AI-Powered Security Features
 
 Sonic Shield AI leverages advanced AI models to provide cutting-edge security analysis:
 
@@ -226,23 +226,6 @@ The vulnerability scanner provides real-time security analysis of smart contract
 - Responsive design for all screen sizes
 - Clear error messaging and form validation
 
-#### Configuration
-
-The vulnerability scanner requires the following environment variables:
-
-```env
-SONIC_TESTNET_RPC_URL=your_sonic_testnet_url
-MONGODB_URI=your_mongodb_connection_string
-API_KEY=your_api_key
-```
-
-To initialize the vulnerability scanner:
-
-1. Ensure all environment variables are properly set
-2. Start the server using `npm start`
-3. Monitor the logs for successful connection to the Sonic testnet
-4. Verify the network ID and block number in the initialization logs
-
 ## 📚 Learning Modules
 
 Sonic Shield AI includes comprehensive learning modules to help users understand blockchain security:
@@ -293,32 +276,26 @@ Sonic Shield AI integrates with Telegram for real-time alerts and interactions:
 ### Features
 
 - **Real-time Alerts**: Instant notifications for:
-
-  - Detected vulnerabilities
-  - Suspicious transactions
-  - Wallet drainer detection
-  - High-risk contract interactions
-
+- Detected vulnerabilities
+- Suspicious transactions
+- Wallet drainer detection
+- High-risk contract interactions
 - **Interactive Commands**:
-
-  - `/scan <address>`: Quick contract security scan
-  - `/check <tx>`: Transaction risk assessment
-  - `/alerts`: Manage alert settings
-  - `/status`: Check system status
-  - `/help`: List available commands
-
+- `/scan <address>`: Quick contract security scan
+- `/check <tx>`: Transaction risk assessment
+- `/alerts`: Manage alert settings
+- `/status`: Check system status
+- `/help`: List available commands
 - **Custom Notifications**:
-
-  - Set threshold amounts for alerts
-  - Choose alert categories
-  - Configure quiet hours
-  - Customize alert format
-
+- Set threshold amounts for alerts
+- Choose alert categories
+- Configure quiet hours
+- Customize alert format
 - **Security Reports**:
-  - Daily security summaries
-  - Weekly risk assessments
-  - Monthly activity reports
-  - Custom report scheduling
+- Daily security summaries
+- Weekly risk assessments
+- Monthly activity reports
+- Custom report scheduling
 
 ### Alert Categories
 
@@ -329,32 +306,23 @@ Sonic Shield AI integrates with Telegram for real-time alerts and interactions:
 - Gas Price Notifications
 - Custom Alert Rules
 
-## 🏗️ Architecture
-
-- **Smart Contracts**: Solidity contracts deployed on Sonic blockchain for on-chain monitoring and analysis
-- **Backend API**: Node.js server with AI integration for transaction and contract analysis
-- **Frontend**: React-based dashboard built with Chakra UI for a modern, responsive interface
-- **Database**: MongoDB for storing historical data, analysis results, and user preferences
-- **AI Integration**: OpenAI API integration for advanced security analysis
-- **Notification System**: Multi-channel alert system for real-time security notifications
-- **Block Explorer Integration**: Direct integration with Sonic block explorer
-
----
-
 ## 🔍 Using the AI Security Features
 
 ### Smart Contract Analyzer
 
 1. Navigate to "AI Contract Analyzer" in the sidebar
 2. Enter a contract address or paste contract code
-   - Use the "Load Sample" button to test with a sample contract
-   - Use the "Load Vulnerable Sample" to see how vulnerabilities are detected
+
+- Use the "Load Sample" button to test with a sample contract
+- Use the "Load Vulnerable Sample" to see how vulnerabilities are detected
+
 3. Click "Analyze Contract"
 4. Review the detailed security analysis:
-   - Overall risk score and risk level
-   - List of vulnerabilities with severity ratings
-   - Detailed descriptions and recommendations
-   - Links to the contract on the block explorer
+
+- Overall risk score and risk level
+- List of vulnerabilities with severity ratings
+- Detailed descriptions and recommendations
+- Links to the contract on the block explorer
 
 ### Address Analyzer
 
@@ -363,10 +331,11 @@ Sonic Shield AI integrates with Telegram for real-time alerts and interactions:
 3. Enter a Sonic address
 4. Click "Analyze"
 5. Review the security assessment:
-   - Risk score and risk level
-   - Suspicious activity findings
-   - Recommended security actions
-   - Links to the address on the block explorer
+
+- Risk score and risk level
+- Suspicious activity findings
+- Recommended security actions
+- Links to the address on the block explorer
 
 ### Transaction Monitoring
 
@@ -377,7 +346,7 @@ The system automatically monitors transactions for suspicious activity:
 3. Suspicious transactions trigger alerts
 4. Details are displayed in the dashboard and notifications
 
-## 🔄 API Integration
+## API Integration
 
 Sonic Shield AI provides a REST API for integration with other services:
 
@@ -385,6 +354,31 @@ Sonic Shield AI provides a REST API for integration with other services:
 - **Endpoints**: Comprehensive endpoints for accessing security data
 - **Documentation**: Detailed API documentation available at `/api/docs`
 - **Rate Limiting**: Fair usage policies to ensure service availability
+
+### Contract Address
+
+- Network: sonic_testnet (Chain RPC: [https://rpc.blaze.soniclabs.com)](https://rpc.blaze.soniclabs.com)) (Chain ID: 57054)
+- TransactionMonitor deployed to: 0x5870daE1dA84864fBC2A7fbDF2B599aB3CEf2183
+- RugPullDetector deployed to: 0x151910d2B019d38623eE7DE0f7705b5F819792c8
+- WalletDrainerDetector deployed to: 0xc91bc914DF0C8b76b1DED07823e259c8B04b0Fd6
+- SWatchdogRegistry deployed to: 0x6e808c5A0A3ed300F3d8B3119D37d20d762E858f
+
+#### Configuration
+
+The vulnerability scanner requires the following environment variables:
+
+```env
+SONIC_TESTNET_RPC_URL=your_sonic_testnet_url
+MONGODB_URI=your_mongodb_connection_string
+API_KEY=your_api_key
+```
+
+To initialize the vulnerability scanner:
+
+1. Ensure all environment variables are properly set
+2. Start the server using `npm start`
+3. Monitor the logs for successful connection to the Sonic testnet
+4. Verify the network ID and block number in the initialization logs
 
 ## 🚀 Getting Started
 
