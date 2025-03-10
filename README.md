@@ -2,9 +2,9 @@
 
 Sonic Shield AI is a next-generation security platform for the Sonic blockchain. It leverages artificial intelligence to protect digital assets by detecting threats, preventing scams, and securing blockchain interactions in real-time.
 
-Demo URL: https://sonic-shield-ai.vercel.app/
+Demo URL: https://sonic-shield.vercel.app/
 
-Backend server URL: https://sonic-shield-ai-production.up.railway.app/
+Backend server URL: https://sonic-shield-production.up.railway.app/
 
 ## 🛡️ Key Features
 
