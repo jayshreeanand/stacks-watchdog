@@ -16,6 +16,7 @@ import SecurityScanner from './pages/SecurityScanner';
 import NotificationSettings from './pages/NotificationSettings';
 import TokenApprovals from './pages/TokenApprovals';
 import SmartContractAnalyzer from './pages/SmartContractAnalyzer';
+import LearningModules from './pages/LearningModules';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="smart-contract-analyzer" element={<SmartContractAnalyzer />} />
           <Route path="notification-settings" element={<NotificationSettings />} />
           <Route path="token-approvals" element={<TokenApprovals />} />
+          <Route path="learning-modules" element={<LearningModules />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

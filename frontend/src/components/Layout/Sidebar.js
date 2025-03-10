@@ -20,7 +20,8 @@ import {
   FiBell,
   FiLock,
   FiKey,
-  FiCode
+  FiCode,
+  FiBookOpen
 } from 'react-icons/fi';
 
 const NavItem = ({ icon, children, to, ...rest }) => {
@@ -96,6 +97,9 @@ const Sidebar = ({ isOpen, onClose }) => {
         </NavItem>
         <NavItem to="/app/token-approvals" icon={FiKey}>
           Token Approvals
+        </NavItem>
+        <NavItem to="/app/learning-modules" icon={FiBookOpen}>
+          Learning Modules
         </NavItem>
         <NavItem to="/app/notification-settings" icon={FiBell}>
           Notifications

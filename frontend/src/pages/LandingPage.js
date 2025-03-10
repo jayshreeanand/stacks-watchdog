@@ -40,7 +40,9 @@ import {
   FaTelegram, 
   FaMobile,
   FaUserShield,
-  FaCheckCircle
+  FaCheckCircle,
+  FaBookOpen,
+  FaArrowRight,
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -478,43 +480,178 @@ const LandingPage = () => {
                 delay={0.1}
                 gradient="linear(to-r, blue.400, blue.600)"
               />
+              
               <Feature
                 title="Wallet Security Scanner"
                 text="Deep analysis of wallet interactions to identify potential security risks and vulnerabilities."
                 icon={<Icon as={FaSearch} color="white" w={8} h={8} />}
-                delay={0.2}
+                delay={0.3}
                 gradient="linear(to-r, purple.400, purple.600)"
               />
               <Feature
                 title="Telegram Alerts"
                 text="Instant notifications sent directly to your Telegram when suspicious activity is detected."
                 icon={<Icon as={FaTelegram} color="white" w={8} h={8} />}
-                delay={0.3}
+                delay={0.4}
                 gradient="linear(to-r, telegram.400, telegram.600)"
               />
               <Feature
                 title="Rug Pull Detection"
                 text="Advanced algorithms to identify potential rug pulls before they happen."
                 icon={<Icon as={FaExclamationTriangle} color="white" w={8} h={8} />}
-                delay={0.4}
+                delay={0.5}
                 gradient="linear(to-r, yellow.400, orange.500)"
               />
               <Feature
                 title="Wallet Drainer Protection"
                 text="Identify and block malicious contracts designed to drain your wallet."
                 icon={<Icon as={FaShieldAlt} color="white" w={8} h={8} />}
-                delay={0.5}
+                delay={0.6}
                 gradient="linear(to-r, red.400, red.600)"
               />
               <Feature
                 title="Smart Contract Analysis"
                 text="Detailed security analysis of smart contracts to identify vulnerabilities and backdoors."
                 icon={<Icon as={FaLock} color="white" w={8} h={8} />}
-                delay={0.6}
+                delay={0.7}
                 gradient="linear(to-r, green.400, green.600)"
+              />
+              <Feature
+                title="Interactive Learning Modules"
+                text="Enhance your blockchain security knowledge with interactive tutorials on vulnerabilities and best practices."
+                icon={<Icon as={FaBookOpen} color="white" w={8} h={8} />}
+                delay={0.2}
+                gradient="linear(to-r, purple.400, purple.600)"
               />
             </SimpleGrid>
           </VStack>
+        </Container>
+      </Box>
+      
+      {/* Learning Modules Section */}
+      <Box py={20} bg={useColorModeValue('white', 'gray.800')}>
+        <Container maxW="container.xl">
+          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={10} alignItems="center">
+            <Box>
+              <Badge
+                colorScheme="purple"
+                fontSize="sm"
+                px={3}
+                py={1}
+                rounded="full"
+                mb={3}
+              >
+                Educational Resources
+              </Badge>
+              <Heading
+                as="h2"
+                fontSize={{ base: '3xl', md: '4xl' }}
+                mb={4}
+              >
+                Interactive Learning Modules
+              </Heading>
+              <Text
+                fontSize={{ base: 'lg', md: 'xl' }}
+                color={useColorModeValue('gray.600', 'gray.400')}
+                mb={6}
+              >
+                Enhance your blockchain security knowledge with our comprehensive learning modules. From smart contract vulnerabilities to security best practices, our interactive tutorials help you stay ahead of potential threats.
+              </Text>
+              
+              <VStack align="start" spacing={4} mb={8}>
+                <HStack>
+                  <Icon as={FaCheckCircle} color="green.500" />
+                  <Text fontSize="lg">Smart Contract Vulnerabilities</Text>
+                </HStack>
+                <HStack>
+                  <Icon as={FaCheckCircle} color="green.500" />
+                  <Text fontSize="lg">Security Best Practices</Text>
+                </HStack>
+                <HStack>
+                  <Icon as={FaCheckCircle} color="green.500" />
+                  <Text fontSize="lg">Access Control Patterns</Text>
+                </HStack>
+                <HStack>
+                  <Icon as={FaCheckCircle} color="green.500" />
+                  <Text fontSize="lg">DeFi Security Fundamentals</Text>
+                </HStack>
+                <HStack>
+                  <Icon as={FaCheckCircle} color="green.500" />
+                  <Text fontSize="lg">AI-Driven Vulnerability Detection</Text>
+                </HStack>
+              </VStack>
+              
+              <Button
+                as={RouterLink}
+                to="/app/learning-modules"
+                size="lg"
+                colorScheme="purple"
+                rightIcon={<Icon as={FaArrowRight} />}
+                _hover={{
+                  transform: 'translateY(-2px)',
+                  boxShadow: 'lg',
+                }}
+              >
+                Start Learning
+              </Button>
+            </Box>
+            
+            <MotionBox
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Box
+                position="relative"
+                height="400px"
+                rounded="2xl"
+                boxShadow="2xl"
+                overflow="hidden"
+              >
+                <Box
+                  position="absolute"
+                  top={0}
+                  left={0}
+                  right={0}
+                  bottom={0}
+                  bg="purple.500"
+                  opacity={0.8}
+                  roundedTop="2xl"
+                />
+                
+                <VStack
+                  position="absolute"
+                  top={0}
+                  left={0}
+                  right={0}
+                  bottom={0}
+                  justify="center"
+                  p={8}
+                  spacing={6}
+                >
+                  <Icon as={FaBookOpen} color="white" w={16} h={16} />
+                  <Heading color="white" textAlign="center">
+                    Learn. Secure. Protect.
+                  </Heading>
+                  <Text color="white" fontSize="lg" textAlign="center">
+                    Our interactive modules provide practical knowledge to help you secure your blockchain assets.
+                  </Text>
+                  
+                  <HStack spacing={4}>
+                    <Badge colorScheme="green" px={3} py={2} rounded="full" fontSize="md">
+                      Beginner
+                    </Badge>
+                    <Badge colorScheme="blue" px={3} py={2} rounded="full" fontSize="md">
+                      Intermediate
+                    </Badge>
+                    <Badge colorScheme="purple" px={3} py={2} rounded="full" fontSize="md">
+                      Advanced
+                    </Badge>
+                  </HStack>
+                </VStack>
+              </Box>
+            </MotionBox>
+          </SimpleGrid>
         </Container>
       </Box>
       
