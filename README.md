@@ -131,6 +131,136 @@ The AI Transaction Analyzer monitors transactions for:
 - **Scam Patterns**: Detects patterns consistent with known scams
 - **Real-time Alerts**: Provides immediate notifications for high-risk transactions
 
+### Smart Contract Vulnerability Scanner
+
+The vulnerability scanner provides real-time security analysis of smart contracts on the Sonic blockchain:
+
+#### Features
+
+- Dark theme UI for optimal visibility and reduced eye strain
+- Real-time contract scanning and analysis
+- Sample contract testing capabilities
+- Detailed vulnerability reporting
+- Interactive contract search interface
+
+#### Components
+
+- **Contract Search Form**: User-friendly interface with dark theme styling for contract address input
+- **Sample Contracts List**: Pre-loaded sample contracts for testing, displayed in an easy-to-read dark-themed table
+- **Scan Result Card**: Detailed vulnerability scan results with dark theme optimization
+- **Vulnerability List**: Comprehensive list of detected vulnerabilities with severity indicators
+
+#### UI/UX Features
+
+- Consistent dark theme across all components
+- High contrast text for improved readability
+- Hover effects for interactive elements
+- Responsive design for all screen sizes
+- Clear error messaging and form validation
+
+#### Configuration
+
+The vulnerability scanner requires the following environment variables:
+
+```env
+SONIC_TESTNET_RPC_URL=your_sonic_testnet_url
+MONGODB_URI=your_mongodb_connection_string
+API_KEY=your_api_key
+```
+
+To initialize the vulnerability scanner:
+
+1. Ensure all environment variables are properly set
+2. Start the server using `npm start`
+3. Monitor the logs for successful connection to the Sonic testnet
+4. Verify the network ID and block number in the initialization logs
+
+## 📚 Learning Modules
+
+Sonic Shield AI includes comprehensive learning modules to help users understand blockchain security:
+
+### Smart Contract Security Basics
+
+- Introduction to common vulnerabilities
+- Best practices for secure contract development
+- Interactive examples of vulnerable code
+- Guided walkthroughs of security fixes
+- Quizzes to test understanding
+
+### Security Best Practices
+
+- Wallet security fundamentals
+- Safe transaction practices
+- Token approval management
+- Identifying scam patterns
+- Emergency response procedures
+
+### Hands-on Training
+
+- Practice with sample vulnerable contracts
+- Interactive vulnerability detection exercises
+- Real-world case studies
+- Guided security auditing practice
+- Custom vulnerability creation for learning
+
+### Progress Tracking
+
+- Completion certificates for modules
+- Progress indicators for each section
+- Achievement badges for skills mastered
+- Personal learning dashboard
+- Recommended next steps
+
+## 🤖 Telegram Integration
+
+Sonic Shield AI integrates with Telegram for real-time alerts and interactions:
+
+### Setup Instructions
+
+1. Find our bot: @SonicShieldAIBot
+2. Start a chat and click "Start"
+3. Complete the authentication process
+4. Configure your alert preferences
+
+### Features
+
+- **Real-time Alerts**: Instant notifications for:
+
+  - Detected vulnerabilities
+  - Suspicious transactions
+  - Wallet drainer detection
+  - High-risk contract interactions
+
+- **Interactive Commands**:
+
+  - `/scan <address>`: Quick contract security scan
+  - `/check <tx>`: Transaction risk assessment
+  - `/alerts`: Manage alert settings
+  - `/status`: Check system status
+  - `/help`: List available commands
+
+- **Custom Notifications**:
+
+  - Set threshold amounts for alerts
+  - Choose alert categories
+  - Configure quiet hours
+  - Customize alert format
+
+- **Security Reports**:
+  - Daily security summaries
+  - Weekly risk assessments
+  - Monthly activity reports
+  - Custom report scheduling
+
+### Alert Categories
+
+- Critical Security Alerts
+- Suspicious Activity Warnings
+- Network Status Updates
+- Price Movement Alerts
+- Gas Price Notifications
+- Custom Alert Rules
+
 ## 🏗️ Architecture
 
 - **Smart Contracts**: Solidity contracts deployed on Sonic blockchain for on-chain monitoring and analysis
@@ -225,7 +355,7 @@ Sonic Shield AI provides a REST API for integration with other services:
    Add your OpenAI API key to the `.env` file:
 
    ```
-   REACT_APP_OPENAI_API_KEY=your_openai_api_key_here
+   REACT_APP_OPENAI_API_KEY=your_openai_api_key
    REACT_APP_USE_MOCK_AI=false  # Set to true to use mock AI responses instead of real API
    ```
 
