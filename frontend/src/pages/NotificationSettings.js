@@ -32,8 +32,11 @@ import {
 } from '@chakra-ui/react';
 import { FaBell, FaEnvelope, FaMobile, FaDesktop, FaShieldAlt, FaSave } from 'react-icons/fa';
 import { useWallet } from '../context/WalletContext';
+import TelegramConnect from '../components/TelegramConnect';
+import SimpleTelegramConnect from '../components/SimpleTelegramConnect';
 
 const NotificationSettings = () => {
+  console.log('NotificationSettings page rendered');
   const { account } = useWallet();
   const toast = useToast();
   const bgColor = useColorModeValue('white', 'gray.800');
@@ -49,328 +52,461 @@ const NotificationSettings = () => {
   // Email settings
   const [email, setEmail] = useState('');
   
-  // Alert thresholds
-  const [thresholds, setThresholds] = useState({
-    transactionAmount: 1000,
-    riskLevel: 'medium', // low, medium, high
-    frequency: 'immediate', // immediate, hourly, daily
-  });
-  
   // Alert types
   const [alertTypes, setAlertTypes] = useState({
-    largeTransactions: true,
-    suspiciousContracts: true,
-    walletDrainers: true,
-    rugPulls: true,
-    phishingAttempts: true,
-    newApprovals: true,
+    suspicious_transaction: true,
+    rug_pull: true,
+    wallet_drainer: true,
+    phishing: true,
+    security_vulnerability: true,
   });
-
-  // Transaction amount threshold
+  
+  // Severity threshold
+  const [severityThreshold, setSeverityThreshold] = useState(25);
   const [showTooltip, setShowTooltip] = useState(false);
-  const [sliderValue, setSliderValue] = useState(1000);
-
+  
+  // Handle channel toggle
   const handleChannelToggle = (channel) => {
     setChannels({
       ...channels,
       [channel]: !channels[channel],
     });
   };
-
-  const handleAlertToggle = (alertType) => {
+  
+  // Handle alert type toggle
+  const handleAlertTypeToggle = (alertType) => {
     setAlertTypes({
       ...alertTypes,
       [alertType]: !alertTypes[alertType],
     });
   };
-
-  const handleThresholdChange = (field, value) => {
-    setThresholds({
-      ...thresholds,
-      [field]: value,
-    });
+  
+  // Handle email change
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
-
-  const handleSliderChange = (value) => {
-    setSliderValue(value);
-    handleThresholdChange('transactionAmount', value);
+  
+  // Handle severity threshold change
+  const handleSeverityChange = (value) => {
+    setSeverityThreshold(value);
   };
-
-  const handleSaveSettings = () => {
+  
+  // Save settings
+  const saveSettings = () => {
     // Validate email if email notifications are enabled
-    if (channels.email && !email) {
+    if (channels.email && !validateEmail(email)) {
       toast({
-        title: 'Email required',
-        description: 'Please enter an email address to receive email notifications',
+        title: 'Invalid email',
+        description: 'Please enter a valid email address.',
         status: 'error',
-        duration: 3000,
+        duration: 5000,
         isClosable: true,
       });
       return;
     }
-
-    // In a real app, we would save these settings to the backend
+    
+    // Save settings logic would go here
+    // This would typically involve an API call to save the settings
+    
     toast({
       title: 'Settings saved',
-      description: 'Your notification preferences have been updated',
+      description: 'Your notification settings have been saved.',
       status: 'success',
-      duration: 3000,
+      duration: 5000,
       isClosable: true,
     });
   };
-
+  
+  // Validate email
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+  
+  // Get severity label
+  const getSeverityLabel = (value) => {
+    if (value < 25) return 'Low';
+    if (value < 50) return 'Medium';
+    if (value < 75) return 'High';
+    return 'Critical';
+  };
+  
+  // Get severity color
+  const getSeverityColor = (value) => {
+    if (value < 25) return 'green';
+    if (value < 50) return 'yellow';
+    if (value < 75) return 'orange';
+    return 'red';
+  };
+  
+  // Handle Telegram settings update
+  const handleTelegramUpdate = () => {
+    // Refresh other settings if needed
+    toast({
+      title: 'Telegram settings updated',
+      description: 'Your Telegram notification settings have been updated.',
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    });
+  };
+  
+  // Generate Telegram connection code
+  const generateTelegramCode = async () => {
+    if (!account) {
+      toast({
+        title: 'Wallet not connected',
+        description: 'Please connect your wallet first.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+    
+    try {
+      const response = await fetch('/api/notifications/telegram/connect', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: account }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        toast({
+          title: 'Connection code generated',
+          description: 'Please check your Telegram app to connect.',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: 'Error',
+          description: data.error || 'Failed to generate connection code',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      console.error('Error generating connection code:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to generate connection code. Please try again.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+  
   return (
-    <Container maxW="7xl" py={8}>
+    <Container maxW="container.xl" py={8}>
       <VStack spacing={8} align="stretch">
-        <Box textAlign="center">
-          <Heading size="xl" mb={2}>
-            Notification Settings
-          </Heading>
-          <Text color={useColorModeValue('gray.600', 'gray.400')}>
-            Configure how and when you want to be notified about security events
+        <Box>
+          <Heading size="lg" mb={2}>Notification Settings</Heading>
+          <Text color="gray.500">
+            Configure how and when you want to receive security alerts.
+          </Text>
+          <Text color="purple.500" fontWeight="bold" mt={2}>
+            Debug: Wallet account = {account || 'Not connected'}
           </Text>
         </Box>
-
+        
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
-          {/* Notification Channels */}
-          <Card variant="outline" bg={bgColor}>
-            <CardHeader>
-              <HStack>
-                <Icon as={FaBell} color="blue.400" />
-                <Heading size="md">Notification Channels</Heading>
-              </HStack>
-            </CardHeader>
-            <CardBody>
-              <VStack spacing={4} align="stretch">
-                <FormControl display="flex" alignItems="center" justifyContent="space-between">
-                  <HStack>
-                    <Icon as={FaEnvelope} color="gray.500" />
-                    <FormLabel mb={0}>Email Notifications</FormLabel>
-                  </HStack>
-                  <Switch 
-                    colorScheme="blue" 
-                    isChecked={channels.email}
-                    onChange={() => handleChannelToggle('email')}
-                  />
-                </FormControl>
-                
-                {channels.email && (
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter your email address" 
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </FormControl>
-                )}
-                
-                <Divider />
-                
-                <FormControl display="flex" alignItems="center" justifyContent="space-between">
-                  <HStack>
-                    <Icon as={FaDesktop} color="gray.500" />
-                    <FormLabel mb={0}>Browser Notifications</FormLabel>
-                  </HStack>
-                  <Switch 
-                    colorScheme="blue" 
-                    isChecked={channels.browser}
-                    onChange={() => handleChannelToggle('browser')}
-                  />
-                </FormControl>
-                
-                <Divider />
-                
-                <FormControl display="flex" alignItems="center" justifyContent="space-between">
-                  <HStack>
-                    <Icon as={FaMobile} color="gray.500" />
-                    <FormLabel mb={0}>Mobile Push Notifications</FormLabel>
-                  </HStack>
-                  <Switch 
-                    colorScheme="blue" 
-                    isChecked={channels.mobile}
-                    onChange={() => handleChannelToggle('mobile')}
-                  />
-                </FormControl>
-                
-                <Divider />
-                
-                <FormControl display="flex" alignItems="center" justifyContent="space-between">
-                  <HStack>
-                    <Icon as={FaBell} color="gray.500" />
-                    <FormLabel mb={0}>Telegram Notifications</FormLabel>
-                  </HStack>
-                  <Switch 
-                    colorScheme="blue" 
-                    isChecked={channels.telegram}
-                    onChange={() => handleChannelToggle('telegram')}
-                  />
-                </FormControl>
-              </VStack>
-            </CardBody>
-          </Card>
-
-          {/* Alert Types */}
-          <Card variant="outline" bg={bgColor}>
-            <CardHeader>
-              <HStack>
-                <Icon as={FaShieldAlt} color="blue.400" />
-                <Heading size="md">Alert Types</Heading>
-              </HStack>
-            </CardHeader>
-            <CardBody>
-              <VStack spacing={4} align="stretch">
-                <FormControl display="flex" alignItems="center" justifyContent="space-between">
-                  <FormLabel mb={0}>Large Transactions</FormLabel>
-                  <Switch 
-                    colorScheme="blue" 
-                    isChecked={alertTypes.largeTransactions}
-                    onChange={() => handleAlertToggle('largeTransactions')}
-                  />
-                </FormControl>
-                
-                <FormControl display="flex" alignItems="center" justifyContent="space-between">
-                  <FormLabel mb={0}>Suspicious Contracts</FormLabel>
-                  <Switch 
-                    colorScheme="blue" 
-                    isChecked={alertTypes.suspiciousContracts}
-                    onChange={() => handleAlertToggle('suspiciousContracts')}
-                  />
-                </FormControl>
-                
-                <FormControl display="flex" alignItems="center" justifyContent="space-between">
-                  <FormLabel mb={0}>Wallet Drainers</FormLabel>
-                  <Switch 
-                    colorScheme="blue" 
-                    isChecked={alertTypes.walletDrainers}
-                    onChange={() => handleAlertToggle('walletDrainers')}
-                  />
-                </FormControl>
-                
-                <FormControl display="flex" alignItems="center" justifyContent="space-between">
-                  <FormLabel mb={0}>Rug Pulls</FormLabel>
-                  <Switch 
-                    colorScheme="blue" 
-                    isChecked={alertTypes.rugPulls}
-                    onChange={() => handleAlertToggle('rugPulls')}
-                  />
-                </FormControl>
-                
-                <FormControl display="flex" alignItems="center" justifyContent="space-between">
-                  <FormLabel mb={0}>Phishing Attempts</FormLabel>
-                  <Switch 
-                    colorScheme="blue" 
-                    isChecked={alertTypes.phishingAttempts}
-                    onChange={() => handleAlertToggle('phishingAttempts')}
-                  />
-                </FormControl>
-                
-                <FormControl display="flex" alignItems="center" justifyContent="space-between">
-                  <FormLabel mb={0}>New Token Approvals</FormLabel>
-                  <Switch 
-                    colorScheme="blue" 
-                    isChecked={alertTypes.newApprovals}
-                    onChange={() => handleAlertToggle('newApprovals')}
-                  />
-                </FormControl>
-              </VStack>
-            </CardBody>
-          </Card>
-        </SimpleGrid>
-
-        {/* Thresholds */}
-        <Card variant="outline" bg={bgColor}>
-          <CardHeader>
-            <Heading size="md">Alert Thresholds</Heading>
-          </CardHeader>
-          <CardBody>
-            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
-              <FormControl>
-                <FormLabel>Transaction Amount Threshold (S)</FormLabel>
-                <Box pt={6} pb={2}>
-                  <Slider
-                    id="transaction-slider"
-                    defaultValue={1000}
-                    min={100}
-                    max={10000}
-                    step={100}
-                    onChange={handleSliderChange}
-                    onMouseEnter={() => setShowTooltip(true)}
-                    onMouseLeave={() => setShowTooltip(false)}
-                  >
-                    <SliderMark value={100} mt={2} ml={-2.5} fontSize="sm">
-                      100
-                    </SliderMark>
-                    <SliderMark value={5000} mt={2} ml={-2.5} fontSize="sm">
-                      5000
-                    </SliderMark>
-                    <SliderMark value={10000} mt={2} ml={-2.5} fontSize="sm">
-                      10000
-                    </SliderMark>
-                    <SliderTrack>
-                      <SliderFilledTrack bg="blue.400" />
-                    </SliderTrack>
-                    <Tooltip
-                      hasArrow
-                      bg="blue.500"
-                      color="white"
-                      placement="top"
-                      isOpen={showTooltip}
-                      label={`${sliderValue} S`}
-                    >
-                      <SliderThumb boxSize={6}>
-                        <Box color="blue.500" as={FaBell} />
-                      </SliderThumb>
-                    </Tooltip>
-                  </Slider>
-                </Box>
-                <Flex justify="space-between" mt={2}>
-                  <Text>0 S</Text>
-                  <Badge colorScheme="blue" p={1} borderRadius="md">
-                    {sliderValue} S
-                  </Badge>
-                  <Text>10,000 S</Text>
-                </Flex>
-                <Text fontSize="sm" color="gray.500" mt={2}>
-                  You will be notified of transactions larger than {sliderValue} S
-                </Text>
-              </FormControl>
-
-              <FormControl>
-                <FormLabel>Risk Level</FormLabel>
-                <Select 
-                  value={thresholds.riskLevel}
-                  onChange={(e) => handleThresholdChange('riskLevel', e.target.value)}
-                >
-                  <option value="low">Low (All alerts, including minor risks)</option>
-                  <option value="medium">Medium (Moderate and high risk alerts)</option>
-                  <option value="high">High (Only high risk alerts)</option>
-                </Select>
-              </FormControl>
-
-              <FormControl>
-                <FormLabel>Alert Frequency</FormLabel>
-                <Select 
-                  value={thresholds.frequency}
-                  onChange={(e) => handleThresholdChange('frequency', e.target.value)}
-                >
-                  <option value="immediate">Immediate (As they happen)</option>
-                  <option value="hourly">Hourly Digest</option>
-                  <option value="daily">Daily Summary</option>
-                </Select>
-              </FormControl>
-            </SimpleGrid>
-          </CardBody>
-          <CardFooter>
+          {/* Telegram Notifications */}
+          <Box border="2px dashed red" p={2}>
+            <Text color="red.500" fontWeight="bold" mb={2}>
+              TelegramConnect Component Below:
+            </Text>
+            <TelegramConnect onUpdate={handleTelegramUpdate} />
+            
+            <Divider my={4} />
+            
+            <Text color="blue.500" fontWeight="bold" mb={2}>
+              Direct Button Test:
+            </Text>
             <Button
-              leftIcon={<Icon as={FaSave} />}
-              colorScheme="blue"
-              onClick={handleSaveSettings}
-              width="full"
+              colorScheme="telegram"
+              size="lg"
+              width="100%"
+              onClick={() => alert('Direct button clicked!')}
             >
-              Save Notification Settings
+              Direct Connect Telegram Button
             </Button>
-          </CardFooter>
-        </Card>
+            
+            <Divider my={4} />
+            
+            <Text color="green.500" fontWeight="bold" mb={2}>
+              Simple Telegram Connect Component:
+            </Text>
+            <SimpleTelegramConnect />
+            
+            <Divider my={4} />
+            
+            <Text color="orange.500" fontWeight="bold" mb={2}>
+              Direct API Call Button:
+            </Text>
+            <Button
+              colorScheme="orange"
+              size="lg"
+              width="100%"
+              onClick={generateTelegramCode}
+            >
+              Generate Telegram Code (Direct API Call)
+            </Button>
+          </Box>
+          
+          {/* Email Notifications */}
+          <Box p={5} borderWidth="1px" borderRadius="lg" bg={bgColor}>
+            <VStack spacing={4} align="stretch">
+              <HStack justify="space-between">
+                <HStack>
+                  <Icon as={FaEnvelope} color="blue.500" boxSize={6} />
+                  <Text fontWeight="bold" fontSize="lg">Email Notifications</Text>
+                </HStack>
+                <Switch 
+                  colorScheme="blue" 
+                  isChecked={channels.email} 
+                  onChange={() => handleChannelToggle('email')}
+                />
+              </HStack>
+              
+              <Divider />
+              
+              {channels.email && (
+                <FormControl>
+                  <FormLabel>Email Address</FormLabel>
+                  <Input 
+                    type="email" 
+                    placeholder="your@email.com" 
+                    value={email} 
+                    onChange={handleEmailChange}
+                  />
+                </FormControl>
+              )}
+              
+              {!channels.email && (
+                <Text color="gray.500">
+                  Enable email notifications to receive alerts in your inbox.
+                </Text>
+              )}
+            </VStack>
+          </Box>
+          
+          {/* Browser Notifications */}
+          <Box p={5} borderWidth="1px" borderRadius="lg" bg={bgColor}>
+            <VStack spacing={4} align="stretch">
+              <HStack justify="space-between">
+                <HStack>
+                  <Icon as={FaDesktop} color="purple.500" boxSize={6} />
+                  <Text fontWeight="bold" fontSize="lg">Browser Notifications</Text>
+                </HStack>
+                <Switch 
+                  colorScheme="purple" 
+                  isChecked={channels.browser} 
+                  onChange={() => handleChannelToggle('browser')}
+                />
+              </HStack>
+              
+              <Divider />
+              
+              {channels.browser && (
+                <Text>
+                  You will receive notifications in your browser when you have the Sonic Watchdog app open.
+                </Text>
+              )}
+              
+              {!channels.browser && (
+                <Text color="gray.500">
+                  Enable browser notifications to receive alerts while using the app.
+                </Text>
+              )}
+            </VStack>
+          </Box>
+          
+          {/* Mobile Notifications */}
+          <Box p={5} borderWidth="1px" borderRadius="lg" bg={bgColor}>
+            <VStack spacing={4} align="stretch">
+              <HStack justify="space-between">
+                <HStack>
+                  <Icon as={FaMobile} color="green.500" boxSize={6} />
+                  <Text fontWeight="bold" fontSize="lg">Mobile Notifications</Text>
+                </HStack>
+                <Switch 
+                  colorScheme="green" 
+                  isChecked={channels.mobile} 
+                  onChange={() => handleChannelToggle('mobile')}
+                />
+              </HStack>
+              
+              <Divider />
+              
+              {channels.mobile && (
+                <Text>
+                  Download our mobile app to receive push notifications on your device.
+                </Text>
+              )}
+              
+              {!channels.mobile && (
+                <Text color="gray.500">
+                  Enable mobile notifications to receive alerts on your phone or tablet.
+                </Text>
+              )}
+            </VStack>
+          </Box>
+          
+          {/* Alert Types */}
+          <Box p={5} borderWidth="1px" borderRadius="lg" bg={bgColor}>
+            <VStack spacing={4} align="stretch">
+              <HStack>
+                <Icon as={FaBell} color="red.500" boxSize={6} />
+                <Text fontWeight="bold" fontSize="lg">Alert Types</Text>
+              </HStack>
+              
+              <Divider />
+              
+              <FormControl display="flex" alignItems="center">
+                <FormLabel htmlFor="suspicious-tx" mb="0" flex="1">
+                  Suspicious Transactions
+                </FormLabel>
+                <Switch 
+                  id="suspicious-tx" 
+                  colorScheme="red" 
+                  isChecked={alertTypes.suspicious_transaction} 
+                  onChange={() => handleAlertTypeToggle('suspicious_transaction')}
+                />
+              </FormControl>
+              
+              <FormControl display="flex" alignItems="center">
+                <FormLabel htmlFor="rug-pull" mb="0" flex="1">
+                  Potential Rug Pulls
+                </FormLabel>
+                <Switch 
+                  id="rug-pull" 
+                  colorScheme="red" 
+                  isChecked={alertTypes.rug_pull} 
+                  onChange={() => handleAlertTypeToggle('rug_pull')}
+                />
+              </FormControl>
+              
+              <FormControl display="flex" alignItems="center">
+                <FormLabel htmlFor="wallet-drainer" mb="0" flex="1">
+                  Wallet Drainers
+                </FormLabel>
+                <Switch 
+                  id="wallet-drainer" 
+                  colorScheme="red" 
+                  isChecked={alertTypes.wallet_drainer} 
+                  onChange={() => handleAlertTypeToggle('wallet_drainer')}
+                />
+              </FormControl>
+              
+              <FormControl display="flex" alignItems="center">
+                <FormLabel htmlFor="phishing" mb="0" flex="1">
+                  Phishing Attempts
+                </FormLabel>
+                <Switch 
+                  id="phishing" 
+                  colorScheme="red" 
+                  isChecked={alertTypes.phishing} 
+                  onChange={() => handleAlertTypeToggle('phishing')}
+                />
+              </FormControl>
+              
+              <FormControl display="flex" alignItems="center">
+                <FormLabel htmlFor="security-vulnerability" mb="0" flex="1">
+                  Security Vulnerabilities
+                </FormLabel>
+                <Switch 
+                  id="security-vulnerability" 
+                  colorScheme="red" 
+                  isChecked={alertTypes.security_vulnerability} 
+                  onChange={() => handleAlertTypeToggle('security_vulnerability')}
+                />
+              </FormControl>
+            </VStack>
+          </Box>
+          
+          {/* Severity Threshold */}
+          <Box p={5} borderWidth="1px" borderRadius="lg" bg={bgColor}>
+            <VStack spacing={4} align="stretch">
+              <HStack>
+                <Icon as={FaShieldAlt} color="orange.500" boxSize={6} />
+                <Text fontWeight="bold" fontSize="lg">Severity Threshold</Text>
+              </HStack>
+              
+              <Divider />
+              
+              <Text>
+                Only receive alerts for issues with severity at or above:
+              </Text>
+              
+              <Box pt={6} pb={2}>
+                <Slider
+                  id="severity-slider"
+                  defaultValue={severityThreshold}
+                  min={0}
+                  max={100}
+                  step={25}
+                  onChange={handleSeverityChange}
+                  onMouseEnter={() => setShowTooltip(true)}
+                  onMouseLeave={() => setShowTooltip(false)}
+                >
+                  <SliderMark value={0} mt={2} ml={-2.5} fontSize="sm">
+                    Low
+                  </SliderMark>
+                  <SliderMark value={33} mt={2} ml={-2.5} fontSize="sm">
+                    Medium
+                  </SliderMark>
+                  <SliderMark value={66} mt={2} ml={-2.5} fontSize="sm">
+                    High
+                  </SliderMark>
+                  <SliderMark value={100} mt={2} ml={-2.5} fontSize="sm">
+                    Critical
+                  </SliderMark>
+                  <SliderTrack>
+                    <SliderFilledTrack bg={getSeverityColor(severityThreshold) + '.500'} />
+                  </SliderTrack>
+                  <Tooltip
+                    hasArrow
+                    bg={getSeverityColor(severityThreshold) + '.500'}
+                    color="white"
+                    placement="top"
+                    isOpen={showTooltip}
+                    label={getSeverityLabel(severityThreshold)}
+                  >
+                    <SliderThumb boxSize={6} />
+                  </Tooltip>
+                </Slider>
+              </Box>
+              
+              <HStack justify="space-between">
+                <Badge colorScheme={getSeverityColor(severityThreshold)}>
+                  {getSeverityLabel(severityThreshold)}
+                </Badge>
+                <Text fontSize="sm" color="gray.500">
+                  You will only receive alerts for issues with {getSeverityLabel(severityThreshold).toLowerCase()} or higher severity.
+                </Text>
+              </HStack>
+            </VStack>
+          </Box>
+        </SimpleGrid>
+        
+        <Flex justify="flex-end">
+          <Button
+            leftIcon={<FaSave />}
+            colorScheme="blue"
+            size="lg"
+            onClick={saveSettings}
+          >
+            Save Settings
+          </Button>
+        </Flex>
       </VStack>
     </Container>
   );
