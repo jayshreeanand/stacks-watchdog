@@ -288,15 +288,75 @@ const getMockData = (type) => {
   }
 };
 
+// Create testnet data with real-looking values but clearly marked as testnet
+const getTestnetData = (type) => {
+  // Use a prefix that clearly indicates this is testnet data
+  const testnetPrefix = '[TESTNET]';
+  const explorerUrl = getExplorerUrl();
+  
+  switch (type) {
+    case 'stats':
+      return {
+        totalDrainers: 12,
+        activeDrainers: 5,
+        totalVictims: 28,
+        totalLost: 75000,
+        source: testnetPrefix,
+        explorerUrl: explorerUrl,
+        securityScore: 92,
+        alertCount: 1,
+        monitoredWallets: 8
+      };
+    case 'drainers':
+      return [
+        {
+          address: '0x2345678901abcdef2345678901abcdef23456789',
+          name: `${testnetPrefix} Sonic Fake Staking`,
+          riskLevel: 'high',
+          victims: 8,
+          totalStolen: 25000,
+          lastActive: '2025-03-02T10:15:30Z',
+          isVerified: true,
+          description: `${testnetPrefix} Fake staking contract on Sonic Blaze Testnet that steals user funds.`,
+          createdAt: '2025-02-25T08:30:15Z',
+          verifiedBy: 'TestnetTeam',
+          verificationNotes: 'Verified on testnet for demonstration purposes.',
+        },
+        {
+          address: '0x3456789012abcdef3456789012abcdef34567890',
+          name: `${testnetPrefix} Testnet Drainer`,
+          riskLevel: 'medium',
+          victims: 5,
+          totalStolen: 15000,
+          lastActive: '2025-03-01T14:22:10Z',
+          isVerified: true,
+          description: `${testnetPrefix} Wallet drainer contract deployed on Sonic Blaze Testnet for testing.`,
+          createdAt: '2025-02-20T11:20:45Z',
+          verifiedBy: 'TestnetTeam',
+          verificationNotes: 'Verified on testnet for demonstration purposes.',
+        }
+      ];
+    default:
+      return null;
+  }
+};
+
 // API service for interacting with the backend
 const apiService = {
   // Dashboard stats
   getDashboardStats: async () => {
     console.log(`Getting dashboard stats with data source: ${CURRENT_DATA_SOURCE}`);
     
+    // Only use mock data if explicitly set to mock
     if (CURRENT_DATA_SOURCE === 'mock') {
       console.log('Using mock data for dashboard stats');
       return getMockData('stats');
+    }
+    
+    // For testnet, use testnet data
+    if (CURRENT_DATA_SOURCE === 'testnet') {
+      console.log('Using testnet data for dashboard stats');
+      return getTestnetData('stats');
     }
     
     try {
@@ -304,16 +364,16 @@ const apiService = {
       const response = await api.get('/stats');
       
       if (!response.data || Object.keys(response.data).length === 0) {
-        console.log('Empty response from API, using mock data');
-        return getMockData('stats');
+        console.log('Empty response from API, using testnet data');
+        return getTestnetData('stats');
       }
       
       console.log('Received dashboard stats from API:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching dashboard stats:', error);
-      console.log('Falling back to mock data due to error');
-      return getMockData('stats');
+      console.log('Falling back to testnet data due to error');
+      return getTestnetData('stats');
     }
   },
   
@@ -321,9 +381,16 @@ const apiService = {
   getWalletDrainers: async () => {
     console.log(`Getting wallet drainers with data source: ${CURRENT_DATA_SOURCE}`);
     
+    // Only use mock data if explicitly set to mock
     if (CURRENT_DATA_SOURCE === 'mock') {
       console.log('Using mock data for wallet drainers');
       return getMockData('drainers');
+    }
+    
+    // For testnet, use testnet data
+    if (CURRENT_DATA_SOURCE === 'testnet') {
+      console.log('Using testnet data for wallet drainers');
+      return getTestnetData('drainers');
     }
     
     try {
@@ -331,16 +398,16 @@ const apiService = {
       const response = await api.get('/walletdrainer/list');
       
       if (!response.data || response.data.length === 0) {
-        console.log('Empty response from API, using mock data');
-        return getMockData('drainers');
+        console.log('Empty response from API, using testnet data');
+        return getTestnetData('drainers');
       }
       
       console.log('Received wallet drainers from API:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching wallet drainers:', error);
-      console.log('Falling back to mock data due to error');
-      return getMockData('drainers');
+      console.log('Falling back to testnet data due to error');
+      return getTestnetData('drainers');
     }
   },
   
@@ -443,9 +510,16 @@ const apiService = {
   getRecentWalletDrainers: async (limit = 5) => {
     console.log(`Getting recent wallet drainers with data source: ${CURRENT_DATA_SOURCE}`);
     
+    // Only use mock data if explicitly set to mock
     if (CURRENT_DATA_SOURCE === 'mock') {
       console.log('Using mock data for recent wallet drainers');
       return getMockData('drainers').slice(0, limit);
+    }
+    
+    // For testnet, use testnet data
+    if (CURRENT_DATA_SOURCE === 'testnet') {
+      console.log('Using testnet data for recent wallet drainers');
+      return getTestnetData('drainers').slice(0, limit);
     }
     
     try {
@@ -453,16 +527,16 @@ const apiService = {
       const response = await api.get(`/walletdrainer/recent?limit=${limit}`);
       
       if (!response.data || response.data.length === 0) {
-        console.log('Empty response from API, using mock data');
-        return getMockData('drainers').slice(0, limit);
+        console.log('Empty response from API, using testnet data');
+        return getTestnetData('drainers').slice(0, limit);
       }
       
       console.log('Received recent wallet drainers from API:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching recent wallet drainers:', error);
-      console.log('Falling back to mock data due to error');
-      return getMockData('drainers').slice(0, limit);
+      console.log('Falling back to testnet data due to error');
+      return getTestnetData('drainers').slice(0, limit);
     }
   },
   

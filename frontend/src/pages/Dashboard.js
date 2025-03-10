@@ -48,10 +48,11 @@ const Dashboard = () => {
     securityScore: 0,
     alertCount: 0,
     monitoredWallets: 0,
+    source: ''
   });
   const [recentDrainers, setRecentDrainers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { dataSource, isMockData } = useDataSource();
+  const { dataSource, isMockData, isTestnet } = useDataSource();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -109,6 +110,18 @@ const Dashboard = () => {
             <AlertTitle>Using Mock Data</AlertTitle>
             <AlertDescription>
               You are currently viewing mock data. Switch to Testnet or Mainnet for real data.
+            </AlertDescription>
+          </Box>
+        </Alert>
+      )}
+
+      {isTestnet && stats.source && stats.source.includes('[TESTNET]') && (
+        <Alert status="info" mb={6} borderRadius="md">
+          <AlertIcon />
+          <Box>
+            <AlertTitle>Sonic Blaze Testnet</AlertTitle>
+            <AlertDescription>
+              You are viewing data from the Sonic Blaze Testnet. This is simulated data for testing purposes.
             </AlertDescription>
           </Box>
         </Alert>
