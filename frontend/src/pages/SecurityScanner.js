@@ -51,6 +51,7 @@ import { useWallet } from '../context/WalletContext';
 import AddressAnalyzer from '../components/AddressAnalyzer';
 import BlockExplorerLink from '../components/BlockExplorerLink';
 import { useDataSource } from '../context/DataSourceContext';
+import apiService from '../utils/apiService';
 
 const SecurityScanner = () => {
   const { account } = useWallet();
@@ -68,13 +69,13 @@ const SecurityScanner = () => {
     checkPhishing: true,
   });
   
-  const { dataSource, getNetworkName } = useDataSource();
+  const { dataSource, getNetworkName, useRealWalletData, toggleRealWalletData } = useDataSource();
   
   // Move useColorModeValue calls outside of conditional rendering
   const textColor = useColorModeValue('gray.600', 'gray.400');
   const cardBg = useColorModeValue('white', 'gray.800');
 
-  const handleScan = () => {
+  const handleScan = async () => {
     // Validate if we have an address to scan
     const addressToScan = account || customAddress;
     
@@ -108,34 +109,48 @@ const SecurityScanner = () => {
     setScanResults(null);
 
     try {
-      // Simulate scanning process
+      // Start progress animation
       const interval = setInterval(() => {
         setScanProgress((prevProgress) => {
-          const newProgress = prevProgress + Math.random() * 10;
-          if (newProgress >= 100) {
+          const newProgress = prevProgress + 5;
+          if (newProgress >= 90) {
             clearInterval(interval);
-            setIsScanning(false);
-            setScanComplete(true);
-            // Generate mock scan results
-            generateMockResults(addressToScan);
-            // Set tab index to the scan results tab (index 3)
-            setTabIndex(3);
-            // Show toast notification
-            toast({
-              title: 'Scan complete',
-              description: 'Redirecting to scan results',
-              status: 'success',
-              duration: 3000,
-              isClosable: true,
-            });
-            return 100;
+            return 90; // Hold at 90% until the actual scan completes
           }
           return newProgress;
         });
-      }, 300);
+      }, 200);
+
+      // Perform the actual wallet scan using the API service
+      console.log(`Scanning wallet address: ${addressToScan} with useRealWalletData: ${useRealWalletData}`);
+      
+      const results = await apiService.scanWallet(addressToScan, useRealWalletData);
+      
+      // Complete the progress bar
+      clearInterval(interval);
+      setScanProgress(100);
+      
+      // Set the scan results
+      console.log('Scan results:', results);
+      setScanResults(results);
+      setScanComplete(true);
+      setIsScanning(false);
+      
+      // Set tab index to the scan results tab (index 3)
+      setTabIndex(3);
+      
+      // Show toast notification
+      toast({
+        title: 'Scan complete',
+        description: 'Wallet scan completed successfully',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (error) {
       console.error('Error during wallet scan:', error);
       setIsScanning(false);
+      setScanProgress(0);
       toast({
         title: 'Scan failed',
         description: error.message || 'An error occurred during the wallet scan',
@@ -521,6 +536,18 @@ const SecurityScanner = () => {
             />
           </FormControl>
           
+          <Flex mt={4} align="center">
+            <Checkbox 
+              isChecked={useRealWalletData} 
+              onChange={toggleRealWalletData}
+              colorScheme="sonic"
+              mr={2}
+            />
+            <Text color="gray.400" fontSize="sm">
+              Use real wallet data {dataSource === 'mock' ? '(disabled in mock mode)' : ''}
+            </Text>
+          </Flex>
+          
           {isScanning && (
             <Box mt={4}>
               <Text color="gray.400" fontSize="sm" mb={2}>
@@ -631,401 +658,122 @@ const SecurityScanner = () => {
           
           {scanComplete && (
             <TabPanel>
-              <Box bg="gray.800" p={6} borderRadius="md">
-                <Heading as="h2" size="md" color="white" mb={4}>
-                  Wallet Security Scan Results
-                </Heading>
+              <Box p={4} bg="gray.800" borderRadius="lg" boxShadow="md">
+                <Flex justify="space-between" align="center" mb={4}>
+                  <Heading as="h3" size="md" color="white">
+                    Wallet Security Scan Results
+                  </Heading>
+                  <Text color="gray.400" fontSize="sm">
+                    Address: {scanResults.address}
+                  </Text>
+                </Flex>
+                <Text color="gray.400" fontSize="sm" mb={4}>
+                  Scan completed on {new Date(scanResults.scanDate).toLocaleString()}
+                  {scanResults.networkInfo && (
+                    <Text as="span" ml={2}>
+                      Network: {scanResults.networkInfo.name} {scanResults.networkInfo.chainId && `(Chain ID: ${scanResults.networkInfo.chainId})`}
+                    </Text>
+                  )}
+                </Text>
                 
-                {scanResults && (
-                  <>
-                    <Flex justify="space-between" align="center" mb={6}>
-                      <Box>
-                        <Text color="gray.400" mb={2}>
-                          Address: {scanResults.address}
-                        </Text>
-                        <Text color="gray.400" fontSize="sm">
-                          Scan completed on {new Date(scanResults.scanDate).toLocaleString()}
-                        </Text>
-                        {scanResults.networkInfo && (
-                          <Text color="gray.400" fontSize="sm">
-                            Network: {scanResults.networkInfo.name} (Chain ID: {scanResults.networkInfo.chainId})
+                <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4} mb={6}>
+                  <Stat bg="gray.700" p={4} borderRadius="md">
+                    <StatLabel color="gray.400">Security Score</StatLabel>
+                    <StatNumber color={getScoreColor(scanResults.securityScore)}>
+                      {scanResults.securityScore}/100
+                    </StatNumber>
+                    <StatHelpText color="gray.400">Overall wallet security</StatHelpText>
+                  </Stat>
+                  
+                  {scanResults.balances && scanResults.balances.length > 0 && (
+                    <Stat bg="gray.700" p={4} borderRadius="md">
+                      <StatLabel color="gray.400">Wallet Balance</StatLabel>
+                      <StatNumber color="white">
+                        {scanResults.balances.map((balance, index) => (
+                          <Text key={index} fontSize={index === 0 ? "2xl" : "md"}>
+                            {balance.balance} {balance.token}
+                            {balance.value && <Text as="span" fontSize="sm" color="gray.400" ml={1}>
+                              (${balance.value})
+                            </Text>}
                           </Text>
-                        )}
-                      </Box>
-                      <Stat textAlign="right">
-                        <StatLabel color="gray.400">Security Score</StatLabel>
-                        <StatNumber color={getScoreColor(scanResults.securityScore)}>
-                          {scanResults.securityScore}/100
-                        </StatNumber>
-                      </Stat>
-                    </Flex>
-                    
-                    {/* Wallet Balances */}
-                    {scanResults.balances && scanResults.balances.length > 0 && (
-                      <Box mb={6}>
-                        <Heading as="h3" size="sm" color="white" mb={3}>
-                          Wallet Balances
-                        </Heading>
-                        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
-                          {scanResults.balances.map((balance, index) => (
-                            <Box 
-                              key={index} 
-                              p={4} 
-                              bg="gray.700" 
-                              borderRadius="md"
-                              borderLeft="4px solid"
-                              borderLeftColor="sonic.400"
-                            >
-                              <Stat>
-                                <StatLabel color="gray.400">{balance.token}</StatLabel>
-                                <StatNumber color="white" fontSize="xl">{balance.balance}</StatNumber>
-                                <StatHelpText color="gray.400">≈ ${balance.value}</StatHelpText>
-                              </Stat>
-                            </Box>
-                          ))}
-                        </SimpleGrid>
-                      </Box>
-                    )}
-                    
-                    {/* Wallet Drainers */}
-                    {scanResults.walletDrainers && scanResults.walletDrainers.length > 0 && (
-                      <Box mb={6}>
-                        <Heading as="h3" size="sm" color="white" mb={3}>
-                          Detected Wallet Drainers ({scanResults.walletDrainers.length})
-                        </Heading>
-                        
-                        {console.log('Rendering wallet drainers in SecurityScanner:', scanResults.walletDrainers)}
-                        
-                        <VStack spacing={4} align="stretch" width="100%">
-                          {scanResults.walletDrainers.map((drainer, index) => {
-                            console.log(`Rendering drainer ${index + 1} in SecurityScanner:`, drainer.name);
-                            return (
-                              <Box 
-                                key={drainer.id || index}
-                                p={4} 
-                                bg="gray.700" 
-                                borderRadius="md"
-                                borderLeft="4px solid"
-                                borderLeftColor={
-                                  drainer.riskLevel === 'critical' ? 'red.500' : 
-                                  drainer.riskLevel === 'high' ? 'orange.500' : 'yellow.500'
-                                }
-                                width="100%"
-                              >
-                                <Flex justify="space-between" align="center" mb={3}>
-                                  <Heading as="h4" size="sm" color="white">
-                                    {index + 1}. {drainer.name}
-                                  </Heading>
-                                  <Badge 
-                                    colorScheme={
-                                      drainer.riskLevel === 'critical' ? 'red' : 
-                                      drainer.riskLevel === 'high' ? 'orange' : 'yellow'
-                                    }
-                                    fontSize="sm"
-                                  >
-                                    {drainer.riskLevel.toUpperCase()}
-                                  </Badge>
-                                </Flex>
-                                
-                                <Flex mb={3} flexWrap="wrap">
-                                  <Text color="gray.400" fontSize="sm" mr={4}>
-                                    <strong>Type:</strong> {drainer.type}
-                                  </Text>
-                                  <Text color="gray.400" fontSize="sm" mr={4}>
-                                    <strong>Address:</strong> {drainer.address}
-                                  </Text>
-                                  <Text color="gray.400" fontSize="sm">
-                                    <strong>Detected:</strong> {new Date(drainer.detectedAt).toLocaleDateString()}
-                                  </Text>
-                                </Flex>
-                                
-                                <Text color="gray.300" fontSize="sm" mb={3}>
-                                  {drainer.description}
-                                </Text>
-                                
-                                <Box bg="gray.800" p={3} borderRadius="md" mb={3}>
-                                  <Text color="white" fontSize="sm" fontWeight="bold" mb={2}>
-                                    Risk Indicators:
-                                  </Text>
-                                  {drainer.indicators.map((indicator, idx) => (
-                                    <Flex key={idx} align="center" mb={idx < drainer.indicators.length - 1 ? 2 : 0}>
-                                      <Icon as={FiAlertTriangle} color="red.400" mr={2} />
-                                      <Text color="gray.300" fontSize="sm">{indicator}</Text>
-                                    </Flex>
-                                  ))}
-                                </Box>
-                                
-                                <Box bg="gray.800" p={3} borderRadius="md">
-                                  <Text color="white" fontSize="sm" fontWeight="bold" mb={1}>
-                                    Recommendation:
-                                  </Text>
-                                  <Text color="gray.300" fontSize="sm">
-                                    {drainer.recommendation}
-                                  </Text>
-                                </Box>
-                                
-                                <Flex justify="flex-end" mt={3}>
-                                  <Button 
-                                    size="sm" 
-                                    colorScheme="red" 
-                                    variant="outline"
-                                    leftIcon={<Icon as={FiAlertTriangle} />}
-                                  >
-                                    Report False Positive
-                                  </Button>
-                                </Flex>
-                              </Box>
-                            );
-                          })}
-                        </VStack>
-                      </Box>
-                    )}
-                    
-                    {/* Wallet Drainer Interactions */}
-                    {scanResults.drainerInteractions && scanResults.drainerInteractions.length > 0 && (
-                      <Box mb={6}>
-                        <Heading as="h3" size="sm" color="white" mb={3}>
-                          <Flex align="center">
-                            <Icon as={FaExclamationTriangle} color="red.500" mr={2} />
-                            Your Interactions with Wallet Drainers
-                          </Flex>
-                        </Heading>
-                        
-                        <Alert status="error" bg="red.900" color="white" mb={4} borderRadius="md">
-                          <AlertIcon color="red.200" />
-                          <Box>
-                            <AlertTitle>Critical Security Alert</AlertTitle>
-                            <AlertDescription>
-                              We've detected {scanResults.drainerInteractions.length} interactions with known wallet drainers. 
-                              Immediate action is recommended to secure your assets.
-                            </AlertDescription>
-                          </Box>
-                        </Alert>
-                        
-                        {scanResults.drainerInteractions.map((interaction) => (
-                          <Box 
-                            key={interaction.id} 
-                            p={4} 
-                            bg="gray.700" 
-                            borderRadius="md" 
-                            mb={4}
-                            borderLeft="4px solid"
-                            borderLeftColor={
-                              interaction.riskLevel === 'critical' ? 'red.500' : 
-                              interaction.riskLevel === 'high' ? 'orange.500' : 'yellow.500'
-                            }
-                          >
-                            <Flex justify="space-between" align="center" mb={3}>
-                              <Heading as="h4" size="sm" color="white">
-                                {interaction.interactionType} with {interaction.drainerName}
-                              </Heading>
-                              <HStack>
-                                <Badge 
-                                  colorScheme={
-                                    interaction.riskLevel === 'critical' ? 'red' : 
-                                    interaction.riskLevel === 'high' ? 'orange' : 'yellow'
-                                  }
-                                >
-                                  {interaction.riskLevel.toUpperCase()}
-                                </Badge>
-                                <Badge 
-                                  colorScheme={interaction.status === 'Active' ? 'red' : 'gray'}
-                                >
-                                  {interaction.status}
-                                </Badge>
-                              </HStack>
-                            </Flex>
-                            
-                            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4} mb={3}>
-                              <Box>
-                                <Text color="gray.400" fontSize="xs">Asset</Text>
-                                <Text color="white" fontWeight="medium">{interaction.asset}</Text>
-                              </Box>
-                              <Box>
-                                <Text color="gray.400" fontSize="xs">Amount</Text>
-                                <Text color="white" fontWeight="medium">{interaction.amount}</Text>
-                              </Box>
-                              <Box>
-                                <Text color="gray.400" fontSize="xs">Date</Text>
-                                <Text color="white" fontWeight="medium">
-                                  {new Date(interaction.timestamp).toLocaleDateString()}
-                                </Text>
-                              </Box>
-                            </SimpleGrid>
-                            
-                            <Flex mb={3} flexWrap="wrap">
-                              <Text color="gray.400" fontSize="sm" mr={4}>
-                                <strong>Drainer Address:</strong> {interaction.drainerAddress}
-                              </Text>
-                              <Text color="gray.400" fontSize="sm">
-                                <strong>Transaction:</strong> {interaction.transactionHash}
-                              </Text>
-                            </Flex>
-                            
-                            <Box bg="gray.800" p={3} borderRadius="md" mb={3}>
-                              <Text color="white" fontSize="sm" fontWeight="bold" mb={1}>
-                                Recommendation:
-                              </Text>
-                              <Text color="gray.300" fontSize="sm">
-                                {interaction.recommendation}
-                              </Text>
-                            </Box>
-                            
-                            <Flex justify="flex-end" mt={3}>
-                              <Button 
-                                size="sm" 
-                                colorScheme="red"
-                                mr={2}
-                              >
-                                Revoke Approval
-                              </Button>
-                              <Button 
-                                size="sm" 
-                                variant="outline"
-                                colorScheme="gray"
-                              >
-                                View Transaction
-                              </Button>
-                            </Flex>
-                          </Box>
                         ))}
-                      </Box>
-                    )}
-                    
-                    {/* Security Issues */}
-                    <Heading as="h3" size="sm" color="white" mb={3}>
-                      Detected Issues
+                      </StatNumber>
+                      <StatHelpText color="gray.400">Current holdings</StatHelpText>
+                    </Stat>
+                  )}
+                  
+                  <Stat bg="gray.700" p={4} borderRadius="md">
+                    <StatLabel color="gray.400">Transaction Count</StatLabel>
+                    <StatNumber color="white">
+                      {scanResults.transactionCount || 'N/A'}
+                    </StatNumber>
+                    <StatHelpText color="gray.400">Total transactions</StatHelpText>
+                  </Stat>
+                </SimpleGrid>
+                
+                {/* Security Issues Section */}
+                {scanResults.issues && scanResults.issues.length > 0 && (
+                  <Box mb={6}>
+                    <Heading as="h4" size="sm" color="white" mb={3}>
+                      Security Issues ({scanResults.issues.length})
                     </Heading>
-                    
-                    {scanResults.issues.length > 0 ? (
-                      scanResults.issues.map((issue) => (
-                        <Box 
-                          key={issue.id} 
-                          p={4} 
-                          bg="gray.700" 
-                          borderRadius="md" 
-                          mb={3}
-                          borderLeft="4px solid"
-                          borderLeftColor={getSeverityColor(issue.severity)}
-                        >
-                          <Flex justify="space-between" align="center" mb={2}>
-                            <Heading as="h4" size="xs" color="white">
-                              {issue.title}
-                            </Heading>
-                            <Badge colorScheme={getSeverityColor(issue.severity)}>
-                              {issue.severity}
-                            </Badge>
-                          </Flex>
-                          <Text color="gray.400" fontSize="sm" mb={2}>
-                            {issue.description}
-                          </Text>
-                          <Flex justify="space-between" align="center">
-                            <Text color="gray.300" fontSize="sm" fontWeight="bold">
-                              Recommendation: {issue.recommendation}
+                    <VStack spacing={3} align="stretch">
+                      {scanResults.issues.map((issue) => (
+                        <Card key={issue.id} bg="gray.700" variant="filled">
+                          <CardHeader pb={2}>
+                            <Flex justify="space-between" align="center">
+                              <Heading size="xs" color="white">
+                                {issue.title}
+                              </Heading>
+                              <Badge colorScheme={getSeverityColor(issue.severity)}>
+                                {issue.severity}
+                              </Badge>
+                            </Flex>
+                          </CardHeader>
+                          <CardBody pt={0}>
+                            <Text color="gray.400" fontSize="sm">
+                              {issue.description}
                             </Text>
-                            {issue.detectedAt && (
-                              <Text color="gray.500" fontSize="xs">
-                                Detected: {new Date(issue.detectedAt).toLocaleDateString()}
+                            {issue.recommendation && (
+                              <Text color="sonic.300" fontSize="sm" mt={2}>
+                                Recommendation: {issue.recommendation}
                               </Text>
                             )}
-                          </Flex>
-                        </Box>
-                      ))
-                    ) : (
-                      <Text color="green.400">No issues detected!</Text>
-                    )}
-                    
-                    {/* Recent Transactions */}
-                    {scanResults.recentTransactions && scanResults.recentTransactions.length > 0 && (
-                      <Box mt={6} mb={6}>
-                        <Heading as="h3" size="sm" color="white" mb={3}>
-                          Recent Transactions
-                        </Heading>
-                        <Box overflowX="auto">
-                          <Table size="sm" variant="simple">
-                            <Thead>
-                              <Tr>
-                                <Th color="gray.400">Type</Th>
-                                <Th color="gray.400">Asset</Th>
-                                <Th color="gray.400">Amount</Th>
-                                <Th color="gray.400">Date</Th>
-                                <Th color="gray.400">Risk</Th>
-                              </Tr>
-                            </Thead>
-                            <Tbody>
-                              {scanResults.recentTransactions.map((tx, index) => (
-                                <Tr key={index}>
-                                  <Td color="white">{tx.type}</Td>
-                                  <Td color="white">{tx.asset}</Td>
-                                  <Td color="white">{tx.amount}</Td>
-                                  <Td color="gray.400">{new Date(tx.timestamp).toLocaleDateString()}</Td>
-                                  <Td>
-                                    <Badge 
-                                      colorScheme={
-                                        tx.risk === 'high' ? 'red' : 
-                                        tx.risk === 'medium' ? 'orange' : 'green'
-                                      }
-                                      size="sm"
-                                    >
-                                      {tx.risk}
-                                    </Badge>
-                                  </Td>
-                                </Tr>
-                              ))}
-                            </Tbody>
-                          </Table>
-                        </Box>
-                      </Box>
-                    )}
-                    
-                    {/* Security Recommendations */}
-                    <Heading as="h3" size="sm" color="white" mt={6} mb={3}>
+                          </CardBody>
+                        </Card>
+                      ))}
+                    </VStack>
+                  </Box>
+                )}
+                
+                {/* Recommendations Section */}
+                {scanResults.recommendations && scanResults.recommendations.length > 0 && (
+                  <Box mb={6}>
+                    <Heading as="h4" size="sm" color="white" mb={3}>
                       Security Recommendations
                     </Heading>
-                    
-                    <Box p={4} bg="gray.700" borderRadius="md" mb={6}>
+                    <VStack spacing={2} align="stretch" bg="gray.700" p={4} borderRadius="md">
                       {scanResults.recommendations.map((rec, index) => (
                         <Flex key={index} align="center" mb={index < scanResults.recommendations.length - 1 ? 2 : 0}>
                           <Icon as={FaCheckCircle} color="green.400" mr={2} />
-                          <Text color="gray.300">{rec}</Text>
+                          <Text color="gray.300" fontSize="sm">{rec}</Text>
                         </Flex>
                       ))}
-                    </Box>
-                    
-                    {/* Security Tips */}
-                    {scanResults.securityTips && scanResults.securityTips.length > 0 && (
-                      <>
-                        <Heading as="h3" size="sm" color="white" mt={6} mb={3}>
-                          Security Tips
-                        </Heading>
-                        
-                        <Box p={4} bg="gray.700" borderRadius="md">
-                          {scanResults.securityTips.map((tip, index) => (
-                            <Flex key={index} align="center" mb={index < scanResults.securityTips.length - 1 ? 2 : 0}>
-                              <Icon as={FiAlertTriangle} color="yellow.400" mr={2} />
-                              <Text color="gray.300">{tip}</Text>
-                            </Flex>
-                          ))}
-                        </Box>
-                      </>
-                    )}
-                    
-                    <Flex justify="center" mt={8}>
-                      <Button
-                        colorScheme="sonic"
-                        leftIcon={<FiSearch />}
-                        onClick={() => {
-                          setScanComplete(false);
-                          setScanResults(null);
-                          setTabIndex(0);
-                          setCustomAddress('');
-                        }}
-                      >
-                        Scan Another Address
-                      </Button>
-                    </Flex>
-                  </>
+                    </VStack>
+                  </Box>
                 )}
+                
+                {/* Data Source Information */}
+                <Alert status="info" variant="subtle" bg="blue.900" color="blue.100" borderRadius="md">
+                  <AlertIcon color="blue.200" />
+                  <Box>
+                    <AlertTitle fontSize="sm">Data Source Information</AlertTitle>
+                    <AlertDescription fontSize="xs">
+                      This scan was performed using {scanResults.source || dataSource} data. 
+                      {dataSource !== 'mock' ? ' The results reflect actual on-chain data.' : ' Some data may be simulated for demonstration purposes.'}
+                    </AlertDescription>
+                  </Box>
+                </Alert>
               </Box>
             </TabPanel>
           )}

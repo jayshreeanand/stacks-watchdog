@@ -25,6 +25,7 @@ export const DataSourceProvider = ({ children }) => {
   console.log(`DataSourceProvider initializing with data source: ${initialDataSource}`);
   
   const [dataSource, setDataSource] = useState(initialDataSource);
+  const [useRealWalletData, setUseRealWalletData] = useState(true);
   
   // Initialize API URL when the component mounts
   useEffect(() => {
@@ -60,6 +61,12 @@ export const DataSourceProvider = ({ children }) => {
     }
   };
   
+  // Function to toggle real wallet data usage
+  const toggleRealWalletData = () => {
+    console.log(`DataSourceProvider: Toggling real wallet data from ${useRealWalletData} to ${!useRealWalletData}`);
+    setUseRealWalletData(!useRealWalletData);
+  };
+  
   // Function to get the network name based on data source
   const getNetworkName = () => {
     if (dataSource === DATA_SOURCES.MOCK) {
@@ -75,6 +82,8 @@ export const DataSourceProvider = ({ children }) => {
     dataSource,
     changeDataSource,
     getNetworkName,
+    useRealWalletData,
+    toggleRealWalletData,
     isMockData: dataSource === DATA_SOURCES.MOCK,
     isTestnet: dataSource === DATA_SOURCES.TESTNET,
     isMainnet: dataSource === DATA_SOURCES.MAINNET
