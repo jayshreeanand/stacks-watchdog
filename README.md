@@ -1,6 +1,6 @@
 # Sonic Shield AI: AI powered security for Sonic
 
-Sonic Shield AI is a comprehensive security monitoring platform for the Electroneum blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
+Sonic Shield AI is a comprehensive security monitoring platform for the Sonic blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
 
 Demo URL (frontend): [https://sonic-shield.vercel.app/](https://sonic-shield.vercel.app/)
 
@@ -17,6 +17,67 @@ Backend server URL (api server): [https://sonic-shield-backend.up.railway.app/](
 - **AI Integration**: OpenAI API integration for advanced security analysis
 - **Notification System**: Multi-channel alert system for real-time security notifications
 - **Block Explorer Integration**: Direct integration with Sonic block explorer
+
+### System Architecture Flow
+
+```mermaid
+graph TD
+    subgraph Blockchain
+        SC[Smart Contracts] --> |Events| BL[Blockchain]
+        BL --> |Transactions| SC
+    end
+
+    subgraph Backend
+        API[Node.js API Server] --> |Monitors| BL
+        API --> |Stores| DB[(MongoDB)]
+        API --> |Queries| AI[OpenAI GPT]
+        WS[WebSocket Server] --> |Real-time Updates| API
+    end
+
+    subgraph Frontend
+        UI[React Dashboard] --> |API Requests| API
+        UI --> |WebSocket| WS
+        UI --> |Contract Data| BE[Block Explorer]
+    end
+
+    subgraph Notifications
+        NS[Notification Service] --> |Alerts| TG[Telegram Bot]
+        NS --> |Alerts| EM[Email]
+        API --> |Triggers| NS
+    end
+
+    subgraph Security Analysis
+        AI --> |Contract Analysis| VS[Vulnerability Scanner]
+        AI --> |Transaction Analysis| TA[Transaction Analyzer]
+        AI --> |Address Analysis| AA[Address Analyzer]
+        VS --> |Results| API
+        TA --> |Results| API
+        AA --> |Results| API
+    end
+```
+
+1. **Smart Contract Monitoring**:
+
+   - Smart contracts emit events on the Sonic blockchain
+   - Backend continuously monitors for new transactions and events
+   - Real-time updates are pushed through WebSocket connections
+
+2. **Security Analysis Pipeline**:
+
+   - New contracts/transactions trigger AI-powered analysis
+   - Multiple analysis modules run in parallel
+   - Results are stored in MongoDB for quick retrieval
+
+3. **User Interaction Flow**:
+
+   - Frontend dashboard makes API requests to fetch data
+   - WebSocket connections provide real-time updates
+   - Block explorer integration provides additional contract details
+
+4. **Alert System**:
+   - Security events trigger the notification service
+   - Alerts are sent through configured channels (Telegram, Email)
+   - Users receive real-time notifications based on their preferences
 
 ## Key Features
 

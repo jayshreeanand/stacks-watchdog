@@ -78,7 +78,7 @@ router.post('/analyze', async (req, res) => {
     }
     
     // Create provider
-    const provider = new ethers.JsonRpcProvider(process.env.ELECTRONEUM_RPC_URL);
+    const provider = new ethers.JsonRpcProvider(process.env.Sonic_RPC_URL);
     
     // Analyze token contract
     const analysis = await rugPullService.analyzeTokenContract(tokenAddress, provider);

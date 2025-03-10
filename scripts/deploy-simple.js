@@ -15,7 +15,7 @@ async function main() {
     console.log("Deploying Sonic Shield contracts to testnet...");
     
     // Create provider and wallet
-    const provider = new ethers.JsonRpcProvider(process.env.ELECTRONEUM_TESTNET_RPC_URL);
+    const provider = new ethers.JsonRpcProvider(process.env.Sonic_TESTNET_RPC_URL);
     const network = await provider.getNetwork();
     console.log(`Connected to network: Chain ID ${network.chainId}`);
     
