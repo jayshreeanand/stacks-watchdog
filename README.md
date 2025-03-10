@@ -1,10 +1,10 @@
-# Sonic Watchdog AI: Security Monitoring Bot for Sonic
+# Sonic Shield AI: Advanced Security Platform for Sonic
 
-Sonic Watchdog AI is a comprehensive security monitoring platform for the Sonic blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time.
+Sonic Shield AI is a next-generation security platform for the Sonic blockchain. It leverages artificial intelligence to protect digital assets by detecting threats, preventing scams, and securing blockchain interactions in real-time.
 
-Demo URL: https://sonic-watchdog.vercel.app/
+Demo URL: https://sonic-shield-ai.vercel.app/
 
-Backend server URL: https://sonic-watchdog-production.up.railway.app/
+Backend server URL: https://sonic-shield-ai-production.up.railway.app/
 
 ## 🛡️ Key Features
 
@@ -96,7 +96,7 @@ Customize your security alerts:
 
 ## 🧠 AI-Powered Security Features
 
-Sonic Watchdog AI leverages advanced AI models to provide cutting-edge security analysis:
+Sonic Shield AI leverages advanced AI models to provide cutting-edge security analysis:
 
 ### Smart Contract Vulnerability Detection
 
@@ -181,7 +181,7 @@ The system automatically monitors transactions for suspicious activity:
 
 ## 🔄 API Integration
 
-Sonic Watchdog AI provides a REST API for integration with other services:
+Sonic Shield AI provides a REST API for integration with other services:
 
 - **Authentication**: JWT-based authentication for secure API access
 - **Endpoints**: Comprehensive endpoints for accessing security data
@@ -202,8 +202,8 @@ Sonic Watchdog AI provides a REST API for integration with other services:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/sonic-watchdog.git
-   cd sonic-watchdog
+   git clone https://github.com/yourusername/sonic-shield-ai.git
+   cd sonic-shield-ai
    ```
 
 2. Install dependencies:
@@ -313,7 +313,7 @@ REACT_APP_USE_MOCK_AI=false
 
 ## 🧪 Running on Testnet
 
-To run Sonic Watchdog AI on the Sonic Blaze Testnet instead of mainnet, follow these steps:
+To run Sonic Shield AI on the Sonic Blaze Testnet instead of mainnet, follow these steps:
 
 1. Update your `.env` file to use testnet configuration:
 
@@ -359,7 +359,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## ⚠️ Disclaimer
 
-Sonic Watchdog AI is provided for informational purposes only. While we strive to provide accurate and up-to-date security information, we cannot guarantee the identification of all security threats. Always do your own research before making investment decisions or interacting with smart contracts on the Sonic blockchain.
+Sonic Shield AI is provided for informational purposes only. While we strive to provide accurate and up-to-date security information, we cannot guarantee the identification of all security threats. Always do your own research before making investment decisions or interacting with smart contracts on the Sonic blockchain.
 
 ## 📞 Support
 

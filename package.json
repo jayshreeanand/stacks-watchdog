@@ -1,7 +1,7 @@
 {
-  "name": "sonic-watchdog",
+  "name": "sonic-shield-ai",
   "version": "1.0.0",
-  "description": "AI security bot for Sonic blockchain that detects suspicious transactions, wallet drainers, and rug-pull risks",
+  "description": "Advanced AI-powered security platform for Sonic blockchain that protects digital assets from threats, scams, and vulnerabilities",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",

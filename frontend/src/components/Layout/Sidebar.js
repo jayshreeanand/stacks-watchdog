@@ -73,8 +73,8 @@ const Sidebar = ({ isOpen, onClose }) => {
       zIndex="docked"
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontWeight="bold">
-          Sonic Watchdog
+        <Text fontSize="2xl" fontWeight="bold" bgGradient="linear(to-r, blue.400, purple.500)" bgClip="text">
+          Sonic Shield AI
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
