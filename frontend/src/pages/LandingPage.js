@@ -300,8 +300,7 @@ const LandingPage = () => {
                 mb={8}
               >
                 Advanced AI-powered security monitoring for the Sonic blockchain. 
-                Detect threats, prevent scams, and secure your assets with real-time 
-                alerts and comprehensive analysis.
+                We use AI to monitor transactions, detect threats realtime, analyze smart contracts, and educate users on security issues.
               </Text>
               
               <Stack
