@@ -12,18 +12,19 @@ const rugPullRoutes = require('./api/routes/rugPullRoutes');
 const walletDrainerRoutes = require('./api/routes/walletDrainerRoutes');
 const alertRoutes = require('./api/routes/alertRoutes');
 const notificationRoutes = require('./api/routes/notificationRoutes');
+const vulnerabilityScannerRoutes = require('./api/vulnerabilityScanner');
 
 // Import services
 const blockchainMonitor = require('./utils/blockchainMonitor');
 const aiAnalyzer = require('./utils/aiAnalyzer');
 const telegramBotHandler = require('./utils/telegramBotHandler');
+const VulnerabilityScanner = require('./utils/vulnerabilityScanner');
 
 // Create Express app
 const app = express();
 const server = http.createServer(app);
 
 
-// Middleware
 // Middleware
 app.use(cors({
   origin: process.env.CORS_ORIGIN || '*',
@@ -64,6 +65,7 @@ app.use('/api/rugpull', apiKeyMiddleware, rugPullRoutes);
 app.use('/api/walletdrainer', apiKeyMiddleware, walletDrainerRoutes);
 app.use('/api/alerts', apiKeyMiddleware, alertRoutes);
 app.use('/api/notifications', apiKeyMiddleware, notificationRoutes);
+app.use('/api/vulnerability-scanner', apiKeyMiddleware, vulnerabilityScannerRoutes);
 
 // Health check route
 app.get('/health', (req, res) => {
@@ -88,6 +90,11 @@ io.on('connection', (socket) => {
     socket.join('alerts');
   });
   
+  socket.on('subscribe-vulnerability-scanner', () => {
+    console.log('Client subscribed to vulnerability scanner');
+    socket.join('vulnerability-scanner');
+  });
+  
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });
@@ -95,6 +102,23 @@ io.on('connection', (socket) => {
 
 // Export socket.io instance for use in other modules
 app.set('io', io);
+
+// Initialize vulnerability scanner with socket.io for real-time updates
+const initializeVulnerabilityScanner = async () => {
+  try {
+    const provider = process.env.ETHEREUM_RPC_URL || 'https://eth-mainnet.g.alchemy.com/v2/demo';
+    const scanner = new VulnerabilityScanner(provider);
+    await scanner.initialize();
+    
+    scanner.startRealTimeScanning((data) => {
+      io.to('vulnerability-scanner').emit('vulnerability-update', data);
+    });
+    
+    console.log('Vulnerability scanner initialized');
+  } catch (error) {
+    console.error('Failed to initialize vulnerability scanner:', error);
+  }
+};
 
 // Function to start the server
 const startServer = () => {
@@ -116,6 +140,9 @@ const startServer = () => {
     } else {
       console.log('Telegram bot not started (TELEGRAM_BOT_TOKEN not set)');
     }
+    
+    // Initialize vulnerability scanner
+    initializeVulnerabilityScanner();
   });
 };
 

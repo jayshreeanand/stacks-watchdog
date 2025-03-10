@@ -17,6 +17,7 @@ import NotificationSettings from './pages/NotificationSettings';
 import TokenApprovals from './pages/TokenApprovals';
 import SmartContractAnalyzer from './pages/SmartContractAnalyzer';
 import LearningModules from './pages/LearningModules';
+import VulnerabilityScanner from './pages/VulnerabilityScanner';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="analyze" element={<AnalyzeContract />} />
           <Route path="security-scanner" element={<SecurityScanner />} />
           <Route path="smart-contract-analyzer" element={<SmartContractAnalyzer />} />
+          <Route path="vulnerability-scanner" element={<VulnerabilityScanner />} />
           <Route path="notification-settings" element={<NotificationSettings />} />
           <Route path="token-approvals" element={<TokenApprovals />} />
           <Route path="learning-modules" element={<LearningModules />} />

@@ -21,7 +21,8 @@ import {
   FiLock,
   FiKey,
   FiCode,
-  FiBookOpen
+  FiBookOpen,
+  FiActivity
 } from 'react-icons/fi';
 
 const NavItem = ({ icon, children, to, ...rest }) => {
@@ -94,6 +95,9 @@ const Sidebar = ({ isOpen, onClose }) => {
         </NavItem>
         <NavItem to="/app/security-scanner" icon={FiShield}>
           Security Scanner
+        </NavItem>
+        <NavItem to="/app/vulnerability-scanner" icon={FiActivity}>
+          Vulnerability Scanner
         </NavItem>
         <NavItem to="/app/token-approvals" icon={FiKey}>
           Token Approvals
