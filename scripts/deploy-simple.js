@@ -12,7 +12,7 @@ const SWatchdogRegistryArtifact = require('../artifacts/contracts/SWatchdogRegis
 
 async function main() {
   try {
-    console.log("Deploying Sonic Watchdog contracts to testnet...");
+    console.log("Deploying Sonic Shield contracts to testnet...");
     
     // Create provider and wallet
     const provider = new ethers.JsonRpcProvider(process.env.ELECTRONEUM_TESTNET_RPC_URL);

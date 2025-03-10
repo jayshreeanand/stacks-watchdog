@@ -1,4 +1,4 @@
-# Sonic Watchdog AI Setup Guide
+# Sonic Shield AI Setup Guide
 
 ## Prerequisites
 

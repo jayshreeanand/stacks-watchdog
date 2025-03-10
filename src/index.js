@@ -73,7 +73,7 @@ app.get('/health', (req, res) => {
 // Root route for testing
 app.get('/', (req, res) => {
   res.status(200).json({ 
-    message: 'Sonic Watchdog AI API is running',
+    message: 'Sonic Shield AI API is running',
     version: '1.0.0',
     mongodbConnected: mongoose.connection.readyState === 1
   });

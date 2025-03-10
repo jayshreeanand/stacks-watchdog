@@ -428,7 +428,7 @@ const SecurityScanner = () => {
         'Enable multi-signature for critical operations',
         'Regularly check for phishing attempts and suspicious websites',
         'Monitor your wallet activity with a blockchain explorer',
-        'Use a dedicated security tool like Sonic Watchdog AI regularly',
+        'Use a dedicated security tool like Sonic Shield AI regularly',
         'Consider using a time-lock for large transactions',
         'Verify smart contract addresses before interacting with them',
         'Keep your private keys secure and never share them',

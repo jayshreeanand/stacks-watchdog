@@ -110,7 +110,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         <Divider my={4} borderColor="gray.700" />
         <Box px={8} py={4}>
           <Text color="gray.400" fontSize="sm">
-            Sonic Watchdog v0.1.0
+            Sonic Shield v0.1.0
           </Text>
           <Text color="gray.500" fontSize="xs" mt={1}>
             Protecting the Sonic ecosystem

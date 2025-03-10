@@ -116,7 +116,7 @@ const formatAlertMessage = (alert) => {
   const emoji = getAlertEmoji(alert.type);
   const riskLevel = alert.riskLevel ? `[${alert.riskLevel.toUpperCase()}] ` : '';
   
-  let message = `${emoji} <b>${riskLevel}Sonic Watchdog Alert</b>\n\n`;
+  let message = `${emoji} <b>${riskLevel}Sonic Shield Alert</b>\n\n`;
   message += `<b>Type:</b> ${formatAlertType(alert.type)}\n`;
   
   if (alert.targetAddress) {
@@ -198,7 +198,7 @@ const sendAlert = async (alert, chatId) => {
  */
 const testConnection = async (chatId = TELEGRAM_DEFAULT_CHAT_ID) => {
   const message = `
-<b>🔔 Sonic Watchdog Telegram Bot Test</b>
+<b>🔔 Sonic Shield Telegram Bot Test</b>
 
 Your Telegram alerts are now set up correctly!
 You will receive security alerts in this chat.
@@ -270,14 +270,14 @@ const sendWalletScanAlert = async (scanData, chatId) => {
   const { walletAddress, scanTime, scanType } = scanData;
   
   const message = `
-<b>🔍 Sonic Watchdog Wallet Scan Alert</b>
+<b>🔍 Sonic Shield Wallet Scan Alert</b>
 
 Your wallet has been scanned:
 <b>Address:</b> <code>${walletAddress}</code>
 <b>Scan Type:</b> ${scanType || 'Security Scan'}
 <b>Time:</b> ${new Date(scanTime || Date.now()).toISOString()}
 
-This is an automated security alert from Sonic Watchdog.
+This is an automated security alert from Sonic Shield.
   `;
   
   return sendMessage(message, chatId);

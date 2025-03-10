@@ -223,7 +223,7 @@ const NotificationSettings = () => {
               
               {channels.browser && (
                 <Text>
-                  You will receive notifications in your browser when you have the Sonic Watchdog app open.
+                  You will receive notifications in your browser when you have the Sonic Shield app open.
                 </Text>
               )}
               

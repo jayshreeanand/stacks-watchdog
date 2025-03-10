@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 /**
- * AI-powered security analysis utilities for Sonic Watchdog AI
+ * AI-powered security analysis utilities for Sonic Shield AI
  */
 class AIAnalyzer {
   constructor() {

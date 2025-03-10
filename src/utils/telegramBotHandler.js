@@ -117,7 +117,7 @@ const handleMessage = async (message) => {
  */
 const handleStartCommand = async (chatId) => {
   const message = `
-<b>👋 Welcome to Sonic Watchdog!</b>
+<b>👋 Welcome to Sonic Shield!</b>
 
 I'm your security assistant for the Sonic blockchain. I can send you alerts about:
 - Suspicious transactions
@@ -126,7 +126,7 @@ I'm your security assistant for the Sonic blockchain. I can send you alerts abou
 - Phishing attempts
 - Security vulnerabilities
 
-To connect your account, please use the connection code from the Sonic Watchdog web app.
+To connect your account, please use the connection code from the Sonic Shield web app.
 
 Type /help for more information.
   `;
@@ -166,7 +166,7 @@ const handleConnectCommand = async (chatId, code, message) => {
     const successMessage = `
 <b>✅ Connection successful!</b>
 
-Your Telegram account is now connected to Sonic Watchdog.
+Your Telegram account is now connected to Sonic Shield.
 You will receive security alerts in this chat.
 
 To test the connection, go to the Notification Settings page in the web app.
@@ -185,14 +185,14 @@ To test the connection, go to the Notification Settings page in the web app.
  */
 const handleHelpCommand = async (chatId) => {
   const message = `
-<b>🔍 Sonic Watchdog Help</b>
+<b>🔍 Sonic Shield Help</b>
 
 Available commands:
 /start - Start the bot
 /connect [code] - Connect your account with a code from the web app
 /help - Show this help message
 
-For more information, visit the Sonic Watchdog web app.
+For more information, visit the Sonic Shield web app.
   `;
   
   await telegramService.sendMessage(message, chatId);

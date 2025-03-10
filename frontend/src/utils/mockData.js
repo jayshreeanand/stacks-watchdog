@@ -1,5 +1,5 @@
 /**
- * Mock data for the Sonic Watchdog AI application
+ * Mock data for the Sonic Shield AI application
  * This is used when the API is not available
  */
 

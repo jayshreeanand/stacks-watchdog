@@ -10,7 +10,7 @@ async function main() {
     throw new Error("Ethers not properly initialized!");
   }
 
-  console.log("Deploying Sonic Watchdog contracts...");
+  console.log("Deploying Sonic Shield contracts...");
   console.log(`Network: ${hre.network.name} (Chain RPC: ${hre.network.config.url}) (Chain ID: ${hre.network.config.chainId})`);
 
   // Get the contract factories
