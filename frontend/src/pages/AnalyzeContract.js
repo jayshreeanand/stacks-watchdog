@@ -23,6 +23,7 @@ import {
   ListIcon,
   Badge,
   useToast,
+  Checkbox,
 } from '@chakra-ui/react';
 import { 
   FiSearch, 
@@ -34,16 +35,19 @@ import {
 } from 'react-icons/fi';
 import { ethers } from 'ethers';
 import apiService from '../utils/apiService';
+import { useDataSource } from '../context/DataSourceContext';
 
 const AnalyzeContract = () => {
   const navigate = useNavigate();
   const toast = useToast();
+  const { useRealAIAnalysis, toggleRealAIAnalysis } = useDataSource();
   
   const [contractAddress, setContractAddress] = useState('');
   const [isAddressValid, setIsAddressValid] = useState(true);
   const [loading, setLoading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [error, setError] = useState(null);
+  const [analysisProgress, setAnalysisProgress] = useState(0);
 
   const validateAddress = (address) => {
     return ethers.isAddress(address);
@@ -72,9 +76,28 @@ const AnalyzeContract = () => {
     setLoading(true);
     setError(null);
     setAnalysisResult(null);
+    setAnalysisProgress(0);
+
+    // Start progress animation
+    const interval = setInterval(() => {
+      setAnalysisProgress((prevProgress) => {
+        const newProgress = prevProgress + 5;
+        if (newProgress >= 90) {
+          clearInterval(interval);
+          return 90; // Hold at 90% until the actual analysis completes
+        }
+        return newProgress;
+      });
+    }, 500);
 
     try {
-      const result = await apiService.analyzeContract(contractAddress);
+      console.log(`Analyzing contract ${contractAddress} with useRealAIAnalysis: ${useRealAIAnalysis}`);
+      const result = await apiService.analyzeContract(contractAddress, useRealAIAnalysis);
+      
+      // Complete the progress bar
+      clearInterval(interval);
+      setAnalysisProgress(100);
+      
       setAnalysisResult(result);
       
       // If high risk, show a toast notification
@@ -90,6 +113,8 @@ const AnalyzeContract = () => {
     } catch (error) {
       console.error('Error analyzing contract:', error);
       setError(error.message || 'Failed to analyze contract. Please try again.');
+      clearInterval(interval);
+      setAnalysisProgress(0);
     } finally {
       setLoading(false);
     }
@@ -198,10 +223,23 @@ const AnalyzeContract = () => {
           </FormHelperText>
         </FormControl>
         
+        {/* Add toggle for real AI analysis */}
+        <Flex mb={4} align="center">
+          <Checkbox 
+            isChecked={useRealAIAnalysis} 
+            onChange={toggleRealAIAnalysis}
+            colorScheme="teal"
+            mr={2}
+          />
+          <Text color="gray.600" fontSize="sm">
+            Use real AI analysis
+          </Text>
+        </Flex>
+        
         {loading && (
           <Box my={6}>
-            <Text color="gray.300" mb={2}>Analyzing contract...</Text>
-            <Progress size="sm" isIndeterminate colorScheme="sonic" />
+            <Text color="gray.300" mb={2}>Analyzing contract... {Math.round(analysisProgress)}%</Text>
+            <Progress value={analysisProgress} size="sm" colorScheme="teal" hasStripe isAnimated />
           </Box>
         )}
         

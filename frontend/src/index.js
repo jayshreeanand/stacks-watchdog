@@ -6,6 +6,7 @@ import App from './App';
 import './index.css';
 import { WalletProvider } from './context/WalletContext';
 import { DataSourceProvider } from './context/DataSourceContext';
+import aiAnalyzer from './utils/aiAnalyzer';
 
 // Define custom theme
 const theme = extendTheme({
@@ -59,6 +60,15 @@ if (dataSourceParam && validDataSources.includes(dataSourceParam)) {
 // Get the current data source
 const currentDataSource = localStorage.getItem('sonic_watchdog_data_source') || 'testnet';
 console.log(`Current data source: ${currentDataSource}`);
+
+// Listen for changes to the useRealAIAnalysis flag in localStorage
+window.addEventListener('storage', (event) => {
+  if (event.key === 'sonic_watchdog_use_real_ai') {
+    const useRealAI = event.newValue === 'true';
+    console.log(`Storage event: useRealAI changed to ${useRealAI}`);
+    aiAnalyzer.setUseMockAI(!useRealAI);
+  }
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

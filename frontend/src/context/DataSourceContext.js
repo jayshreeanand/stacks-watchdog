@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { setApiBaseUrl } from '../utils/apiService';
+import aiAnalyzer from '../utils/aiAnalyzer';
 
 // Data source options
 export const DATA_SOURCES = {
@@ -22,10 +23,21 @@ export const DataSourceProvider = ({ children }) => {
   const savedDataSource = localStorage.getItem('sonic_watchdog_data_source');
   const initialDataSource = savedDataSource || DATA_SOURCES.TESTNET;
   
+  // Check if there's a useRealWalletData flag in localStorage or use true as default
+  const savedUseRealWalletData = localStorage.getItem('sonic_watchdog_use_real_wallet');
+  const initialUseRealWalletData = savedUseRealWalletData === null ? true : savedUseRealWalletData === 'true';
+  
+  // Check if there's a useRealAIAnalysis flag in localStorage or use true as default
+  const savedUseRealAIAnalysis = localStorage.getItem('sonic_watchdog_use_real_ai');
+  const initialUseRealAIAnalysis = savedUseRealAIAnalysis === null ? true : savedUseRealAIAnalysis === 'true';
+  
   console.log(`DataSourceProvider initializing with data source: ${initialDataSource}`);
+  console.log(`DataSourceProvider initializing with useRealWalletData: ${initialUseRealWalletData}`);
+  console.log(`DataSourceProvider initializing with useRealAIAnalysis: ${initialUseRealAIAnalysis}`);
   
   const [dataSource, setDataSource] = useState(initialDataSource);
-  const [useRealWalletData, setUseRealWalletData] = useState(true);
+  const [useRealWalletData, setUseRealWalletData] = useState(initialUseRealWalletData);
+  const [useRealAIAnalysis, setUseRealAIAnalysis] = useState(initialUseRealAIAnalysis);
   
   // Initialize API URL when the component mounts
   useEffect(() => {
@@ -41,6 +53,21 @@ export const DataSourceProvider = ({ children }) => {
     // Also update the API base URL when the data source changes
     setApiBaseUrl(dataSource);
   }, [dataSource]);
+  
+  // Update localStorage when useRealWalletData changes
+  useEffect(() => {
+    console.log(`DataSourceProvider: useRealWalletData changed to ${useRealWalletData}`);
+    localStorage.setItem('sonic_watchdog_use_real_wallet', useRealWalletData);
+  }, [useRealWalletData]);
+  
+  // Update localStorage when useRealAIAnalysis changes
+  useEffect(() => {
+    console.log(`DataSourceProvider: useRealAIAnalysis changed to ${useRealAIAnalysis}`);
+    localStorage.setItem('sonic_watchdog_use_real_ai', useRealAIAnalysis);
+    
+    // Update the aiAnalyzer
+    aiAnalyzer.setUseMockAI(!useRealAIAnalysis);
+  }, [useRealAIAnalysis]);
   
   // Function to change data source
   const changeDataSource = (newSource) => {
@@ -67,6 +94,12 @@ export const DataSourceProvider = ({ children }) => {
     setUseRealWalletData(!useRealWalletData);
   };
   
+  // Function to toggle real AI analysis
+  const toggleRealAIAnalysis = () => {
+    console.log(`DataSourceProvider: Toggling real AI analysis from ${useRealAIAnalysis} to ${!useRealAIAnalysis}`);
+    setUseRealAIAnalysis(!useRealAIAnalysis);
+  };
+  
   // Function to get the network name based on data source
   const getNetworkName = () => {
     if (dataSource === DATA_SOURCES.MOCK) {
@@ -84,6 +117,8 @@ export const DataSourceProvider = ({ children }) => {
     getNetworkName,
     useRealWalletData,
     toggleRealWalletData,
+    useRealAIAnalysis,
+    toggleRealAIAnalysis,
     isMockData: dataSource === DATA_SOURCES.MOCK,
     isTestnet: dataSource === DATA_SOURCES.TESTNET,
     isMainnet: dataSource === DATA_SOURCES.MAINNET

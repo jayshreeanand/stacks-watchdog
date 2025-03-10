@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { mockApiService } from './mockData';
 import { ethers } from 'ethers';
+import aiAnalyzer from './aiAnalyzer';
 
 // API base URLs
 const API_BASE_URLS = {
@@ -431,20 +432,42 @@ const apiService = {
   },
   
   // Smart contract analysis
-  analyzeSmartContract: async (contractAddress, contractCode) => {
-    if (CURRENT_DATA_SOURCE === 'mock') {
+  analyzeSmartContract: async (contractAddress, contractCode, useRealAI = true) => {
+    console.log(`Analyzing smart contract ${contractAddress} with data source: ${CURRENT_DATA_SOURCE}, useRealAI: ${useRealAI}`);
+    
+    // Only use mock data if explicitly set to mock or if useRealAI is false
+    if (CURRENT_DATA_SOURCE === 'mock' || !useRealAI) {
+      console.log('Using mock data for smart contract analysis');
       return getMockData('contractAnalysis');
     }
     
     try {
+      console.log('Using real AI for smart contract analysis');
+      
+      // First try to use the AI analyzer directly
+      if (aiAnalyzer) {
+        try {
+          console.log('Using AI analyzer for smart contract analysis');
+          const aiResult = await aiAnalyzer.analyzeSmartContract(contractCode, contractAddress, false);
+          console.log('AI analysis result:', aiResult);
+          return aiResult;
+        } catch (aiError) {
+          console.error('Error using AI analyzer:', aiError);
+          console.log('Falling back to API endpoint');
+        }
+      }
+      
+      // If AI analyzer fails or is not available, use the API endpoint
       const response = await api.post('/rugpull/analyze', {
         address: contractAddress,
         code: contractCode
       });
+      
       if (!response.data || Object.keys(response.data).length === 0) {
         console.log('Empty response from API, using mock data');
         return getMockData('contractAnalysis');
       }
+      
       return response.data;
     } catch (error) {
       console.error('Error analyzing smart contract:', error);
@@ -698,17 +721,75 @@ const apiService = {
   },
   
   // Analyze contract
-  analyzeContract: async (contractAddress) => {
-    if (CURRENT_DATA_SOURCE === 'mock') {
+  analyzeContract: async (contractAddress, useRealAI = true) => {
+    console.log(`Analyzing contract ${contractAddress} with data source: ${CURRENT_DATA_SOURCE}, useRealAI: ${useRealAI}`);
+    
+    // Only use mock data if explicitly set to mock or if useRealAI is false
+    if (CURRENT_DATA_SOURCE === 'mock' || !useRealAI) {
+      console.log('Using mock data for contract analysis');
       return getMockData('contractAnalysis');
     }
     
     try {
-      const response = await api.post('/rugpull/analyze', { contractAddress });
+      console.log('Using real analysis for contract');
+      
+      // First try to get the contract code
+      let contractCode = '';
+      try {
+        // Create a provider based on the current data source
+        const providerUrl = CURRENT_DATA_SOURCE === 'testnet' 
+          ? 'https://rpc.blaze.soniclabs.com' 
+          : 'https://rpc.soniclabs.com';
+        
+        console.log(`Using provider URL: ${providerUrl}`);
+        const provider = new ethers.JsonRpcProvider(providerUrl);
+        
+        // Get the contract code
+        contractCode = await provider.getCode(contractAddress);
+        console.log(`Retrieved contract code for ${contractAddress}, length: ${contractCode.length}`);
+        
+        // If the contract code is just "0x", it's not a contract
+        if (contractCode === '0x') {
+          console.log(`${contractAddress} is not a contract`);
+          return {
+            address: contractAddress,
+            isContract: false,
+            riskLevel: 'low',
+            analysis: {
+              score: 0,
+              summary: 'This address is not a smart contract.'
+            }
+          };
+        }
+      } catch (codeError) {
+        console.error('Error getting contract code:', codeError);
+        console.log('Proceeding with API endpoint without code');
+      }
+      
+      // If we have the contract code and AI analyzer, use it directly
+      if (contractCode && contractCode !== '0x' && aiAnalyzer) {
+        try {
+          console.log('Using AI analyzer for contract analysis');
+          const aiResult = await aiAnalyzer.analyzeSmartContract(contractCode, contractAddress, false);
+          console.log('AI analysis result:', aiResult);
+          return aiResult;
+        } catch (aiError) {
+          console.error('Error using AI analyzer:', aiError);
+          console.log('Falling back to API endpoint');
+        }
+      }
+      
+      // If AI analyzer fails or is not available, use the API endpoint
+      const response = await api.post('/rugpull/analyze', { 
+        contractAddress,
+        contractCode: contractCode !== '0x' ? contractCode : undefined
+      });
+      
       if (!response.data || Object.keys(response.data).length === 0) {
         console.log('Empty response from API, using mock data');
         return getMockData('contractAnalysis');
       }
+      
       return response.data;
     } catch (error) {
       console.error('Error analyzing contract:', error);

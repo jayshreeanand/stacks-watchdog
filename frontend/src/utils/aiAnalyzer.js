@@ -47,15 +47,25 @@ class AIAnalyzer {
   }
 
   /**
+   * Set whether to use mock AI or real AI
+   * @param {boolean} useMock - Whether to use mock AI
+   */
+  setUseMockAI(useMock) {
+    this.useMockAI = useMock;
+    console.log(`AI Analyzer: ${useMock ? 'Using mock AI' : 'Using real AI'}`);
+  }
+
+  /**
    * Analyze a smart contract for potential vulnerabilities
    * @param {string} contractCode - The smart contract code to analyze
    * @param {string} contractAddress - The address of the contract (optional)
+   * @param {boolean} forceMock - Force using mock data even if real AI is available
    * @returns {Promise<Object>} Analysis results
    */
-  async analyzeSmartContract(contractCode, contractAddress = null) {
+  async analyzeSmartContract(contractCode, contractAddress = null, forceMock = false) {
     try {
       // If using mock data, return predefined analysis
-      if (!this.apiKey || process.env.REACT_APP_USE_MOCK_AI === 'true') {
+      if (forceMock || !this.apiKey || this.useMockAI) {
         console.log('Using mock data for smart contract analysis');
         return this.getMockContractAnalysis(contractCode, contractAddress);
       }
@@ -135,6 +145,7 @@ class AIAnalyzer {
       // Add metadata
       analysisJson.contractAddress = contractAddress;
       analysisJson.timestamp = Date.now();
+      analysisJson.source = 'real_ai';
 
       return analysisJson;
     } catch (error) {
@@ -525,4 +536,8 @@ class AIAnalyzer {
   }
 }
 
-export default new AIAnalyzer(); 
+// Create a singleton instance of the AIAnalyzer class
+const aiAnalyzer = new AIAnalyzer();
+aiAnalyzer.initialize();
+
+export default aiAnalyzer; 
