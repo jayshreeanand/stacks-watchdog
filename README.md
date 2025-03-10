@@ -5,8 +5,8 @@ Chain Shield AI is an intelligent AI agent for Real time blockchain security mon
 Demo URL (frontend): [https://chain-shield.vercel.app/](https://chain-shield.vercel.app/)
 
 Backend server URL (api server): [https://chain-shield-backend.up.railway.app/](https://chain-shield-backend.up.railway.app/)
+<img width="1601" alt="Screenshot 2025-03-10 at 11 51 04 PM" src="https://github.com/user-attachments/assets/bea148b1-8a79-44c7-b080-a98080c43ca1" />
 
-<img width="1473" alt="home" src="https://github.com/user-attachments/assets/9e229904-d0da-4ec5-8398-a6181dd021ac" />
 
 ## 🏗️ Architecture
 
