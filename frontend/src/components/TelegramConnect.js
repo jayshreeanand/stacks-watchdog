@@ -18,29 +18,22 @@ import {
   CloseButton,
   useClipboard,
   useColorModeValue,
-  Spinner,
   Link,
 } from '@chakra-ui/react';
 import { FaTelegram, FaCheck, FaTimes, FaCopy, FaExternalLinkAlt } from 'react-icons/fa';
 import { useWallet } from '../context/WalletContext';
 import axios from 'axios';
 
-// API key from environment
-const API_KEY = process.env.REACT_APP_API_KEY || 'your_api_key_for_security';
-
-// API instance with API key
+// API instance
 const api = axios.create({
   baseURL: '/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
-    // Temporarily disable API key for testing
-    // 'x-api-key': API_KEY
   }
 });
 
 const TelegramConnect = ({ onUpdate }) => {
-  console.log('TelegramConnect component rendered');
   const { account } = useWallet();
   const toast = useToast();
   const bgColor = useColorModeValue('white', 'gray.800');
@@ -85,9 +78,6 @@ const TelegramConnect = ({ onUpdate }) => {
   
   // Generate a connection code
   const generateConnectionCode = async () => {
-    console.log('generateConnectionCode called');
-    alert('Generate Connection Code function called!');
-    
     if (!account) {
       toast({
         title: 'Wallet not connected',
@@ -257,23 +247,12 @@ const TelegramConnect = ({ onUpdate }) => {
         </HStack>
         
         <Divider />
-        
+{/*         
         <Text color="purple.500" fontWeight="bold">
           Debug: Wallet account = {account || 'Not connected'}
         </Text>
-        
-        <Box bg="yellow.100" p={4} borderRadius="md">
-          <Text color="black" fontWeight="bold">
-            Direct button test:
-          </Text>
-          <Button
-            mt={2}
-            colorScheme="red"
-            onClick={() => alert('Button clicked!')}
-          >
-            Test Button
-          </Button>
-        </Box>
+         */}
+       
         
         {showAlert && connectionCode && (
           <Alert status="info" borderRadius="md">
@@ -366,39 +345,14 @@ const TelegramConnect = ({ onUpdate }) => {
               potential rug pulls, and wallet drainers.
             </Text>
             
-            <Text color="red.500" fontWeight="bold">
-              Debug: telegramSettings.enabled = {String(telegramSettings.enabled)}
-            </Text>
-            
-            {/* Regular button */}
             <Button
-              leftIcon={<FaTelegram />}
-              colorScheme="telegram"
-              onClick={generateConnectionCode}
-              isLoading={loading}
-              loadingText="Generating code..."
-              size="lg"
-              width="100%"
-              height="60px"
-              fontSize="xl"
-              position="relative"
-              zIndex={10}
-            >
-              Connect Telegram
-            </Button>
-            
-            {/* Fallback button with different styling */}
-            <Button
-              mt={4}
               leftIcon={<FaTelegram />}
               colorScheme="red"
               onClick={generateConnectionCode}
               isLoading={loading}
               loadingText="Generating code..."
-              position="relative"
-              zIndex={10}
             >
-              FALLBACK: Connect Telegram
+              Connect Telegram
             </Button>
           </VStack>
         )}

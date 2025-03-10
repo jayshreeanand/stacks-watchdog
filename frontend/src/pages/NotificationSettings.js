@@ -33,10 +33,8 @@ import {
 import { FaBell, FaEnvelope, FaMobile, FaDesktop, FaShieldAlt, FaSave } from 'react-icons/fa';
 import { useWallet } from '../context/WalletContext';
 import TelegramConnect from '../components/TelegramConnect';
-import SimpleTelegramConnect from '../components/SimpleTelegramConnect';
 
 const NotificationSettings = () => {
-  console.log('NotificationSettings page rendered');
   const { account } = useWallet();
   const toast = useToast();
   const bgColor = useColorModeValue('white', 'gray.800');
@@ -151,59 +149,6 @@ const NotificationSettings = () => {
     });
   };
   
-  // Generate Telegram connection code
-  const generateTelegramCode = async () => {
-    if (!account) {
-      toast({
-        title: 'Wallet not connected',
-        description: 'Please connect your wallet first.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-      return;
-    }
-    
-    try {
-      const response = await fetch('/api/notifications/telegram/connect', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId: account }),
-      });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        toast({
-          title: 'Connection code generated',
-          description: 'Please check your Telegram app to connect.',
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-        });
-      } else {
-        toast({
-          title: 'Error',
-          description: data.error || 'Failed to generate connection code',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      }
-    } catch (error) {
-      console.error('Error generating connection code:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to generate connection code. Please try again.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
-  
   return (
     <Container maxW="container.xl" py={8}>
       <VStack spacing={8} align="stretch">
@@ -212,54 +157,14 @@ const NotificationSettings = () => {
           <Text color="gray.500">
             Configure how and when you want to receive security alerts.
           </Text>
-          <Text color="purple.500" fontWeight="bold" mt={2}>
+          {/* <Text color="purple.500" fontWeight="bold" mt={2}>
             Debug: Wallet account = {account || 'Not connected'}
-          </Text>
+          </Text> */}
         </Box>
         
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
           {/* Telegram Notifications */}
-          <Box border="2px dashed red" p={2}>
-            <Text color="red.500" fontWeight="bold" mb={2}>
-              TelegramConnect Component Below:
-            </Text>
-            <TelegramConnect onUpdate={handleTelegramUpdate} />
-            
-            <Divider my={4} />
-            
-            <Text color="blue.500" fontWeight="bold" mb={2}>
-              Direct Button Test:
-            </Text>
-            <Button
-              colorScheme="telegram"
-              size="lg"
-              width="100%"
-              onClick={() => alert('Direct button clicked!')}
-            >
-              Direct Connect Telegram Button
-            </Button>
-            
-            <Divider my={4} />
-            
-            <Text color="green.500" fontWeight="bold" mb={2}>
-              Simple Telegram Connect Component:
-            </Text>
-            <SimpleTelegramConnect />
-            
-            <Divider my={4} />
-            
-            <Text color="orange.500" fontWeight="bold" mb={2}>
-              Direct API Call Button:
-            </Text>
-            <Button
-              colorScheme="orange"
-              size="lg"
-              width="100%"
-              onClick={generateTelegramCode}
-            >
-              Generate Telegram Code (Direct API Call)
-            </Button>
-          </Box>
+          <TelegramConnect onUpdate={handleTelegramUpdate} />
           
           {/* Email Notifications */}
           <Box p={5} borderWidth="1px" borderRadius="lg" bg={bgColor}>
