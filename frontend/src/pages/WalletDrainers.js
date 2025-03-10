@@ -45,7 +45,7 @@ const WalletDrainers = () => {
     const fetchDrainers = async () => {
       try {
         setLoading(true);
-        const data = await apiService.getAllWalletDrainers();
+        const data = await apiService.getWalletDrainers();
         setDrainers(data);
       } catch (error) {
         console.error('Error fetching wallet drainers:', error);
@@ -62,7 +62,7 @@ const WalletDrainers = () => {
     };
 
     fetchDrainers();
-  }, [toast]);
+  }, [toast, dataSource]);
 
   // Filter drainers based on search term and risk filter
   const filteredDrainers = drainers.filter((drainer) => {

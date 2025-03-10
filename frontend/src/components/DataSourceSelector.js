@@ -1,136 +1,112 @@
 import React, { useState, useRef } from 'react';
 import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Button,
-  Flex,
-  Text,
-  Icon,
-  Badge,
-  useColorModeValue,
-  useToast,
   Box,
+  Button,
   HStack,
-  VStack
+  VStack,
+  Text,
+  Badge,
+  useOutsideClick,
+  Tooltip
 } from '@chakra-ui/react';
-import { FiDatabase, FiChevronDown, FiCheck, FiCode, FiGlobe } from 'react-icons/fi';
+import { FiDatabase, FiChevronDown, FiCode, FiGlobe, FiCheck, FiAlertTriangle } from 'react-icons/fi';
 import { useDataSource, DATA_SOURCES } from '../context/DataSourceContext';
-import { setApiBaseUrl } from '../utils/apiService';
+
+// MenuItem component
+const MenuItem = ({ children, isActive, icon, onClick, ...rest }) => {
+  return (
+    <Box
+      px={3}
+      py={2}
+      borderRadius="md"
+      cursor="pointer"
+      bg={isActive ? 'blue.500' : 'transparent'}
+      color={isActive ? 'white' : 'gray.200'}
+      _hover={{ bg: isActive ? 'blue.600' : 'gray.700' }}
+      onClick={onClick}
+      {...rest}
+    >
+      <HStack spacing={2}>
+        {icon && <Box>{icon}</Box>}
+        <Text flex="1">{children}</Text>
+        {isActive && <FiCheck />}
+      </HStack>
+    </Box>
+  );
+};
 
 const DataSourceSelector = () => {
-  const { dataSource, changeDataSource, getNetworkName } = useDataSource();
-  const toast = useToast();
+  const { dataSource, changeDataSource, getNetworkName, isMockData } = useDataSource();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   
-  // Get badge color based on data source
-  const getBadgeColor = () => {
-    switch (dataSource) {
-      case DATA_SOURCES.MOCK:
-        return 'gray';
-      case DATA_SOURCES.TESTNET:
-        return 'orange';
-      case DATA_SOURCES.MAINNET:
-        return 'green';
-      default:
-        return 'gray';
-    }
-  };
-  
-  // Handle data source change
-  const handleDataSourceChange = (newSource) => {
-    if (newSource === dataSource) {
-      console.log(`Already using ${newSource} data source`);
-      return;
-    }
-    
-    console.log(`DataSourceSelector: Changing data source to ${newSource}`);
-    
-    // Change the data source in the context
-    changeDataSource(newSource);
-    
-    // Update the API base URL
-    setApiBaseUrl(newSource);
-    
-    // Show a toast notification
-    toast({
-      title: 'Data Source Changed',
-      description: `Switched to ${getDataSourceName(newSource)}`,
-      status: 'success',
-      duration: 3000,
-      isClosable: true,
-    });
-    
-    // Force reload the page to ensure all components update
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
-  };
-  
-  // Get data source name
-  const getDataSourceName = (source) => {
-    switch (source) {
-      case DATA_SOURCES.MOCK:
-        return 'Mock Data';
-      case DATA_SOURCES.TESTNET:
-        return 'Sonic Blaze Testnet';
-      case DATA_SOURCES.MAINNET:
-        return 'Sonic Mainnet';
-      default:
-        return 'Unknown';
-    }
-  };
+  // Close menu when clicking outside
+  useOutsideClick({
+    ref: menuRef,
+    handler: () => setIsOpen(false),
+  });
   
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
   
   const handleSelect = (newSource) => {
-    handleDataSourceChange(newSource);
+    if (newSource !== dataSource) {
+      changeDataSource(newSource);
+    }
     setIsOpen(false);
   };
   
   const getStatusColor = () => {
     switch (dataSource) {
       case DATA_SOURCES.MOCK:
-        return 'gray';
+        return 'gray.500';
       case DATA_SOURCES.TESTNET:
-        return 'orange';
+        return 'orange.400';
       case DATA_SOURCES.MAINNET:
-        return 'green';
+        return 'green.400';
       default:
-        return 'gray';
+        return 'gray.500';
     }
   };
   
   return (
     <Box position="relative" ref={menuRef}>
-      <Button
-        onClick={toggleMenu}
-        size="sm"
-        variant="ghost"
-        rightIcon={<FiChevronDown />}
-        _hover={{ bg: 'gray.700' }}
+      <Tooltip 
+        label={isMockData ? "Currently using mock data. Switch to testnet for real data." : "Data source"} 
+        hasArrow
       >
-        <HStack spacing={2}>
-          <Box 
-            w="10px" 
-            h="10px" 
-            borderRadius="full" 
-            bg={getStatusColor()} 
-          />
-          <Text>{getNetworkName()}</Text>
-        </HStack>
-      </Button>
+        <Button
+          onClick={toggleMenu}
+          size="sm"
+          variant="ghost"
+          rightIcon={<FiChevronDown />}
+          leftIcon={isMockData ? <FiAlertTriangle color="yellow.400" /> : null}
+          _hover={{ bg: 'gray.700' }}
+        >
+          <HStack spacing={2}>
+            <Box 
+              w="10px" 
+              h="10px" 
+              borderRadius="full" 
+              bg={getStatusColor()} 
+            />
+            <Text>{getNetworkName()}</Text>
+            {isMockData && (
+              <Badge colorScheme="yellow" variant="solid" fontSize="xs">
+                MOCK
+              </Badge>
+            )}
+          </HStack>
+        </Button>
+      </Tooltip>
       
       {isOpen && (
         <Box
           position="absolute"
           right="0"
           mt="2"
-          w="200px"
+          w="220px"
           bg="gray.800"
           borderRadius="md"
           boxShadow="lg"
@@ -143,14 +119,20 @@ const DataSourceSelector = () => {
               onClick={() => handleSelect(DATA_SOURCES.MOCK)}
               icon={<FiDatabase />}
             >
-              Mock Data
+              <HStack>
+                <Text>Mock Data</Text>
+                <Badge colorScheme="yellow" size="sm">Testing</Badge>
+              </HStack>
             </MenuItem>
             <MenuItem
               isActive={dataSource === DATA_SOURCES.TESTNET}
               onClick={() => handleSelect(DATA_SOURCES.TESTNET)}
               icon={<FiCode />}
             >
-              Sonic Blaze Testnet
+              <HStack>
+                <Text>Sonic Blaze Testnet</Text>
+                <Badge colorScheme="green" size="sm">Recommended</Badge>
+              </HStack>
             </MenuItem>
             <MenuItem
               isActive={dataSource === DATA_SOURCES.MAINNET}

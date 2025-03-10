@@ -13,65 +13,75 @@ const DataSourceContext = createContext();
 
 // Custom hook to use the data source context
 export const useDataSource = () => {
-  const context = useContext(DataSourceContext);
-  if (!context) {
-    throw new Error('useDataSource must be used within a DataSourceProvider');
-  }
-  return context;
+  return useContext(DataSourceContext);
 };
 
 // Provider component
 export const DataSourceProvider = ({ children }) => {
-  // Check if there's a data source in localStorage
+  // Check if there's a data source in localStorage or use testnet as default
   const savedDataSource = localStorage.getItem('sonic_watchdog_data_source');
-  const [dataSource, setDataSource] = useState(savedDataSource || 'mock');
-
-  // Initialize API URL when the app loads
+  const initialDataSource = savedDataSource || DATA_SOURCES.TESTNET;
+  
+  console.log(`DataSourceProvider initializing with data source: ${initialDataSource}`);
+  
+  const [dataSource, setDataSource] = useState(initialDataSource);
+  
+  // Initialize API URL when the component mounts
   useEffect(() => {
-    console.log('DataSourceProvider initialized with data source:', dataSource);
+    console.log(`DataSourceProvider: Setting API base URL to ${dataSource}`);
     setApiBaseUrl(dataSource);
   }, []);
-
-  // Save data source preference to localStorage when it changes
+  
+  // Update localStorage when data source changes
   useEffect(() => {
-    console.log('Data source changed to:', dataSource);
+    console.log(`DataSourceProvider: Data source changed to ${dataSource}`);
     localStorage.setItem('sonic_watchdog_data_source', dataSource);
+    
+    // Also update the API base URL when the data source changes
+    setApiBaseUrl(dataSource);
   }, [dataSource]);
-
+  
   // Function to change data source
-  const changeDataSource = (newDataSource) => {
-    if (newDataSource === dataSource) return;
+  const changeDataSource = (newSource) => {
+    console.log(`DataSourceProvider: Changing data source from ${dataSource} to ${newSource}`);
     
-    setDataSource(newDataSource);
-    localStorage.setItem('sonic_watchdog_data_source', newDataSource);
-    
-    // Reload the page to apply the new data source
-    window.location.reload();
+    if (Object.values(DATA_SOURCES).includes(newSource)) {
+      // Update the data source state
+      setDataSource(newSource);
+      
+      // Show a message to the user
+      alert(`Switching to ${newSource === 'mock' ? 'Mock Data' : 
+             newSource === 'testnet' ? 'Sonic Blaze Testnet' : 'Sonic Mainnet'}`);
+      
+      // Reload the page to ensure all components update
+      window.location.reload();
+    } else {
+      console.error(`DataSourceProvider: Invalid data source: ${newSource}`);
+    }
   };
-
+  
   // Function to get the network name based on data source
   const getNetworkName = () => {
-    if (dataSource === 'mock') {
+    if (dataSource === DATA_SOURCES.MOCK) {
       return 'Mock Data';
-    } else if (dataSource === 'testnet') {
+    } else if (dataSource === DATA_SOURCES.TESTNET) {
       return 'Sonic Blaze Testnet';
     } else {
       return 'Sonic Mainnet';
     }
   };
-
-  // Context value
-  const value = {
+  
+  const contextValue = {
     dataSource,
     changeDataSource,
     getNetworkName,
-    isUsingMockData: dataSource === DATA_SOURCES.MOCK,
-    isUsingTestnet: dataSource === DATA_SOURCES.TESTNET,
-    isUsingMainnet: dataSource === DATA_SOURCES.MAINNET
+    isMockData: dataSource === DATA_SOURCES.MOCK,
+    isTestnet: dataSource === DATA_SOURCES.TESTNET,
+    isMainnet: dataSource === DATA_SOURCES.MAINNET
   };
-
+  
   return (
-    <DataSourceContext.Provider value={value}>
+    <DataSourceContext.Provider value={contextValue}>
       {children}
     </DataSourceContext.Provider>
   );

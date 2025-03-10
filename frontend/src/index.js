@@ -43,13 +43,22 @@ const theme = extendTheme({
 const urlParams = new URLSearchParams(window.location.search);
 const dataSourceParam = urlParams.get('dataSource');
 
-if (dataSourceParam) {
+// Valid data sources
+const validDataSources = ['mock', 'testnet', 'mainnet'];
+
+// If a valid data source is provided in the URL, use it
+if (dataSourceParam && validDataSources.includes(dataSourceParam)) {
+  console.log(`Setting data source from URL parameter: ${dataSourceParam}`);
   localStorage.setItem('sonic_watchdog_data_source', dataSourceParam);
+} else if (!localStorage.getItem('sonic_watchdog_data_source')) {
+  // If no data source is set in localStorage, default to testnet
+  console.log('No data source found in localStorage, defaulting to testnet');
+  localStorage.setItem('sonic_watchdog_data_source', 'testnet');
 }
 
-// Get data source from localStorage or default to mock
-const savedDataSource = localStorage.getItem('sonic_watchdog_data_source');
-const initialDataSource = savedDataSource || 'mock';
+// Get the current data source
+const currentDataSource = localStorage.getItem('sonic_watchdog_data_source') || 'testnet';
+console.log(`Current data source: ${currentDataSource}`);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

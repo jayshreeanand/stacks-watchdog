@@ -23,6 +23,10 @@ import {
   useColorModeValue,
   Skeleton,
   HStack,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from '@chakra-ui/react';
 import { FiAlertTriangle, FiTrendingUp, FiUsers, FiShield, FiExternalLink, FiBell, FiDollarSign, FiUser } from 'react-icons/fi';
 import apiService, { getExplorerUrl } from '../utils/apiService';
@@ -47,16 +51,13 @@ const Dashboard = () => {
   });
   const [recentDrainers, setRecentDrainers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { dataSource, isUsingMockData } = useDataSource();
+  const { dataSource, isMockData } = useDataSource();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        console.log(`Dashboard fetching data with source: ${dataSource}, isUsingMockData: ${isUsingMockData}`);
-        
-        // Set whether to force mock data based on data source
-        apiService.setForceMockData(isUsingMockData);
+        console.log(`Dashboard fetching data with source: ${dataSource}`);
         
         // Fetch dashboard stats
         console.log('Fetching dashboard stats...');
@@ -77,7 +78,7 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [dataSource, isUsingMockData]);
+  }, [dataSource]);
 
   return (
     <Box>
@@ -100,6 +101,18 @@ const Dashboard = () => {
           <DataSourceSelector />
         </HStack>
       </Flex>
+
+      {isMockData && (
+        <Alert status="warning" mb={6} borderRadius="md">
+          <AlertIcon />
+          <Box>
+            <AlertTitle>Using Mock Data</AlertTitle>
+            <AlertDescription>
+              You are currently viewing mock data. Switch to Testnet or Mainnet for real data.
+            </AlertDescription>
+          </Box>
+        </Alert>
+      )}
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6} mb={8}>
         <StatCard
