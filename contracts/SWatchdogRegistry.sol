@@ -7,10 +7,10 @@ import "./RugPullDetector.sol";
 import "./WalletDrainerDetector.sol";
 
 /**
- * @title ETNWatchdogRegistry
- * @dev Main registry contract for ETN Watchdog security monitoring system
+ * @title SWatchdogRegistry
+ * @dev Main registry contract for Sonic Watchdog security monitoring system
  */
-contract ETNWatchdogRegistry is Ownable {
+contract SWatchdogRegistry is Ownable {
     // Events
     event SecurityAlertRaised(
         uint256 indexed alertId,

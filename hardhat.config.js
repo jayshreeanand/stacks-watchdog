@@ -5,19 +5,19 @@ require("dotenv").config();
 module.exports = {
   solidity: "0.8.20",
   networks: {
-    electroneum: {
-      url: process.env.ELECTRONEUM_RPC_URL || "https://rpc.electroneum.com",
+    sonic: {
+      url: process.env.SONIC_RPC_URL || "https://rpc.soniclabs.com",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      chainId: process.env.NETWORK_CHAIN_ID ? parseInt(process.env.NETWORK_CHAIN_ID) : 1990
+      chainId: process.env.NETWORK_CHAIN_ID ? parseInt(process.env.NETWORK_CHAIN_ID) : 146
     },
-    electroneum_testnet: {
-      url: process.env.ELECTRONEUM_TESTNET_RPC_URL || "https://rpc.ankr.com/electroneum_testnet",
+    sonic_testnet: {
+      url: process.env.SONIC_TESTNET_RPC_URL || "https://rpc.blaze.soniclabs.com",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      chainId: 5201420
+      chainId: 57054
     },
     hardhat: {
       forking: {
-        url: process.env.ELECTRONEUM_RPC_URL || "https://rpc.electroneum.com",
+        url: process.env.SONIC_RPC_URL || "https://rpc.soniclabs.com",
         blockNumber: process.env.FORK_BLOCK_NUMBER ? parseInt(process.env.FORK_BLOCK_NUMBER) : undefined
       }
     }

@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 /**
  * @title TransactionMonitor
- * @dev Contract for monitoring suspicious transactions on Electroneum blockchain
+ * @dev Contract for monitoring suspicious transactions on Sonic blockchain
  */
 contract TransactionMonitor is Ownable {
     // Events

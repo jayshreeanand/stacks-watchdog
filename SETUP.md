@@ -1,4 +1,4 @@
-# ETN Watchdog Setup Guide
+# Sonic Watchdog AI Setup Guide
 
 ## Prerequisites
 
@@ -12,8 +12,8 @@
    - For Ubuntu: `sudo apt install mongodb`
    - For Windows: Download and install from https://www.mongodb.com/try/download/community
 
-3. **Electroneum Wallet**
-   - You need a wallet with testnet ETN for contract deployment
+3. **Sonic Wallet**
+   - You need a wallet with testnet S for contract deployment
 
 ## Setup Steps
 
@@ -59,7 +59,7 @@
 ## Troubleshooting
 
 - **Compilation Errors**: Make sure you're using Node.js v16 or higher
-- **Deployment Errors**: Ensure your private key is correct and you have enough testnet ETN
+- **Deployment Errors**: Ensure your private key is correct and you have enough testnet S
 - **MongoDB Errors**: Verify MongoDB is running with `mongo --eval "db.version()"`
 - **Connection Errors**: Check your RPC URL in the `.env` file
 

@@ -8,10 +8,10 @@ services:
     environment:
       - PORT=3000
       - SKIP_MONGODB=true
-      - ELECTRONEUM_RPC_URL=https://rpc.ankr.com/electroneum_testnet
-      - ELECTRONEUM_TESTNET_RPC_URL=https://rpc.ankr.com/electroneum_testnet
-      - NETWORK_CHAIN_ID=5201420
-      - WEB3_PROVIDER_URL=https://rpc.ankr.com/electroneum_testnet
+      - SONIC_RPC_URL=https://rpc.blaze.soniclabs.com
+      - SONIC_TESTNET_RPC_URL=https://rpc.blaze.soniclabs.com
+      - NETWORK_CHAIN_ID=57054
+      - WEB3_PROVIDER_URL=https://rpc.blaze.soniclabs.com
     volumes:
       - ./:/app
       - /app/node_modules 

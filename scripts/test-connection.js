@@ -1,5 +1,5 @@
 /**
- * Test script to verify connection to Electroneum network
+ * Test script to verify connection to Sonic network
  * Usage: node scripts/test-connection.js
  */
 
@@ -8,10 +8,10 @@ const { ethers } = require('ethers');
 
 async function main() {
   try {
-    console.log('Testing connection to Electroneum network...');
+    console.log('Testing connection to Sonic network...');
     
     // Create provider
-    const provider = new ethers.JsonRpcProvider(process.env.ELECTRONEUM_RPC_URL);
+    const provider = new ethers.JsonRpcProvider(process.env.SONIC_RPC_URL);
     
     // Get network information
     const network = await provider.getNetwork();
@@ -20,8 +20,8 @@ async function main() {
     // Check if we're on testnet
     // Convert BigInt to Number for comparison
     const chainId = Number(network.chainId);
-    const isTestnet = chainId === 1991;
-    console.log(`Running on ${isTestnet ? 'testnet' : 'mainnet'}`);
+    const isTestnet = chainId === 57054;
+    console.log(`Running on ${isTestnet ? 'Blaze Testnet' : 'Mainnet'}`);
     
     // Get latest block
     const blockNumber = await provider.getBlockNumber();
@@ -43,7 +43,7 @@ async function main() {
       const deploymentFileName = isTestnet ? 'deployment-info-testnet.json' : 'deployment-info.json';
       
       const deploymentInfo = JSON.parse(fs.readFileSync(path.join(__dirname, '../' + deploymentFileName)));
-      console.log(`\nDeployment info loaded for ${isTestnet ? 'testnet' : 'mainnet'}:`);
+      console.log(`\nDeployment info loaded for ${isTestnet ? 'Blaze Testnet' : 'Mainnet'}:`);
       console.log(`- Registry: ${deploymentInfo.registry}`);
       console.log(`- TransactionMonitor: ${deploymentInfo.transactionMonitor}`);
       console.log(`- RugPullDetector: ${deploymentInfo.rugPullDetector}`);

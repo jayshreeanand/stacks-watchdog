@@ -7,12 +7,12 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongo:27017/etn-watchdog
+      - MONGODB_URI=mongodb://mongo:27017/sonic-watchdog
       - SKIP_MONGODB=false
-      - ELECTRONEUM_RPC_URL=https://rpc.ankr.com/electroneum_testnet
-      - ELECTRONEUM_TESTNET_RPC_URL=https://rpc.ankr.com/electroneum_testnet
-      - NETWORK_CHAIN_ID=5201420
-      - WEB3_PROVIDER_URL=https://rpc.ankr.com/electroneum_testnet
+      - SONIC_RPC_URL=https://rpc.blaze.soniclabs.com
+      - SONIC_TESTNET_RPC_URL=https://rpc.blaze.soniclabs.com
+      - NETWORK_CHAIN_ID=57054
+      - WEB3_PROVIDER_URL=https://rpc.blaze.soniclabs.com
     depends_on:
       - mongo
     volumes:

@@ -1,10 +1,10 @@
-# ETN Watchdog: AI Security Monitoring Bot for Electroneum
+# Sonic Watchdog AI: Security Monitoring Bot for Sonic
 
-ETN Watchdog is a comprehensive security monitoring platform for the Electroneum blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time.
+Sonic Watchdog AI is a comprehensive security monitoring platform for the Sonic blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time.
 
-Demo URL: https://etn-watchdog.vercel.app/
+Demo URL: https://sonic-watchdog.vercel.app/
 
-Backend server URL: https://etn-watchdog-production.up.railway.app/
+Backend server URL: https://sonic-watchdog-production.up.railway.app/
 
 <img width="600" alt="Screenshot 2025-03-09 at 8 31 50 PM" src="https://github.com/user-attachments/assets/68ead615-de87-45f0-8011-e6c153013653" />
 
@@ -12,7 +12,7 @@ Backend server URL: https://etn-watchdog-production.up.railway.app/
 
 ### Core Security Features
 
-- **Real-time Transaction Monitoring**: Continuously monitors Electroneum blockchain transactions to detect suspicious patterns and potential threats
+- **Real-time Transaction Monitoring**: Continuously monitors Sonic blockchain transactions to detect suspicious patterns and potential threats
 - **AI-Powered Analysis**: Leverages advanced AI models to analyze contracts and transactions for security vulnerabilities
 - **Rug-Pull Detection**: Identifies potential rug-pull risks by analyzing token contract code, liquidity patterns, and ownership structures
 - **Wallet Drainer Detection**: Detects malicious contracts designed to drain user wallets through sophisticated techniques
@@ -33,7 +33,7 @@ Backend server URL: https://etn-watchdog-production.up.railway.app/
 - **Customizable Notifications**: Configure how and when you want to be alerted about security events
 - **Multi-channel Alerts**: Receive notifications via email, browser, mobile app, or Telegram
 - **Responsive Design**: Seamless experience across desktop, tablet, and mobile devices
-- **Electroneum Block Explorer Integration**: Direct links to the Electroneum block explorer for transactions, addresses, and contracts
+- **Sonic Block Explorer Integration**: Direct links to the Sonic block explorer for transactions, addresses, and contracts
 
 ## 📊 Dashboard Sections
 
@@ -98,7 +98,7 @@ Customize your security alerts:
 
 ## 🧠 AI-Powered Security Features
 
-ETN Watchdog leverages advanced AI models to provide cutting-edge security analysis:
+Sonic Watchdog AI leverages advanced AI models to provide cutting-edge security analysis:
 
 ### Smart Contract Vulnerability Detection
 
@@ -135,13 +135,13 @@ The AI Transaction Analyzer monitors transactions for:
 
 ## 🏗️ Architecture
 
-- **Smart Contracts**: Solidity contracts deployed on Electroneum blockchain for on-chain monitoring and analysis
+- **Smart Contracts**: Solidity contracts deployed on Sonic blockchain for on-chain monitoring and analysis
 - **Backend API**: Node.js server with AI integration for transaction and contract analysis
 - **Frontend**: React-based dashboard built with Chakra UI for a modern, responsive interface
 - **Database**: MongoDB for storing historical data, analysis results, and user preferences
 - **AI Integration**: OpenAI API integration for advanced security analysis
 - **Notification System**: Multi-channel alert system for real-time security notifications
-- **Block Explorer Integration**: Direct integration with Electroneum block explorer
+- **Block Explorer Integration**: Direct integration with Sonic block explorer
 
 ---
 
@@ -164,7 +164,7 @@ The AI Transaction Analyzer monitors transactions for:
 
 1. Go to "Security Scanner" in the sidebar
 2. Use the "Address Analyzer" tab
-3. Enter an Electroneum address
+3. Enter a Sonic address
 4. Click "Analyze"
 5. Review the security assessment:
    - Risk score and risk level
@@ -183,7 +183,7 @@ The system automatically monitors transactions for suspicious activity:
 
 ## 🔄 API Integration
 
-ETN Watchdog provides a REST API for integration with other services:
+Sonic Watchdog AI provides a REST API for integration with other services:
 
 - **Authentication**: JWT-based authentication for secure API access
 - **Endpoints**: Comprehensive endpoints for accessing security data
@@ -192,11 +192,11 @@ ETN Watchdog provides a REST API for integration with other services:
 
 ## Contract details
 
-Network: electroneum_testnet (Chain RPC: https://rpc.ankr.com/electroneum_testnet) (Chain ID: 5201420)
-TransactionMonitor deployed to: https://testnet-blockexplorer.electroneum.com/address/0xda52b25ddB0e3B9CC393b0690Ac62245Ac772527
-RugPullDetector deployed to: https://testnet-blockexplorer.electroneum.com/address/0x11B57FE348584f042E436c6Bf7c3c3deF171de49
-WalletDrainerDetector deployed to: https://testnet-blockexplorer.electroneum.com/address/0x1294b86822ff4976BfE136cB06CF43eC7FCF2574
-ETNWatchdogRegistry deployed to: https://testnet-blockexplorer.electroneum.com/address/0xA6E41fFD769491a42A6e5Ce453259b93983a22EF
+Network: Sonic Blaze Testnet (Chain RPC: https://rpc.blaze.soniclabs.com) (Chain ID: 57054)
+TransactionMonitor deployed to: https://testnet.sonicscan.org/address/0xda52b25ddB0e3B9CC393b0690Ac62245Ac772527
+RugPullDetector deployed to: https://testnet.sonicscan.org/address/0x11B57FE348584f042E436c6Bf7c3c3deF171de49
+WalletDrainerDetector deployed to: https://testnet.sonicscan.org/address/0x1294b86822ff4976BfE136cB06CF43eC7FCF2574
+SWatchdogRegistry deployed to: https://testnet.sonicscan.org/address/0xA6E41fFD769491a42A6e5Ce453259b93983a22EF
 
 ## Screenshots
 
@@ -250,7 +250,6 @@ Notification Settings
 <img width="1441" alt="Screenshot 2025-03-09 at 10 10 58 PM" src="https://github.com/user-attachments/assets/46cd82d3-5121-41b7-8fed-90e53111d106" />
 <img width="1454" alt="Screenshot 2025-03-09 at 10 11 07 PM" src="https://github.com/user-attachments/assets/1e36f578-2c41-4a51-bbfe-ab877da07e84" />
 
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -265,8 +264,8 @@ Notification Settings
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/etn-watchdog.git
-   cd etn-watchdog
+   git clone https://github.com/yourusername/sonic-watchdog.git
+   cd sonic-watchdog
    ```
 
 2. Install dependencies:
@@ -296,7 +295,7 @@ Notification Settings
 
 #### With Mock Data (Default)
 
-This mode uses mock data and doesn't require a connection to the Electroneum blockchain:
+This mode uses mock data and doesn't require a connection to the Sonic blockchain:
 
 ```bash
 ./start-app.sh --mock
@@ -304,7 +303,7 @@ This mode uses mock data and doesn't require a connection to the Electroneum blo
 
 #### With Testnet Data
 
-This mode connects to the Electroneum testnet and uses real blockchain data:
+This mode connects to the Sonic Blaze Testnet and uses real blockchain data:
 
 ```bash
 ./start-app.sh --testnet
@@ -312,7 +311,7 @@ This mode connects to the Electroneum testnet and uses real blockchain data:
 
 #### With Mainnet Data
 
-This mode connects to the Electroneum mainnet and uses real blockchain data:
+This mode connects to the Sonic mainnet and uses real blockchain data:
 
 ```bash
 ./start-app.sh --mainnet
@@ -325,8 +324,8 @@ You can also switch between data sources directly in the UI:
 1. Look for the "Data Source" dropdown in the top-right corner of the dashboard
 2. Select your preferred data source:
    - Mock Data: Uses locally generated mock data
-   - Electroneum Testnet: Connects to the Electroneum testnet
-   - Electroneum Mainnet: Connects to the Electroneum mainnet
+   - Sonic Blaze Testnet: Connects to the Sonic Blaze Testnet
+   - Sonic Mainnet: Connects to the Sonic mainnet
 
 Note: Switching data sources in the UI will reload the page to refresh the data.
 
@@ -340,10 +339,10 @@ The application uses the following environment variables:
 
 ```
 # Blockchain Configuration
-ELECTRONEUM_RPC_URL=https://rpc.ankr.com/electroneum_testnet
-ELECTRONEUM_TESTNET_RPC_URL=https://rpc.ankr.com/electroneum_testnet
+SONIC_RPC_URL=https://rpc.soniclabs.com
+SONIC_TESTNET_RPC_URL=https://rpc.blaze.soniclabs.com
 PRIVATE_KEY=your_private_key_here
-NETWORK_CHAIN_ID=5201420
+NETWORK_CHAIN_ID=146
 
 # Database Configuration
 MONGODB_URI=your_mongodb_uri_here
@@ -366,8 +365,8 @@ REACT_APP_TESTNET_API_URL=http://localhost:3000/api
 REACT_APP_MAINNET_API_URL=http://localhost:3000/api
 
 # Block explorer URLs
-REACT_APP_TESTNET_EXPLORER_URL=https://testnet-blockexplorer.electroneum.com/
-REACT_APP_MAINNET_EXPLORER_URL=https://blockexplorer.electroneum.com/
+REACT_APP_TESTNET_EXPLORER_URL=https://testnet.sonicscan.org/
+REACT_APP_MAINNET_EXPLORER_URL=https://sonicscan.org/
 
 # AI Configuration
 REACT_APP_OPENAI_API_KEY=your_openai_api_key_here
@@ -376,24 +375,24 @@ REACT_APP_USE_MOCK_AI=false
 
 ## 🧪 Running on Testnet
 
-To run ETN Watchdog on the Electroneum testnet instead of mainnet, follow these steps:
+To run Sonic Watchdog AI on the Sonic Blaze Testnet instead of mainnet, follow these steps:
 
 1. Update your `.env` file to use testnet configuration:
 
    ```
    # Comment out mainnet URLs
-   # ELECTRONEUM_RPC_URL=https://rpc.electroneum.com
-   # WEB3_PROVIDER_URL=https://rpc.electroneum.com
+   # SONIC_RPC_URL=https://rpc.soniclabs.com
+   # WEB3_PROVIDER_URL=https://rpc.soniclabs.com
 
    # Uncomment testnet URLs
-   ELECTRONEUM_RPC_URL=https://rpc.ankr.com/electroneum_testnet
-   WEB3_PROVIDER_URL=https://rpc.ankr.com/electroneum_testnet
+   SONIC_RPC_URL=https://rpc.blaze.soniclabs.com
+   WEB3_PROVIDER_URL=https://rpc.blaze.soniclabs.com
 
    # Set chain ID to testnet
-   NETWORK_CHAIN_ID=5201420
+   NETWORK_CHAIN_ID=57054
    ```
 
-2. Get testnet ETN from the Electroneum testnet faucet (if available) or request from the Electroneum team.
+2. Get testnet S from the Sonic Blaze Testnet faucet: https://testnet.soniclabs.com/account
 
 3. Deploy the contracts to testnet:
 
@@ -422,7 +421,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## ⚠️ Disclaimer
 
-ETN Watchdog is provided for informational purposes only. While we strive to provide accurate and up-to-date security information, we cannot guarantee the identification of all security threats. Always do your own research before making investment decisions or interacting with smart contracts on the Electroneum blockchain.
+Sonic Watchdog AI is provided for informational purposes only. While we strive to provide accurate and up-to-date security information, we cannot guarantee the identification of all security threats. Always do your own research before making investment decisions or interacting with smart contracts on the Sonic blockchain.
 
 ## 📞 Support
 
@@ -433,4 +432,4 @@ If you encounter any issues or have questions, please:
 
 ---
 
-Built with ❤️ for the Electroneum community
+Built with ❤️ for the Sonic community

@@ -1,5 +1,5 @@
 /**
- * Utility script to switch between Electroneum mainnet and testnet
+ * Utility script to switch between Sonic mainnet and testnet
  * Usage: node scripts/switch-network.js [mainnet|testnet]
  */
 
@@ -29,15 +29,15 @@ if (!network || (network !== 'mainnet' && network !== 'testnet')) {
 
 // Update configuration based on network
 if (network === 'mainnet') {
-  console.log('Switching to Electroneum Mainnet...');
-  envConfig.ELECTRONEUM_RPC_URL = 'https://rpc.electroneum.com';
-  envConfig.WEB3_PROVIDER_URL = 'https://rpc.electroneum.com';
-  envConfig.NETWORK_CHAIN_ID = '52014';
+  console.log('Switching to Sonic Mainnet...');
+  envConfig.SONIC_RPC_URL = 'https://rpc.soniclabs.com';
+  envConfig.WEB3_PROVIDER_URL = 'https://rpc.soniclabs.com';
+  envConfig.NETWORK_CHAIN_ID = '146';
 } else {
-  console.log('Switching to Electroneum Testnet...');
-  envConfig.ELECTRONEUM_RPC_URL = 'https://rpc.ankr.com/electroneum_testnet';
-  envConfig.WEB3_PROVIDER_URL = 'https://rpc.ankr.com/electroneum_testnet';
-  envConfig.NETWORK_CHAIN_ID = '5201420';
+  console.log('Switching to Sonic Blaze Testnet...');
+  envConfig.SONIC_RPC_URL = 'https://rpc.blaze.soniclabs.com';
+  envConfig.WEB3_PROVIDER_URL = 'https://rpc.blaze.soniclabs.com';
+  envConfig.NETWORK_CHAIN_ID = '57054';
 }
 
 // Write updated configuration back to .env file
@@ -47,8 +47,8 @@ const envContent = Object.entries(envConfig)
 
 fs.writeFileSync(envPath, envContent);
 
-console.log(`Successfully switched to Electroneum ${network === 'mainnet' ? 'Mainnet' : 'Testnet'}`);
+console.log(`Successfully switched to Sonic ${network === 'mainnet' ? 'Mainnet' : 'Blaze Testnet'}`);
 console.log('Configuration updated:');
-console.log(`- ELECTRONEUM_RPC_URL: ${envConfig.ELECTRONEUM_RPC_URL}`);
+console.log(`- SONIC_RPC_URL: ${envConfig.SONIC_RPC_URL}`);
 console.log(`- WEB3_PROVIDER_URL: ${envConfig.WEB3_PROVIDER_URL}`);
 console.log(`- NETWORK_CHAIN_ID: ${envConfig.NETWORK_CHAIN_ID}`); 

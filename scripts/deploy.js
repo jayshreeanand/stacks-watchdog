@@ -10,17 +10,17 @@ async function main() {
     throw new Error("Ethers not properly initialized!");
   }
 
-  console.log("Deploying ETN Watchdog contracts...");
+  console.log("Deploying Sonic Watchdog contracts...");
   console.log(`Network: ${hre.network.name} (Chain RPC: ${hre.network.config.url}) (Chain ID: ${hre.network.config.chainId})`);
 
   // Get the contract factories
   const TransactionMonitor = await hre.ethers.getContractFactory("TransactionMonitor");
   const RugPullDetector = await hre.ethers.getContractFactory("RugPullDetector");
   const WalletDrainerDetector = await hre.ethers.getContractFactory("WalletDrainerDetector");
-  const ETNWatchdogRegistry = await hre.ethers.getContractFactory("ETNWatchdogRegistry");
+  const SWatchdogRegistry = await hre.ethers.getContractFactory("SWatchdogRegistry");
 
-  // Deploy TransactionMonitor with a large transaction threshold of 1000 ETN (adjust as needed)
-  // 1000 ETN with 18 decimals
+  // Deploy TransactionMonitor with a large transaction threshold of 1000 S (adjust as needed)
+  // 1000 S with 18 decimals
   const largeTransactionThreshold = hre.ethers.parseEther("1000");
   const transactionMonitor = await TransactionMonitor.deploy(largeTransactionThreshold);
   await transactionMonitor.waitForDeployment();
@@ -37,14 +37,14 @@ async function main() {
   await walletDrainerDetector.waitForDeployment();
   console.log(`WalletDrainerDetector deployed to: ${await walletDrainerDetector.getAddress()}`);
 
-  // Deploy ETNWatchdogRegistry with references to the other contracts
-  const registry = await ETNWatchdogRegistry.deploy(
+  // Deploy SWatchdogRegistry with references to the other contracts
+  const registry = await SWatchdogRegistry.deploy(
     await transactionMonitor.getAddress(),
     await rugPullDetector.getAddress(),
     await walletDrainerDetector.getAddress()
   );
   await registry.waitForDeployment();
-  console.log(`ETNWatchdogRegistry deployed to: ${await registry.getAddress()}`);
+  console.log(`SWatchdogRegistry deployed to: ${await registry.getAddress()}`);
 
   console.log("Deployment complete!");
 
@@ -60,7 +60,7 @@ async function main() {
   };
 
   // Determine filename based on network
-  const isTestnet = hre.network.name === 'electroneum_testnet';
+  const isTestnet = hre.network.name === 'sonic_testnet';
   const filename = isTestnet ? 'deployment-info-testnet.json' : 'deployment-info.json';
 
   fs.writeFileSync(
