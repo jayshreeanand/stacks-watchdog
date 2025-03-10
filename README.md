@@ -1,10 +1,10 @@
-# Chain Shield AI: AI powered security for Sonic
+# Chain Shield AI: AI agent for security monitoring
 
 Chain Shield AI is a comprehensive security monitoring platform for the Sonic blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
 
-Demo URL (frontend): [https://sonic-shield.vercel.app/](https://sonic-shield.vercel.app/)
+Demo URL (frontend): [https://chain-shield.vercel.app/](https://chain-shield.vercel.app/)
 
-Backend server URL (api server): [https://sonic-shield-backend.up.railway.app/](https://sonic-shield-backend.up.railway.app/)
+Backend server URL (api server): [https://chain-shield-backend.up.railway.app/](https://chain-shield-backend.up.railway.app/)
 
 <img width="1473" alt="home" src="https://github.com/user-attachments/assets/9e229904-d0da-4ec5-8398-a6181dd021ac" />
 
