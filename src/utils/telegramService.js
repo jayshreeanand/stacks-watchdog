@@ -8,6 +8,61 @@ const TELEGRAM_DEFAULT_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 // Base URL for Telegram Bot API
 const TELEGRAM_API_BASE_URL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
 
+// Store active connection codes
+const activeConnectionCodes = new Map();
+
+/**
+ * Generate a unique connection code for a user
+ * @param {string} userId - The user ID
+ * @returns {string} - A unique connection code
+ */
+const generateConnectionCode = (userId) => {
+  // Generate a random 6-digit code
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+  
+  // Store the code with the user ID and expiration time (10 minutes)
+  activeConnectionCodes.set(code, {
+    userId,
+    expiresAt: Date.now() + 10 * 60 * 1000 // 10 minutes
+  });
+  
+  // Return the code
+  return code;
+};
+
+/**
+ * Verify a connection code and associate it with a Telegram chat ID
+ * @param {string} code - The connection code
+ * @param {string} chatId - The Telegram chat ID
+ * @returns {Object} - The result of the verification
+ */
+const verifyConnectionCode = (code, chatId) => {
+  // Check if the code exists and is valid
+  if (!activeConnectionCodes.has(code)) {
+    return { success: false, error: 'Invalid connection code' };
+  }
+  
+  const connection = activeConnectionCodes.get(code);
+  
+  // Check if the code has expired
+  if (connection.expiresAt < Date.now()) {
+    activeConnectionCodes.delete(code);
+    return { success: false, error: 'Connection code has expired' };
+  }
+  
+  // Return the user ID and chat ID
+  const result = { 
+    success: true, 
+    userId: connection.userId, 
+    chatId 
+  };
+  
+  // Remove the code from active connections
+  activeConnectionCodes.delete(code);
+  
+  return result;
+};
+
 /**
  * Send a message to a Telegram chat
  * @param {string} message - The message to send
@@ -140,9 +195,64 @@ You will receive security alerts in this chat.
   return sendMessage(message, chatId);
 };
 
+/**
+ * Get the Telegram bot information
+ * @returns {Promise<Object>} - The bot information
+ */
+const getBotInfo = async () => {
+  if (!TELEGRAM_BOT_TOKEN) {
+    console.error('Telegram bot token not configured');
+    return { success: false, error: 'Telegram bot token not configured' };
+  }
+
+  try {
+    const response = await axios.get(`${TELEGRAM_API_BASE_URL}/getMe`);
+    return { success: true, data: response.data.result };
+  } catch (error) {
+    console.error('Error getting bot info:', error.response?.data || error.message);
+    return { 
+      success: false, 
+      error: error.response?.data?.description || error.message 
+    };
+  }
+};
+
+/**
+ * Send connection instructions to a user
+ * @param {string} userId - The user ID
+ * @returns {Object} - The connection code and instructions
+ */
+const getConnectionInstructions = (userId) => {
+  if (!TELEGRAM_BOT_TOKEN) {
+    console.error('Telegram bot token not configured');
+    return { success: false, error: 'Telegram bot token not configured' };
+  }
+
+  // Generate a connection code
+  const code = generateConnectionCode(userId);
+  
+  // Get the bot username (async, but we'll return the code immediately)
+  getBotInfo().then(result => {
+    if (!result.success) {
+      console.error('Error getting bot info:', result.error);
+    }
+  });
+  
+  return { 
+    success: true, 
+    code,
+    expiresIn: '10 minutes',
+    instructions: `To connect your Telegram account, send the following message to our bot:\n\n/connect ${code}`
+  };
+};
+
 module.exports = {
   sendMessage,
   sendAlert,
   formatAlertMessage,
-  testConnection
+  testConnection,
+  generateConnectionCode,
+  verifyConnectionCode,
+  getBotInfo,
+  getConnectionInstructions
 }; 
