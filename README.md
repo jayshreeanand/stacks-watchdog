@@ -1,6 +1,6 @@
-# Sonic Shield AI: AI powered security for Sonic
+# Chain Shield AI: AI powered security for Sonic
 
-Sonic Shield AI is a comprehensive security monitoring platform for the Sonic blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
+Chain Shield AI is a comprehensive security monitoring platform for the Sonic blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
 
 Demo URL (frontend): [https://sonic-shield.vercel.app/](https://sonic-shield.vercel.app/)
 
@@ -22,7 +22,6 @@ Backend server URL (api server): [https://sonic-shield-backend.up.railway.app/](
 
 <img width="1462" alt="flow_chart" src="https://github.com/user-attachments/assets/43372fad-d6ef-4e93-9941-03c5394e0db0" />
 
-  
 1. **Smart Contract Monitoring**:
 
    - Smart contracts emit events on the Sonic blockchain
@@ -188,7 +187,7 @@ Learning progress tracker
 
 ## AI-Powered Security Features
 
-Sonic Shield AI leverages advanced AI models to provide cutting-edge security analysis:
+Chain Shield AI leverages advanced AI models to provide cutting-edge security analysis:
 
 ### Smart Contract Vulnerability Detection
 
@@ -256,7 +255,7 @@ The vulnerability scanner provides real-time security analysis of smart contract
 
 ## 📚 Learning Modules
 
-Sonic Shield AI includes comprehensive learning modules to help users understand blockchain security:
+Chain Shield AI includes comprehensive learning modules to help users understand blockchain security:
 
 ### Smart Contract Security Basics
 
@@ -292,7 +291,7 @@ Sonic Shield AI includes comprehensive learning modules to help users understand
 
 ## 🤖 Telegram Integration
 
-Sonic Shield AI integrates with Telegram for real-time alerts and interactions:
+Chain Shield AI integrates with Telegram for real-time alerts and interactions:
 
 ### Setup Instructions
 
@@ -376,7 +375,7 @@ The system automatically monitors transactions for suspicious activity:
 
 ## API Integration
 
-Sonic Shield AI provides a REST API for integration with other services:
+Chain Shield AI provides a REST API for integration with other services:
 
 - **Authentication**: JWT-based authentication for secure API access
 - **Endpoints**: Comprehensive endpoints for accessing security data
@@ -535,7 +534,7 @@ REACT_APP_USE_MOCK_AI=false
 
 ## 🧪 Running on Testnet
 
-To run Sonic Shield AI on the Sonic Blaze Testnet instead of mainnet, follow these steps:
+To run Chain Shield AI on the Sonic Blaze Testnet instead of mainnet, follow these steps:
 
 1. Update your `.env` file to use testnet configuration:
 
@@ -581,7 +580,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## ⚠️ Disclaimer
 
-Sonic Shield AI is provided for informational purposes only. While we strive to provide accurate and up-to-date security information, we cannot guarantee the identification of all security threats. Always do your own research before making investment decisions or interacting with smart contracts on the Sonic blockchain.
+Chain Shield AI is provided for informational purposes only. While we strive to provide accurate and up-to-date security information, we cannot guarantee the identification of all security threats. Always do your own research before making investment decisions or interacting with smart contracts on the Sonic blockchain.
 
 ## 📞 Support
 

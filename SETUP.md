@@ -1,4 +1,4 @@
-# Sonic Shield AI Setup Guide
+# Chain Shield AI Setup Guide
 
 ## Prerequisites
 

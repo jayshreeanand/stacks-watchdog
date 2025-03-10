@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink as RouterLink } from 'react-router-dom';
+import React from "react";
+import { NavLink as RouterLink } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -10,11 +10,11 @@ import {
   Divider,
   Image,
   CloseButton,
-} from '@chakra-ui/react';
-import { 
-  FiHome, 
-  FiAlertTriangle, 
-  FiSearch, 
+} from "@chakra-ui/react";
+import {
+  FiHome,
+  FiAlertTriangle,
+  FiSearch,
   FiShield,
   FiExternalLink,
   FiBell,
@@ -22,16 +22,16 @@ import {
   FiKey,
   FiCode,
   FiBookOpen,
-  FiActivity
-} from 'react-icons/fi';
+  FiActivity,
+} from "react-icons/fi";
 
 const NavItem = ({ icon, children, to, ...rest }) => {
   return (
     <Link
       as={RouterLink}
       to={to}
-      style={{ textDecoration: 'none' }}
-      _focus={{ boxShadow: 'none' }}
+      style={{ textDecoration: "none" }}
+      _focus={{ boxShadow: "none" }}
     >
       {({ isActive }) => (
         <Flex
@@ -41,21 +41,15 @@ const NavItem = ({ icon, children, to, ...rest }) => {
           borderRadius="lg"
           role="group"
           cursor="pointer"
-          bg={isActive ? 'sonic.500' : 'transparent'}
-          color={isActive ? 'white' : 'gray.300'}
+          bg={isActive ? "sonic.500" : "transparent"}
+          color={isActive ? "white" : "gray.300"}
           _hover={{
-            bg: 'sonic.400',
-            color: 'white',
+            bg: "sonic.400",
+            color: "white",
           }}
           {...rest}
         >
-          {icon && (
-            <Icon
-              mr="4"
-              fontSize="16"
-              as={icon}
-            />
-          )}
+          {icon && <Icon mr="4" fontSize="16" as={icon} />}
           {children}
         </Flex>
       )}
@@ -69,16 +63,21 @@ const Sidebar = ({ isOpen, onClose }) => {
       bg="gray.800"
       borderRight="1px"
       borderRightColor="gray.700"
-      w={{ base: 'full', md: '240px' }}
+      w={{ base: "full", md: "240px" }}
       pos="fixed"
       h="full"
       zIndex="docked"
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontWeight="bold" bgGradient="linear(to-r, blue.400, purple.500)" bgClip="text">
-          Sonic Shield AI
+        <Text
+          fontSize="2xl"
+          fontWeight="bold"
+          bgGradient="linear(to-r, blue.400, purple.500)"
+          bgClip="text"
+        >
+          Chain Shield AI
         </Text>
-        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
+        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       <VStack spacing={1} align="stretch" mt={6}>
         <NavItem to="/app/dashboard" icon={FiHome}>
@@ -114,7 +113,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         <Divider my={4} borderColor="gray.700" />
         <Box px={8} py={4}>
           <Text color="gray.400" fontSize="sm">
-            Sonic Shield v0.1.0
+            Chain Shield v0.1.0
           </Text>
           <Text color="gray.500" fontSize="xs" mt={1}>
             Protecting the Sonic ecosystem
@@ -125,4 +124,4 @@ const Sidebar = ({ isOpen, onClose }) => {
   );
 };
 
-export default Sidebar; 
+export default Sidebar;

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
   Button,
@@ -27,24 +27,24 @@ import {
   StatNumber,
   StatHelpText,
   StatArrow,
-} from '@chakra-ui/react';
-import { keyframes } from '@emotion/react';
-import { 
-  FaShieldAlt, 
-  FaSearch, 
-  FaExclamationTriangle, 
-  FaBell, 
-  FaChartLine, 
-  FaLock, 
-  FaRocket, 
-  FaTelegram, 
+} from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
+import {
+  FaShieldAlt,
+  FaSearch,
+  FaExclamationTriangle,
+  FaBell,
+  FaChartLine,
+  FaLock,
+  FaRocket,
+  FaTelegram,
   FaMobile,
   FaUserShield,
   FaCheckCircle,
   FaBookOpen,
   FaArrowRight,
-} from 'react-icons/fa';
-import { motion } from 'framer-motion';
+} from "react-icons/fa";
+import { motion } from "framer-motion";
 
 // Animated components with framer-motion
 const MotionBox = motion(Box);
@@ -61,7 +61,13 @@ const pulseAnimation = keyframes`
 const pulse = `${pulseAnimation} 2s infinite`;
 
 // Feature card component
-const Feature = ({ title, text, icon, delay = 0, gradient = "linear(to-r, blue.400, teal.500)" }) => {
+const Feature = ({
+  title,
+  text,
+  icon,
+  delay = 0,
+  gradient = "linear(to-r, blue.400, teal.500)",
+}) => {
   return (
     <MotionBox
       initial={{ opacity: 0, y: 20 }}
@@ -70,14 +76,14 @@ const Feature = ({ title, text, icon, delay = 0, gradient = "linear(to-r, blue.4
       p={8}
       rounded="xl"
       shadow="xl"
-      bg={useColorModeValue('white', 'gray.800')}
+      bg={useColorModeValue("white", "gray.800")}
       borderWidth="1px"
-      borderColor={useColorModeValue('gray.100', 'gray.700')}
+      borderColor={useColorModeValue("gray.100", "gray.700")}
       _hover={{
-        transform: 'translateY(-5px)',
-        boxShadow: '2xl',
-        borderColor: 'blue.400',
-        transition: 'all 0.3s ease'
+        transform: "translateY(-5px)",
+        boxShadow: "2xl",
+        borderColor: "blue.400",
+        transition: "all 0.3s ease",
       }}
     >
       <Flex
@@ -94,9 +100,7 @@ const Feature = ({ title, text, icon, delay = 0, gradient = "linear(to-r, blue.4
       <Text fontWeight={700} fontSize="xl" mb={2}>
         {title}
       </Text>
-      <Text color={useColorModeValue('gray.600', 'gray.400')}>
-        {text}
-      </Text>
+      <Text color={useColorModeValue("gray.600", "gray.400")}>{text}</Text>
     </MotionBox>
   );
 };
@@ -111,9 +115,9 @@ const StatCard = ({ title, value, icon, increase, delay = 0 }) => {
       p={6}
       rounded="xl"
       shadow="lg"
-      bg={useColorModeValue('white', 'gray.800')}
+      bg={useColorModeValue("white", "gray.800")}
       borderWidth="1px"
-      borderColor={useColorModeValue('gray.100', 'gray.700')}
+      borderColor={useColorModeValue("gray.100", "gray.700")}
     >
       <HStack spacing={4}>
         <Flex
@@ -158,9 +162,9 @@ const Testimonial = ({ content, author, role, delay = 0 }) => {
       p={8}
       rounded="xl"
       shadow="lg"
-      bg={useColorModeValue('white', 'gray.800')}
+      bg={useColorModeValue("white", "gray.800")}
       borderWidth="1px"
-      borderColor={useColorModeValue('gray.100', 'gray.700')}
+      borderColor={useColorModeValue("gray.100", "gray.700")}
       position="relative"
     >
       <Text fontSize="lg" mb={4} fontStyle="italic">
@@ -182,7 +186,9 @@ const Testimonial = ({ content, author, role, delay = 0 }) => {
         </Box>
         <Box>
           <Text fontWeight="bold">{author}</Text>
-          <Text fontSize="sm" color="gray.500">{role}</Text>
+          <Text fontSize="sm" color="gray.500">
+            {role}
+          </Text>
         </Box>
       </HStack>
     </MotionBox>
@@ -191,14 +197,14 @@ const Testimonial = ({ content, author, role, delay = 0 }) => {
 
 const LandingPage = () => {
   const [scrollY, setScrollY] = useState(0);
-  
+
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -207,7 +213,7 @@ const LandingPage = () => {
       <Box
         position="relative"
         overflow="hidden"
-        bg={useColorModeValue('gray.50', 'gray.900')}
+        bg={useColorModeValue("gray.50", "gray.900")}
         py={20}
       >
         {/* Background gradient */}
@@ -221,7 +227,7 @@ const LandingPage = () => {
           opacity={0.05}
           zIndex={0}
         />
-        
+
         {/* Animated circles */}
         <Box
           position="absolute"
@@ -237,7 +243,7 @@ const LandingPage = () => {
           transform={`translateY(${scrollY * 0.2}px)`}
           transition="transform 0.1s ease-out"
         />
-        
+
         <Box
           position="absolute"
           bottom="10%"
@@ -252,10 +258,10 @@ const LandingPage = () => {
           transform={`translateY(${scrollY * -0.1}px)`}
           transition="transform 0.1s ease-out"
         />
-        
+
         <Container maxW="container.xl" position="relative" zIndex={1}>
           <Stack
-            direction={{ base: 'column', lg: 'row' }}
+            direction={{ base: "column", lg: "row" }}
             spacing={{ base: 10, lg: 20 }}
             align="center"
             justify="space-between"
@@ -277,35 +283,34 @@ const LandingPage = () => {
               >
                 Next-Gen Blockchain Security
               </Badge>
-              
+
               <Heading
                 as="h1"
-                fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }}
+                fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
                 fontWeight="bold"
                 lineHeight="shorter"
                 mb={6}
               >
                 <Text as="span" color="blue.500">
-                  Sonic Shield AI
+                  Chain Shield AI
                 </Text>
                 <br />
-                <Text as="span">
-                  Protecting Your Digital Assets
-                </Text>
+                <Text as="span">Protecting Your Digital Assets</Text>
               </Heading>
-              
+
               <Text
-                fontSize={{ base: 'lg', md: 'xl' }}
-                color={useColorModeValue('gray.600', 'gray.400')}
+                fontSize={{ base: "lg", md: "xl" }}
+                color={useColorModeValue("gray.600", "gray.400")}
                 mb={8}
               >
-               Sonic Shield AI is an intelligent security agent for the Sonic blockchain, employing advanced AI algorithms to monitor transactions, analyze smart contracts, and scan for vulnerabilities in real-time. It also offers educational modules to inform users about common security issues.
+                Chain Shield AI is an intelligent security agent for the Sonic
+                blockchain, employing advanced AI algorithms to monitor
+                transactions, analyze smart contracts, and scan for
+                vulnerabilities in real-time. It also offers educational modules
+                to inform users about common security issues.
               </Text>
-              
-              <Stack
-                direction={{ base: 'column', sm: 'row' }}
-                spacing={4}
-              >
+
+              <Stack direction={{ base: "column", sm: "row" }} spacing={4}>
                 <Button
                   as={RouterLink}
                   to="/app/dashboard"
@@ -315,14 +320,14 @@ const LandingPage = () => {
                   px={8}
                   rounded="full"
                   _hover={{
-                    transform: 'translateY(-2px)',
-                    boxShadow: 'lg',
+                    transform: "translateY(-2px)",
+                    boxShadow: "lg",
                   }}
                   bgGradient="linear(to-r, blue.400, blue.500)"
                 >
                   Launch App
                 </Button>
-                
+
                 <Button
                   as={RouterLink}
                   to="/app/security-scanner"
@@ -333,9 +338,9 @@ const LandingPage = () => {
                   px={8}
                   rounded="full"
                   _hover={{
-                    transform: 'translateY(-2px)',
-                    boxShadow: 'md',
-                    bg: 'blue.50',
+                    transform: "translateY(-2px)",
+                    boxShadow: "md",
+                    bg: "blue.50",
                   }}
                   leftIcon={<Icon as={FaSearch} />}
                 >
@@ -343,7 +348,7 @@ const LandingPage = () => {
                 </Button>
               </Stack>
             </MotionBox>
-            
+
             <MotionBox
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -354,8 +359,8 @@ const LandingPage = () => {
             >
               <Box
                 position="relative"
-                w={{ base: '300px', md: '400px' }}
-                h={{ base: '300px', md: '400px' }}
+                w={{ base: "300px", md: "400px" }}
+                h={{ base: "300px", md: "400px" }}
               >
                 {/* Shield animation */}
                 <Box
@@ -368,12 +373,12 @@ const LandingPage = () => {
                 >
                   <Icon
                     as={FaShieldAlt}
-                    w={{ base: '150px', md: '200px' }}
-                    h={{ base: '150px', md: '200px' }}
+                    w={{ base: "150px", md: "200px" }}
+                    h={{ base: "150px", md: "200px" }}
                     color="blue.500"
                   />
                 </Box>
-                
+
                 {/* Circular gradient background */}
                 <Box
                   position="absolute"
@@ -386,7 +391,7 @@ const LandingPage = () => {
                   bgGradient="radial(blue.100, transparent)"
                   zIndex={1}
                 />
-                
+
                 {/* Orbiting elements */}
                 <Box
                   position="absolute"
@@ -398,7 +403,7 @@ const LandingPage = () => {
                 >
                   <Icon as={FaSearch} w={10} h={10} color="purple.500" />
                 </Box>
-                
+
                 <Box
                   position="absolute"
                   top="50%"
@@ -409,7 +414,7 @@ const LandingPage = () => {
                 >
                   <Icon as={FaBell} w={10} h={10} color="green.500" />
                 </Box>
-                
+
                 <Box
                   position="absolute"
                   bottom="10%"
@@ -420,7 +425,7 @@ const LandingPage = () => {
                 >
                   <Icon as={FaLock} w={10} h={10} color="red.500" />
                 </Box>
-                
+
                 <Box
                   position="absolute"
                   top="50%"
@@ -434,14 +439,12 @@ const LandingPage = () => {
               </Box>
             </MotionBox>
           </Stack>
-          <Box py={12} ></Box>
+          <Box py={12}></Box>
         </Container>
       </Box>
-      
-      
-      
+
       {/* Features Section */}
-      <Box py={20} bg={useColorModeValue('gray.50', 'gray.900')}>
+      <Box py={20} bg={useColorModeValue("gray.50", "gray.900")}>
         <Container maxW="container.xl">
           <VStack spacing={12}>
             <Box textAlign="center" maxW="container.md" mx="auto">
@@ -455,22 +458,23 @@ const LandingPage = () => {
               >
                 Powerful Features
               </Badge>
-              <Heading
-                as="h2"
-                fontSize={{ base: '3xl', md: '4xl' }}
-                mb={4}
-              >
+              <Heading as="h2" fontSize={{ base: "3xl", md: "4xl" }} mb={4}>
                 Advanced Security Tools
               </Heading>
               <Text
-                fontSize={{ base: 'lg', md: 'xl' }}
-                color={useColorModeValue('gray.600', 'gray.400')}
+                fontSize={{ base: "lg", md: "xl" }}
+                color={useColorModeValue("gray.600", "gray.400")}
               >
-                Sonic Shield AI provides a comprehensive suite of security tools to protect your blockchain assets.
+                Chain Shield AI provides a comprehensive suite of security tools
+                to protect your blockchain assets.
               </Text>
             </Box>
-            
-            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} w="full">
+
+            <SimpleGrid
+              columns={{ base: 1, md: 2, lg: 3 }}
+              spacing={10}
+              w="full"
+            >
               <Feature
                 title="Real-time Monitoring"
                 text="Continuous monitoring of blockchain transactions to detect suspicious activity as it happens."
@@ -478,7 +482,7 @@ const LandingPage = () => {
                 delay={0.1}
                 gradient="linear(to-r, blue.400, blue.600)"
               />
-              
+
               <Feature
                 title="Wallet Security Scanner"
                 text="Deep analysis of wallet interactions to identify potential security risks and vulnerabilities."
@@ -496,7 +500,9 @@ const LandingPage = () => {
               <Feature
                 title="Rug Pull Detection"
                 text="Advanced algorithms to identify potential rug pulls before they happen."
-                icon={<Icon as={FaExclamationTriangle} color="white" w={8} h={8} />}
+                icon={
+                  <Icon as={FaExclamationTriangle} color="white" w={8} h={8} />
+                }
                 delay={0.5}
                 gradient="linear(to-r, yellow.400, orange.500)"
               />
@@ -525,11 +531,15 @@ const LandingPage = () => {
           </VStack>
         </Container>
       </Box>
-      
+
       {/* Learning Modules Section */}
-      <Box py={20} bg={useColorModeValue('white', 'gray.800')}>
+      <Box py={20} bg={useColorModeValue("white", "gray.800")}>
         <Container maxW="container.xl">
-          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={10} alignItems="center">
+          <SimpleGrid
+            columns={{ base: 1, lg: 2 }}
+            spacing={10}
+            alignItems="center"
+          >
             <Box>
               <Badge
                 colorScheme="purple"
@@ -541,21 +551,20 @@ const LandingPage = () => {
               >
                 Educational Resources
               </Badge>
-              <Heading
-                as="h2"
-                fontSize={{ base: '3xl', md: '4xl' }}
-                mb={4}
-              >
+              <Heading as="h2" fontSize={{ base: "3xl", md: "4xl" }} mb={4}>
                 Interactive Learning Modules
               </Heading>
               <Text
-                fontSize={{ base: 'lg', md: 'xl' }}
-                color={useColorModeValue('gray.600', 'gray.400')}
+                fontSize={{ base: "lg", md: "xl" }}
+                color={useColorModeValue("gray.600", "gray.400")}
                 mb={6}
               >
-                Enhance your blockchain security knowledge with our comprehensive learning modules. From smart contract vulnerabilities to security best practices, our interactive tutorials help you stay ahead of potential threats.
+                Enhance your blockchain security knowledge with our
+                comprehensive learning modules. From smart contract
+                vulnerabilities to security best practices, our interactive
+                tutorials help you stay ahead of potential threats.
               </Text>
-              
+
               <VStack align="start" spacing={4} mb={8}>
                 <HStack>
                   <Icon as={FaCheckCircle} color="green.500" />
@@ -578,7 +587,7 @@ const LandingPage = () => {
                   <Text fontSize="lg">AI-Driven Vulnerability Detection</Text>
                 </HStack>
               </VStack>
-              
+
               <Button
                 as={RouterLink}
                 to="/app/learning-modules"
@@ -586,14 +595,14 @@ const LandingPage = () => {
                 colorScheme="purple"
                 rightIcon={<Icon as={FaArrowRight} />}
                 _hover={{
-                  transform: 'translateY(-2px)',
-                  boxShadow: 'lg',
+                  transform: "translateY(-2px)",
+                  boxShadow: "lg",
                 }}
               >
                 Start Learning
               </Button>
             </Box>
-            
+
             <MotionBox
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -616,7 +625,7 @@ const LandingPage = () => {
                   opacity={0.8}
                   roundedTop="2xl"
                 />
-                
+
                 <VStack
                   position="absolute"
                   top={0}
@@ -632,17 +641,36 @@ const LandingPage = () => {
                     Learn. Secure. Protect.
                   </Heading>
                   <Text color="white" fontSize="lg" textAlign="center">
-                    Our interactive modules provide practical knowledge to help you secure your blockchain assets.
+                    Our interactive modules provide practical knowledge to help
+                    you secure your blockchain assets.
                   </Text>
-                  
+
                   <HStack spacing={4}>
-                    <Badge colorScheme="green" px={3} py={2} rounded="full" fontSize="md">
+                    <Badge
+                      colorScheme="green"
+                      px={3}
+                      py={2}
+                      rounded="full"
+                      fontSize="md"
+                    >
                       Beginner
                     </Badge>
-                    <Badge colorScheme="blue" px={3} py={2} rounded="full" fontSize="md">
+                    <Badge
+                      colorScheme="blue"
+                      px={3}
+                      py={2}
+                      rounded="full"
+                      fontSize="md"
+                    >
                       Intermediate
                     </Badge>
-                    <Badge colorScheme="purple" px={3} py={2} rounded="full" fontSize="md">
+                    <Badge
+                      colorScheme="purple"
+                      px={3}
+                      py={2}
+                      rounded="full"
+                      fontSize="md"
+                    >
                       Advanced
                     </Badge>
                   </HStack>
@@ -652,9 +680,9 @@ const LandingPage = () => {
           </SimpleGrid>
         </Container>
       </Box>
-      
+
       {/* How It Works Section */}
-      <Box py={20} bg={useColorModeValue('white', 'gray.800')}>
+      <Box py={20} bg={useColorModeValue("white", "gray.800")}>
         <Container maxW="container.xl">
           <VStack spacing={16}>
             <Box textAlign="center" maxW="container.md" mx="auto">
@@ -668,27 +696,20 @@ const LandingPage = () => {
               >
                 Simple Process
               </Badge>
-              <Heading
-                as="h2"
-                fontSize={{ base: '3xl', md: '4xl' }}
-                mb={4}
-              >
-                How Sonic Shield AI Works
+              <Heading as="h2" fontSize={{ base: "3xl", md: "4xl" }} mb={4}>
+                How Chain Shield AI Works
               </Heading>
               <Text
-                fontSize={{ base: 'lg', md: 'xl' }}
-                color={useColorModeValue('gray.600', 'gray.400')}
+                fontSize={{ base: "lg", md: "xl" }}
+                color={useColorModeValue("gray.600", "gray.400")}
               >
-                Protecting your assets has never been easier with our streamlined security process.
+                Protecting your assets has never been easier with our
+                streamlined security process.
               </Text>
             </Box>
-            
+
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10} w="full">
-              <VStack
-                spacing={6}
-                align="center"
-                textAlign="center"
-              >
+              <VStack spacing={6} align="center" textAlign="center">
                 <Flex
                   w={20}
                   h={20}
@@ -702,17 +723,16 @@ const LandingPage = () => {
                 >
                   1
                 </Flex>
-                <Heading as="h3" fontSize="xl">Connect Your Wallet</Heading>
-                <Text color={useColorModeValue('gray.600', 'gray.400')}>
-                  Link your wallet to Sonic Shield AI to enable comprehensive security monitoring.
+                <Heading as="h3" fontSize="xl">
+                  Connect Your Wallet
+                </Heading>
+                <Text color={useColorModeValue("gray.600", "gray.400")}>
+                  Link your wallet to Chain Shield AI to enable comprehensive
+                  security monitoring.
                 </Text>
               </VStack>
-              
-              <VStack
-                spacing={6}
-                align="center"
-                textAlign="center"
-              >
+
+              <VStack spacing={6} align="center" textAlign="center">
                 <Flex
                   w={20}
                   h={20}
@@ -726,17 +746,16 @@ const LandingPage = () => {
                 >
                   2
                 </Flex>
-                <Heading as="h3" fontSize="xl">Set Up Alerts</Heading>
-                <Text color={useColorModeValue('gray.600', 'gray.400')}>
-                  Configure your notification preferences including Telegram alerts for real-time updates.
+                <Heading as="h3" fontSize="xl">
+                  Set Up Alerts
+                </Heading>
+                <Text color={useColorModeValue("gray.600", "gray.400")}>
+                  Configure your notification preferences including Telegram
+                  alerts for real-time updates.
                 </Text>
               </VStack>
-              
-              <VStack
-                spacing={6}
-                align="center"
-                textAlign="center"
-              >
+
+              <VStack spacing={6} align="center" textAlign="center">
                 <Flex
                   w={20}
                   h={20}
@@ -750,13 +769,16 @@ const LandingPage = () => {
                 >
                   3
                 </Flex>
-                <Heading as="h3" fontSize="xl">Stay Protected</Heading>
-                <Text color={useColorModeValue('gray.600', 'gray.400')}>
-                  Receive instant alerts about potential threats and take action to secure your assets.
+                <Heading as="h3" fontSize="xl">
+                  Stay Protected
+                </Heading>
+                <Text color={useColorModeValue("gray.600", "gray.400")}>
+                  Receive instant alerts about potential threats and take action
+                  to secure your assets.
                 </Text>
               </VStack>
             </SimpleGrid>
-            
+
             <Button
               as={RouterLink}
               to="/app/dashboard"
@@ -766,8 +788,8 @@ const LandingPage = () => {
               px={8}
               rounded="full"
               _hover={{
-                transform: 'translateY(-2px)',
-                boxShadow: 'lg',
+                transform: "translateY(-2px)",
+                boxShadow: "lg",
               }}
             >
               Get Started Now
@@ -775,9 +797,7 @@ const LandingPage = () => {
           </VStack>
         </Container>
       </Box>
-      
-     
-      
+
       {/* CTA Section */}
       <Box py={20} position="relative" overflow="hidden">
         {/* Background gradient */}
@@ -791,24 +811,25 @@ const LandingPage = () => {
           opacity={0.9}
           zIndex={0}
         />
-        
+
         <Container maxW="container.xl" position="relative" zIndex={1}>
           <VStack spacing={8} textAlign="center">
             <Heading
               as="h2"
-              fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}
+              fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
               color="white"
               fontWeight="bold"
             >
               Protect Your Digital Assets Today
             </Heading>
             <Text
-              fontSize={{ base: 'lg', md: 'xl' }}
+              fontSize={{ base: "lg", md: "xl" }}
               color="whiteAlpha.900"
               maxW="container.md"
             >
-              Join thousands of users who trust Sonic Shield AI to secure their blockchain investments.
-              Get started now and experience next-level security.
+              Join thousands of users who trust Chain Shield AI to secure their
+              blockchain investments. Get started now and experience next-level
+              security.
             </Text>
             <Button
               as={RouterLink}
@@ -821,54 +842,81 @@ const LandingPage = () => {
               py={7}
               rounded="full"
               _hover={{
-                transform: 'translateY(-2px)',
-                boxShadow: 'lg',
+                transform: "translateY(-2px)",
+                boxShadow: "lg",
               }}
               fontSize="xl"
             >
-              Launch Sonic Shield AI
+              Launch Chain Shield AI
             </Button>
           </VStack>
         </Container>
       </Box>
-      
+
       {/* Footer */}
-      <Box bg={useColorModeValue('gray.900', 'gray.900')} color="white" py={10}>
+      <Box bg={useColorModeValue("gray.900", "gray.900")} color="white" py={10}>
         <Container maxW="container.xl">
           <SimpleGrid columns={{ base: 1, md: 4 }} spacing={8}>
             <VStack align="start" spacing={4}>
-              <Heading size="md">Sonic Shield AI</Heading>
+              <Heading size="md">Chain Shield AI</Heading>
               <Text color="whiteAlpha.700">
-                Next-generation blockchain security powered by artificial intelligence.
+                Next-generation blockchain security powered by artificial
+                intelligence.
               </Text>
             </VStack>
-            
+
             <VStack align="start" spacing={4}>
               <Heading size="md">Features</Heading>
-              <Link as={RouterLink} to="/app/security-scanner" color="whiteAlpha.700">Security Scanner</Link>
-              <Link as={RouterLink} to="/app/wallet-drainers" color="whiteAlpha.700">Wallet Drainer Detection</Link>
-              <Link as={RouterLink} to="/app/analyze" color="whiteAlpha.700">Smart Contract Analysis</Link>
+              <Link
+                as={RouterLink}
+                to="/app/security-scanner"
+                color="whiteAlpha.700"
+              >
+                Security Scanner
+              </Link>
+              <Link
+                as={RouterLink}
+                to="/app/wallet-drainers"
+                color="whiteAlpha.700"
+              >
+                Wallet Drainer Detection
+              </Link>
+              <Link as={RouterLink} to="/app/analyze" color="whiteAlpha.700">
+                Smart Contract Analysis
+              </Link>
             </VStack>
-            
+
             <VStack align="start" spacing={4}>
               <Heading size="md">Resources</Heading>
-              <Link href="#" color="whiteAlpha.700">Documentation</Link>
-              <Link href="#" color="whiteAlpha.700">API</Link>
-              <Link href="#" color="whiteAlpha.700">Blog</Link>
+              <Link href="#" color="whiteAlpha.700">
+                Documentation
+              </Link>
+              <Link href="#" color="whiteAlpha.700">
+                API
+              </Link>
+              <Link href="#" color="whiteAlpha.700">
+                Blog
+              </Link>
             </VStack>
-            
+
             <VStack align="start" spacing={4}>
               <Heading size="md">Connect</Heading>
-              <Link href="#" color="whiteAlpha.700">Twitter</Link>
-              <Link href="#" color="whiteAlpha.700">Discord</Link>
-              <Link href="#" color="whiteAlpha.700">Telegram</Link>
+              <Link href="#" color="whiteAlpha.700">
+                Twitter
+              </Link>
+              <Link href="#" color="whiteAlpha.700">
+                Discord
+              </Link>
+              <Link href="#" color="whiteAlpha.700">
+                Telegram
+              </Link>
             </VStack>
           </SimpleGrid>
-          
+
           <Divider my={8} borderColor="whiteAlpha.300" />
-          
+
           <Text textAlign="center" color="whiteAlpha.600">
-            © {new Date().getFullYear()} Sonic Shield AI. All rights reserved.
+            © {new Date().getFullYear()} Chain Shield AI. All rights reserved.
           </Text>
         </Container>
       </Box>
@@ -876,4 +924,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage; 
+export default LandingPage;

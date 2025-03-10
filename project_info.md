@@ -1,6 +1,6 @@
-# Sonic Shield AI: AI powered security for Sonic
+# Chain Shield AI: AI powered security for Sonic
 
-Sonic Shield AI is an intelligent security monitoring agent for the Sonic blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Gamified Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
+Chain Shield AI is an intelligent security monitoring agent for the Sonic blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Gamified Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
 
 Demo URL (frontend): [https://sonic-shield.vercel.app/](https://sonic-shield.vercel.app/)
 
@@ -10,7 +10,7 @@ Backend server URL (api server): [https://sonic-shield-backend.up.railway.app/](
 
 **Motivation**
 
-The rise in cryptocurrency thefts, with over $2.2 billion stolen in 2024 alone [reuters.com](https://www.reuters.com/technology/losses-crypto-hacks-jump-22-bln-2024-report-says-2024-12-19/?utm_source=chatgpt.com) underscores the critical need for enhanced security in blockchain ecosystems. Recognizing the vulnerabilities with blockchain transactions, I developed Sonic Shield AI to proactively address these challenges. The goal is to safeguard users' assets and bolster trust in the platform by providing real-time threat detection and comprehensive security education.
+The rise in cryptocurrency thefts, with over $2.2 billion stolen in 2024 alone [reuters.com](https://www.reuters.com/technology/losses-crypto-hacks-jump-22-bln-2024-report-says-2024-12-19/?utm_source=chatgpt.com) underscores the critical need for enhanced security in blockchain ecosystems. Recognizing the vulnerabilities with blockchain transactions, I developed Chain Shield AI to proactively address these challenges. The goal is to safeguard users' assets and bolster trust in the platform by providing real-time threat detection and comprehensive security education.
 
 ## Architecture
 
@@ -168,7 +168,7 @@ Learning progress tracker
 
 ## AI-Powered Security Features
 
-Sonic Shield AI leverages advanced AI models to provide cutting-edge security analysis:
+Chain Shield AI leverages advanced AI models to provide cutting-edge security analysis:
 
 ### Smart Contract Vulnerability Detection
 
@@ -209,7 +209,7 @@ The AI Transaction Analyzer monitors transactions for:
 
 ## Telegram Integration
 
-Sonic Shield AI integrates with Telegram for real-time alerts and interactions:
+Chain Shield AI integrates with Telegram for real-time alerts and interactions:
 
 ### Setup Instructions
 
@@ -250,11 +250,11 @@ Sonic Shield AI integrates with Telegram for real-time alerts and interactions:
 - WalletDrainerDetector deployed to: 0xc91bc914DF0C8b76b1DED07823e259c8B04b0Fd6
 - SWatchdogRegistry deployed to: 0x6e808c5A0A3ed300F3d8B3119D37d20d762E858f
 
-**Future Plans for Sonic Shield AI:**
+**Future Plans for Chain Shield AI:**
 
 - **Enhanced AI Capabilities:** Integrate machine learning models to improve threat detection accuracy and adapt to emerging security challenges.
 - **User Education:** Expand educational modules to include interactive tutorials and real-time alerts, fostering a more security-conscious user base.
 - **Community Engagement:** Establish forums and feedback channels to involve the community in identifying threats and suggesting improvements.
-- **Cross-Platform Integration:** Develop plugins and APIs to extend Sonic Shield AI's security features to wallets, exchanges, and other platforms within the Sonic ecosystem.
+- **Cross-Platform Integration:** Develop plugins and APIs to extend Chain Shield AI's security features to wallets, exchanges, and other platforms within the Sonic ecosystem.
 
-These initiatives aim to position Sonic Shield AI as a comprehensive security solution, enhancing trust and safety within the Sonic blockchain community.
+These initiatives aim to position Chain Shield AI as a comprehensive security solution, enhancing trust and safety within the Sonic blockchain community.

@@ -1,6 +1,6 @@
 # Blockchain Security Learning Modules
 
-This document provides comprehensive content for the interactive learning modules in the Sonic Shield AI platform. Each module is designed to enhance users' understanding of blockchain security concepts and best practices.
+This document provides comprehensive content for the interactive learning modules in the Chain Shield AI platform. Each module is designed to enhance users' understanding of blockchain security concepts and best practices.
 
 ## Smart Contract Vulnerabilities
 
