@@ -57,6 +57,7 @@ const NotificationSettings = () => {
     wallet_drainer: true,
     phishing: true,
     security_vulnerability: true,
+    wallet_scan: true,
   });
   
   // Severity threshold
@@ -332,6 +333,18 @@ const NotificationSettings = () => {
                   colorScheme="red" 
                   isChecked={alertTypes.security_vulnerability} 
                   onChange={() => handleAlertTypeToggle('security_vulnerability')}
+                />
+              </FormControl>
+              
+              <FormControl display="flex" alignItems="center">
+                <FormLabel htmlFor="wallet-scan" mb="0" flex="1">
+                  Wallet Scans
+                </FormLabel>
+                <Switch 
+                  id="wallet-scan" 
+                  colorScheme="red" 
+                  isChecked={alertTypes.wallet_scan} 
+                  onChange={() => handleAlertTypeToggle('wallet_scan')}
                 />
               </FormControl>
             </VStack>

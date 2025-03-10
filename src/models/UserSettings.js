@@ -57,6 +57,10 @@ const userSettingsSchema = new mongoose.Schema({
       security_vulnerability: {
         type: Boolean,
         default: true
+      },
+      wallet_scan: {
+        type: Boolean,
+        default: true
       }
     }
   },

@@ -52,6 +52,7 @@ import AddressAnalyzer from '../components/AddressAnalyzer';
 import BlockExplorerLink from '../components/BlockExplorerLink';
 import { useDataSource } from '../context/DataSourceContext';
 import apiService from '../utils/apiService';
+import axios from 'axios';
 
 const SecurityScanner = () => {
   const { account } = useWallet();
@@ -63,13 +64,15 @@ const SecurityScanner = () => {
   const [customAddress, setCustomAddress] = useState('');
   const [tabIndex, setTabIndex] = useState(0);
   const [scanOptions, setScanOptions] = useState({
-    checkPermissions: true,
-    checkInteractions: true,
-    checkTokenApprovals: true,
+    checkApprovals: true,
+    checkTransactions: true,
+    checkContracts: true,
     checkPhishing: true,
   });
+  const [useRealWalletData, setUseRealWalletData] = useState(true);
+  const [sendTelegramNotification, setSendTelegramNotification] = useState(true);
   
-  const { dataSource, getNetworkName, useRealWalletData, toggleRealWalletData } = useDataSource();
+  const { dataSource, getNetworkName, useRealWalletData: dataSourceUseRealWalletData, toggleRealWalletData } = useDataSource();
   
   // Move useColorModeValue calls outside of conditional rendering
   const textColor = useColorModeValue('gray.600', 'gray.400');
@@ -135,6 +138,22 @@ const SecurityScanner = () => {
       setScanResults(results);
       setScanComplete(true);
       setIsScanning(false);
+      
+      // Send wallet scan notification
+      try {
+        if (sendTelegramNotification) {
+          await axios.post('/api/notifications/wallet-scan', {
+            walletAddress: addressToScan,
+            scanType: 'Security Scan'
+          });
+          console.log('Wallet scan notification sent');
+        } else {
+          console.log('Telegram notification skipped (disabled by user)');
+        }
+      } catch (notificationError) {
+        console.error('Error sending wallet scan notification:', notificationError);
+        // Don't show an error toast for notification failure, as it's not critical to the scan
+      }
       
       // Set tab index to the scan results tab (index 3)
       setTabIndex(3);
@@ -424,10 +443,10 @@ const SecurityScanner = () => {
 
     // Filter issues based on scan options
     const filteredIssues = results.issues.filter((issue) => {
-      if (issue.title.includes('Token Approval') && !scanOptions.checkTokenApprovals) return false;
-      if (issue.title.includes('Interaction') && !scanOptions.checkInteractions) return false;
+      if (issue.title.includes('Token Approval') && !scanOptions.checkApprovals) return false;
+      if (issue.title.includes('Interaction') && !scanOptions.checkTransactions) return false;
       if (issue.title.includes('Phishing') && !scanOptions.checkPhishing) return false;
-      if (issue.title.includes('Permission') && !scanOptions.checkPermissions) return false;
+      if (issue.title.includes('Contract') && !scanOptions.checkContracts) return false;
       return true;
     });
 
@@ -545,6 +564,18 @@ const SecurityScanner = () => {
             />
             <Text color="gray.400" fontSize="sm">
               Use real wallet data {dataSource === 'mock' ? '(disabled in mock mode)' : ''}
+            </Text>
+          </Flex>
+          
+          <Flex mt={2} align="center">
+            <Checkbox 
+              isChecked={sendTelegramNotification} 
+              onChange={() => setSendTelegramNotification(!sendTelegramNotification)}
+              colorScheme="telegram"
+              mr={2}
+            />
+            <Text color="gray.400" fontSize="sm">
+              Send Telegram notification when scan completes
             </Text>
           </Flex>
           

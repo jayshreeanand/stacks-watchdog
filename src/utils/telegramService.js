@@ -246,6 +246,29 @@ const getConnectionInstructions = (userId) => {
   };
 };
 
+/**
+ * Send a wallet scan alert via Telegram
+ * @param {Object} scanData - The wallet scan data
+ * @param {string} chatId - The chat ID to send the alert to (optional)
+ * @returns {Promise<Object>} - The response from the Telegram API
+ */
+const sendWalletScanAlert = async (scanData, chatId) => {
+  const { walletAddress, scanTime, scanType } = scanData;
+  
+  const message = `
+<b>🔍 Sonic Watchdog Wallet Scan Alert</b>
+
+Your wallet has been scanned:
+<b>Address:</b> <code>${walletAddress}</code>
+<b>Scan Type:</b> ${scanType || 'Security Scan'}
+<b>Time:</b> ${new Date(scanTime || Date.now()).toISOString()}
+
+This is an automated security alert from Sonic Watchdog.
+  `;
+  
+  return sendMessage(message, chatId);
+};
+
 module.exports = {
   sendMessage,
   sendAlert,
@@ -254,5 +277,6 @@ module.exports = {
   generateConnectionCode,
   verifyConnectionCode,
   getBotInfo,
-  getConnectionInstructions
+  getConnectionInstructions,
+  sendWalletScanAlert
 }; 

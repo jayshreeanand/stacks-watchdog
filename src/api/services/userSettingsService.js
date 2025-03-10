@@ -36,6 +36,25 @@ const getUserSettings = async (userId) => {
 };
 
 /**
+ * Get user settings by wallet address
+ * @param {String} walletAddress Wallet address
+ * @returns {Promise<Object>} User settings
+ */
+const getUserSettingsByWallet = async (walletAddress) => {
+  try {
+    // If MongoDB is not available, get from memory
+    if (!isMongoAvailable()) {
+      return inMemoryUserSettings.find(s => s.walletAddress?.toLowerCase() === walletAddress.toLowerCase());
+    }
+    
+    return await UserSettings.findOne({ walletAddress: { $regex: new RegExp(`^${walletAddress}$`, 'i') } });
+  } catch (error) {
+    console.error(`Error getting user settings for wallet ${walletAddress}:`, error);
+    throw error;
+  }
+};
+
+/**
  * Create or update user settings
  * @param {String} userId User ID
  * @param {Object} settingsData Settings data
@@ -208,5 +227,6 @@ module.exports = {
   updateTelegramSettings,
   updateAlertTypeSettings,
   updateSeverityThreshold,
-  deleteUserSettings
+  deleteUserSettings,
+  getUserSettingsByWallet
 }; 

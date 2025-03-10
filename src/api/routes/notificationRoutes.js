@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userSettingsService = require('../services/userSettingsService');
 const telegramService = require('../../utils/telegramService');
+const notificationService = require('../../utils/notificationService');
 
 /**
  * @route GET /api/notifications/settings/:userId
@@ -202,6 +203,45 @@ router.delete('/settings/:userId', async (req, res) => {
   } catch (error) {
     console.error('Error deleting notification settings:', error);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+/**
+ * @route POST /api/notifications/wallet-scan
+ * @desc Send a notification when a wallet is scanned
+ * @access Private
+ */
+router.post('/wallet-scan', async (req, res) => {
+  try {
+    const { walletAddress, scanType } = req.body;
+    
+    if (!walletAddress) {
+      return res.status(400).json({ success: false, error: 'Wallet address is required' });
+    }
+    
+    const scanData = {
+      walletAddress,
+      scanType: scanType || 'Security Scan',
+      scanTime: Date.now()
+    };
+    
+    const result = await notificationService.sendWalletScanNotification(scanData);
+    
+    if (!result.success) {
+      return res.status(400).json({ 
+        success: false, 
+        error: result.error || 'Failed to send wallet scan notification' 
+      });
+    }
+    
+    res.json({ 
+      success: true, 
+      message: 'Wallet scan notification sent',
+      results: result.results
+    });
+  } catch (error) {
+    console.error('Error sending wallet scan notification:', error);
+    res.status(500).json({ success: false, error: 'Server error' });
   }
 });
 
