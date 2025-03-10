@@ -1,10 +1,18 @@
-# Sonic Shield AI: Advanced Security Platform for Sonic
+# Sonic Shield AI: AI powered security for Sonic
 
-Sonic Shield AI is a next-generation security platform for the Sonic blockchain. It leverages artificial intelligence to protect digital assets by detecting threats, preventing scams, and securing blockchain interactions in real-time.
+Sonic Shield AI is a comprehensive security monitoring platform for the Electroneum blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues.
 
 Demo URL: https://sonic-shield.vercel.app/
 
 Backend server URL: https://sonic-shield-backend.up.railway.app/
+
+### Contract Address
+
+- Network: sonic_testnet (Chain RPC: https://rpc.blaze.soniclabs.com) (Chain ID: 57054)
+- TransactionMonitor deployed to: 0x5870daE1dA84864fBC2A7fbDF2B599aB3CEf2183
+- RugPullDetector deployed to: 0x151910d2B019d38623eE7DE0f7705b5F819792c8
+- WalletDrainerDetector deployed to: 0xc91bc914DF0C8b76b1DED07823e259c8B04b0Fd6
+- SWatchdogRegistry deployed to: 0x6e808c5A0A3ed300F3d8B3119D37d20d762E858f
 
 ## 🛡️ Key Features
 
@@ -45,6 +53,33 @@ The main dashboard provides an at-a-glance view of your security status, includi
 - Network security status
 - Data source selector (Mock/Testnet/Mainnet)
 
+### Vulnerability Scanner Dashboard
+
+The vulnerability scanner dashboard provides comprehensive contract security analysis:
+
+- Real-time contract scanning interface
+- Sample vulnerable contracts for testing
+- Dark-themed UI components for optimal visibility
+- Detailed scan results with severity indicators
+- Interactive vulnerability exploration tools
+- Contract search and history tracking
+- One-click sample contract loading
+- Vulnerability statistics and trends
+
+### Learning Center Dashboard
+
+The learning center dashboard offers interactive security education:
+
+- Progress tracking overview
+- Current module status
+- Recommended learning paths
+- Achievement badges display
+- Interactive learning exercises
+- Practice vulnerability detection
+- Real-world case studies
+- Quiz scores and certifications
+- Customized learning recommendations
+
 ### AI Smart Contract Analyzer
 
 The AI-powered smart contract analyzer provides:
@@ -66,9 +101,9 @@ The wallet drainers section displays:
 - Detailed analysis of each drainer's techniques
 - Direct links to block explorer for verification
 
-### Security Scanner
+### Wallet Security Scanner
 
-The security scanner allows you to:
+The wallet security scanner allows you to:
 
 - Scan any wallet address for vulnerabilities using AI
 - Identify high-risk token approvals
