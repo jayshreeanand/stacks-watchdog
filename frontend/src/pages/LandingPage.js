@@ -299,8 +299,7 @@ const LandingPage = () => {
                 color={useColorModeValue('gray.600', 'gray.400')}
                 mb={8}
               >
-                Advanced AI-powered security monitoring for the Sonic blockchain. 
-                We use AI to monitor transactions, detect threats realtime, analyze smart contracts, and educate users on security issues.
+               Sonic Shield AI is an intelligent security agent for the Electroneum blockchain, employing advanced AI algorithms to monitor transactions, analyze smart contracts, and scan for vulnerabilities in real-time. It also offers educational modules to inform users about common security issues.
               </Text>
               
               <Stack
