@@ -1,10 +1,10 @@
 # Stacks Watchdog AI: AI agent for security monitoring
 
-Stacks Watchdog AI is an intelligent blockchain security monitoring agent. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Gamified Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
+Stacks Watchdog AI is an intelligent blockchain security monitoring agent built for the Stacks blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Gamified Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
 
 Demo URL (frontend): [https://stacks-watchdog.vercel.app/](https://stacks-watchdog.vercel.app/)
 
-Backend server URL (api server): [https://stacks-watchdog-backend.up.railway.app/](https://stacks-watchdog-backend.up.railway.app/)
+Backend server URL (api server): [https://stacks-watchdog-backend.vercel.app/](https://stacks-watchdog-backend.vercel.app/)
 
 <img width="1601" alt="Screenshot 2025-03-10 at 11 51 04 PM" src="https://github.com/user-attachments/assets/bea148b1-8a79-44c7-b080-a98080c43ca1" />
 
@@ -14,7 +14,7 @@ The rise in cryptocurrency thefts, with over $2.2 billion stolen in 2024 alone [
 
 ## Architecture
 
-- **Smart Contracts**: Solidity contracts deployed on Stacks blockchain for on-chain monitoring and analysis
+- **Smart Contracts**: Clarity contracts deployed on Stacks blockchain for on-chain monitoring and analysis
 - **Backend API**: Node.js server with AI integration for transaction and contract analysis
 - **Frontend**: React-based dashboard built with Chakra UI for a modern, responsive interface
 - **Database**: MongoDB for storing historical data, analysis results, and user preferences
@@ -241,14 +241,6 @@ Stacks Watchdog AI integrates with Telegram for real-time alerts and interaction
 - Weekly risk assessments
 - Monthly activity reports
 - Custom report scheduling
-
-### Contract Address
-
-- Network: stacks_testnet (Chain RPC: [https://rpc.blaze.soniclabs.com)](https://rpc.blaze.soniclabs.com)) (Chain ID: 57054)
-- TransactionMonitor deployed to: 0x5870daE1dA84864fBC2A7fbDF2B599aB3CEf2183
-- RugPullDetector deployed to: 0x151910d2B019d38623eE7DE0f7705b5F819792c8
-- WalletDrainerDetector deployed to: 0xc91bc914DF0C8b76b1DED07823e259c8B04b0Fd6
-- SWatchdogRegistry deployed to: 0x6e808c5A0A3ed300F3d8B3119D37d20d762E858f
 
 **Future Plans for Stacks Watchdog AI:**
 
