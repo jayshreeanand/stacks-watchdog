@@ -104,19 +104,6 @@ To deploy contracts using the Leather Wallet browser extension:
 7. Approve each transaction in the Leather wallet popup
 8. Deployment results will be saved to `deployment-info-testnet.json` or `deployment-info.json`
 
-### Option 3: Simple Deployment with Stacks Explorer
-
-If you're having issues with the direct integration, you can use this simpler approach:
-
-1. Install the [Leather Wallet](https://leather.io/) browser extension
-2. Make sure you have STX tokens in your wallet
-3. Run the simple deployment server:
-   ```
-   npm run deploy:leather:simple
-   ```
-4. Open the URL shown in the terminal (usually http://localhost:3000/simple)
-5. Follow the step-by-step instructions on the page to deploy each contract using the Stacks Explorer
-
 ## Dashboard Sections
 
 ### Main Dashboard

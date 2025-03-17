@@ -132,14 +132,6 @@ const createDeploymentHTML = () => {
     #deployment-results {
       margin-top: 20px;
     }
-    #debug-info {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #f8f9fa;
-      border-radius: 4px;
-      font-family: monospace;
-      font-size: 12px;
-    }
   </style>
 </head>
 <body>
@@ -155,33 +147,9 @@ const createDeploymentHTML = () => {
     <button id="deploy-all">Deploy All Contracts</button>
     
     <div id="deployment-results"></div>
-    
-    <div id="debug-info"></div>
   </div>
 
   <script>
-    // Debug function
-    function debug(message) {
-      const debugDiv = document.getElementById('debug-info');
-      debugDiv.innerHTML += '<div>' + message + '</div>';
-      console.log(message);
-    }
-    
-    // Check if connect library is loaded
-    if (typeof window.StacksProvider === 'undefined') {
-      debug('StacksProvider not found, trying to load from @stacks/connect');
-      
-      // Try to load from window.connect
-      if (typeof window.connect !== 'undefined') {
-        debug('Found window.connect, using it');
-        window.StacksProvider = window.connect;
-      } else {
-        debug('ERROR: Stacks Connect library not loaded properly');
-      }
-    } else {
-      debug('StacksProvider found');
-    }
-    
     // Store contracts data
     const contracts = ${contractsJson};
     let userAddress = null;
@@ -189,58 +157,25 @@ const createDeploymentHTML = () => {
     
     // Connect to Leather wallet
     document.getElementById('connect-button').addEventListener('click', async () => {
-      debug('Connect button clicked');
+      const appDetails = {
+        name: 'Stacks Watchdog',
+        icon: window.location.origin + '/logo.svg',
+      };
       
-      try {
-        const appDetails = {
-          name: 'Stacks Watchdog',
-          icon: window.location.origin + '/logo.svg',
-        };
-        
-        const network = '${isTestnet ? 'testnet' : 'mainnet'}';
-        debug('Using network: ' + network);
-        
-        // Check which connect method is available
-        if (window.StacksProvider && window.StacksProvider.connect) {
-          debug('Using StacksProvider.connect');
-          window.StacksProvider.connect({
-            appDetails,
-            network,
-            onFinish: (data) => {
-              debug('Connection successful: ' + JSON.stringify(data));
-              userAddress = data.addresses[network];
-              document.getElementById('connected-address').innerHTML = \`<p>Connected: <strong>\${userAddress}</strong></p>\`;
-              document.getElementById('deploy-all').style.display = 'block';
-            },
-            onCancel: () => {
-              debug('Connection cancelled');
-              alert('Wallet connection was cancelled');
-            }
-          });
-        } else if (window.connect) {
-          debug('Using window.connect directly');
-          window.connect.showConnect({
-            appDetails,
-            network,
-            onFinish: (data) => {
-              debug('Connection successful: ' + JSON.stringify(data));
-              userAddress = data.addresses[network];
-              document.getElementById('connected-address').innerHTML = \`<p>Connected: <strong>\${userAddress}</strong></p>\`;
-              document.getElementById('deploy-all').style.display = 'block';
-            },
-            onCancel: () => {
-              debug('Connection cancelled');
-              alert('Wallet connection was cancelled');
-            }
-          });
-        } else {
-          debug('ERROR: No connect method available');
-          alert('Could not connect to wallet. Stacks Connect library not loaded properly.');
+      const network = '${isTestnet ? 'testnet' : 'mainnet'}';
+      
+      window.StacksProvider.connect({
+        appDetails,
+        network,
+        onFinish: (data) => {
+          userAddress = data.addresses[network];
+          document.getElementById('connected-address').innerHTML = \`<p>Connected: <strong>\${userAddress}</strong></p>\`;
+          document.getElementById('deploy-all').style.display = 'block';
+        },
+        onCancel: () => {
+          alert('Wallet connection was cancelled');
         }
-      } catch (error) {
-        debug('Connection error: ' + error.message);
-        alert('Error connecting to wallet: ' + error.message);
-      }
+      });
     });
     
     // Deploy all contracts
@@ -268,34 +203,21 @@ const createDeploymentHTML = () => {
           }
           
           const codeBody = data.code;
-          debug('Deploying contract: ' + contract.name);
           
           // Deploy contract using Leather wallet
           await new Promise((resolve, reject) => {
-            const deployFunction = window.StacksProvider && window.StacksProvider.deployContract 
-              ? window.StacksProvider.deployContract 
-              : (window.connect ? window.connect.deployContract : null);
-              
-            if (!deployFunction) {
-              debug('ERROR: No deployContract function available');
-              reject(new Error('Could not deploy contract. Stacks Connect library not loaded properly.'));
-              return;
-            }
-            
-            deployFunction({
+            window.StacksProvider.deployContract({
               contractName: contract.name,
               codeBody,
               network: '${isTestnet ? 'testnet' : 'mainnet'}',
               anchorMode: 'any',
               onFinish: (data) => {
-                debug('Deployment successful: ' + JSON.stringify(data));
                 contractDiv.querySelector('.status').className = 'status success';
                 contractDiv.querySelector('.status').textContent = \`Deployed! Tx ID: \${data.txId}\`;
                 deploymentResults[contract.name] = data.txId;
                 resolve(data);
               },
               onCancel: () => {
-                debug('Deployment cancelled');
                 contractDiv.querySelector('.status').className = 'status error';
                 contractDiv.querySelector('.status').textContent = 'Deployment cancelled';
                 reject(new Error('Deployment cancelled'));
@@ -313,34 +235,10 @@ const createDeploymentHTML = () => {
           });
           
         } catch (error) {
-          debug('Deployment error: ' + error.message);
           contractDiv.querySelector('.status').className = 'status error';
           contractDiv.querySelector('.status').textContent = \`Error: \${error.message}\`;
           console.error('Deployment error:', error);
         }
-      }
-    });
-    
-    // Check if Stacks Connect is loaded
-    window.addEventListener('DOMContentLoaded', () => {
-      debug('Page loaded, checking for Stacks Connect');
-      if (typeof window.StacksProvider === 'undefined' && typeof window.connect === 'undefined') {
-        debug('Stacks Connect not found on page load, loading from CDN');
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/@stacks/connect';
-        script.onload = () => {
-          debug('Stacks Connect loaded from CDN');
-          if (typeof window.connect !== 'undefined') {
-            window.StacksProvider = window.connect;
-            debug('Set StacksProvider from window.connect');
-          }
-        };
-        script.onerror = () => {
-          debug('Failed to load Stacks Connect from CDN');
-        };
-        document.head.appendChild(script);
-      } else {
-        debug('Stacks Connect already loaded');
       }
     });
   </script>
@@ -399,11 +297,6 @@ app.post('/api/save-deployment', (req, res) => {
   }
 });
 
-// Add a route for the direct connect page
-app.get('/direct', (req, res) => {
-  res.sendFile(path.join(publicDir, 'direct-connect.html'));
-});
-
 // Create necessary files
 createDeploymentHTML();
 createLogo();
@@ -420,8 +313,6 @@ app.listen(PORT, () => {
   1. Open the URL in your browser
   2. Connect your Leather wallet
   3. Deploy the contracts
-  
-  Alternative direct connection page: http://localhost:${PORT}/direct
   
   Press Ctrl+C to stop the server
 ========================================================
