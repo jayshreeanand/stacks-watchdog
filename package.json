@@ -8,11 +8,8 @@
     "dev": "nodemon src/index.js",
     "simple": "node simple-server.js",
     "test": "jest",
-    "compile": "npx hardhat compile",
-    "deploy": "npx hardhat run scripts/deploy.js --network stacks",
-    "deploy:testnet": "npx hardhat run scripts/deploy.js --network stacks_testnet",
-    "switch:mainnet": "node scripts/switch-network.js mainnet",
-    "switch:testnet": "node scripts/switch-network.js testnet",
+    "deploy:testnet": "NETWORK_CHAIN_ID=2147483648 node scripts/deploy.js",
+    "deploy:mainnet": "NETWORK_CHAIN_ID=1 node scripts/deploy.js",
     "test:connection": "node scripts/test-connection.js"
   },
   "keywords": [
@@ -25,7 +22,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@openzeppelin/contracts": "^5.0.0",
+    "@stacks/network": "^6.4.0",
+    "@stacks/transactions": "^6.4.0",
+    "@stacks/wallet-sdk": "^7.0.0",
     "axios": "^1.6.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
@@ -33,28 +32,11 @@
     "node-fetch": "^3.3.2",
     "node-telegram-bot-api": "^0.66.0",
     "socket.io": "^4.7.2",
-    "telegraf": "^4.16.3",
-    "web3": "^4.2.2"
+    "telegraf": "^4.16.3"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
-    "@nomicfoundation/hardhat-ethers": "^3.0.8",
-    "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
-    "@nomicfoundation/hardhat-verify": "^1.1.1",
-    "@typechain/ethers-v6": "^0.4.3",
-    "@typechain/hardhat": "^8.0.3",
-    "@types/chai": "^4.3.20",
-    "@types/mocha": "^10.0.10",
-    "chai": "^4.5.0",
     "dotenv": "^16.4.7",
-    "ethers": "^6.13.5",
-    "hardhat": "^2.22.19",
-    "hardhat-gas-reporter": "^1.0.10",
     "jest": "^29.7.0",
-    "nodemon": "^3.0.1",
-    "solidity-coverage": "^0.8.14",
-    "ts-node": "^10.9.2",
-    "typechain": "^8.3.2",
-    "typescript": "^5.8.2"
+    "nodemon": "^3.0.1"
   }
 }
