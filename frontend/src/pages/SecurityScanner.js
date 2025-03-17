@@ -237,7 +237,7 @@ const SecurityScanner = () => {
       },
       balances: [
         {
-          token: "S",
+          token: "STX",
           balance: (Math.random() * 1000).toFixed(2),
           value: (Math.random() * 10000).toFixed(2),
         },
@@ -364,7 +364,7 @@ const SecurityScanner = () => {
           drainerAddress: drainerAddresses[1],
           drainerName: "S Swap Scam",
           interactionType: "Swap",
-          asset: "S",
+          asset: "STX",
           amount: "50",
           timestamp: new Date(2025, 2, 1).toISOString(),
           transactionHash: "0x5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d",
@@ -409,7 +409,7 @@ const SecurityScanner = () => {
           description: `You have interacted with a contract flagged for malicious activity: 0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063`,
           recommendation:
             "Avoid further interactions with this contract and revoke any approvals",
-          affectedAsset: "S",
+          affectedAsset: "STX",
           detectedAt: new Date(2025, 2, 3).toISOString(),
         },
         {
@@ -430,7 +430,7 @@ const SecurityScanner = () => {
             "Your transaction patterns might make you susceptible to front-running attacks",
           recommendation:
             "Consider using private transactions or transaction batching",
-          affectedAsset: "S",
+          affectedAsset: "STX",
           detectedAt: new Date(2025, 1, 28).toISOString(),
         },
         {
@@ -451,7 +451,7 @@ const SecurityScanner = () => {
             "You have many small transactions which may lead to unnecessary gas fees",
           recommendation:
             "Batch transactions when possible to save on gas fees",
-          affectedAsset: "S",
+          affectedAsset: "STX",
           detectedAt: new Date(2025, 1, 20).toISOString(),
         },
       ],
@@ -459,7 +459,7 @@ const SecurityScanner = () => {
         {
           hash: "0x3a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b",
           type: "Transfer",
-          asset: "S",
+          asset: "STX",
           amount: "25.5",
           timestamp: new Date(2025, 2, 6).toISOString(),
           to: "0x9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b",

@@ -325,8 +325,8 @@ const WalletDrainerDetails = () => {
                 <StatHelpText>Affected wallets</StatHelpText>
               </Stat>
               <Stat>
-                <StatLabel color="gray.400">Total S Stolen</StatLabel>
-                <StatNumber>{drainer.totalStolen.toLocaleString()} S</StatNumber>
+                <StatLabel color="gray.400">Total STX Stolen</StatLabel>
+                <StatNumber>{drainer.totalStolen.toLocaleString()} STX</StatNumber>
                 <StatHelpText>Estimated value</StatHelpText>
               </Stat>
             </SimpleGrid>
