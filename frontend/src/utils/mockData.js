@@ -1,5 +1,5 @@
 /**
- * Mock data for the Chain Shield AI application
+ * Mock data for the Stacks Watchdog AI application
  * This is used when the API is not available
  */
 
@@ -8,7 +8,7 @@ export const mockWalletDrainers = [
   {
     id: 1,
     address: "0x1234567890abcdef1234567890abcdef12345678",
-    name: "[MOCK] Fake Sonic Airdrop",
+    name: "[MOCK] Fake Stacks Airdrop",
     type: "Approval Drainer",
     riskLevel: "high",
     victims: 12,
@@ -16,7 +16,7 @@ export const mockWalletDrainers = [
     lastActive: "2025-03-05T12:30:45Z",
     isVerified: true,
     description:
-      "This contract pretends to be an official Sonic airdrop but steals user funds when they approve token transfers.",
+      "This contract pretends to be an official Stacks airdrop but steals user funds when they approve token transfers.",
     createdAt: "2025-02-28T10:15:30Z",
     verifiedBy: "SecurityTeam",
     techniques: [
@@ -59,14 +59,14 @@ export const mockWalletDrainers = [
   },
   {
     address: "0x567890abcdef1234567890abcdef1234567890ab",
-    name: "Sonic Token Bridge Scam",
+    name: "Stacks Token Bridge Scam",
     riskLevel: "high",
     victims: 9,
     totalStolen: 67000,
     lastActive: "2025-03-02T14:22:33Z",
     isVerified: true,
     description:
-      "Fake bridge that claims to transfer Sonic between chains but steals the tokens.",
+      "Fake bridge that claims to transfer Stacks between chains but steals the tokens.",
     createdAt: "2025-02-27T16:40:10Z",
     verifiedBy: "CommunityMember",
     verificationNotes:
@@ -81,7 +81,7 @@ export const mockWalletDrainers = [
     lastActive: "2025-03-01T08:11:05Z",
     isVerified: false,
     description:
-      "Mobile app that claims to be an Sonic wallet but steals private keys.",
+      "Mobile app that claims to be an Stacks wallet but steals private keys.",
     createdAt: "2025-03-01T07:55:30Z",
   },
 ];
@@ -111,7 +111,7 @@ export const mockContractAnalysis = {
   recommendations: [
     "Do not approve tokens to this contract",
     "Avoid any interaction with this contract",
-    "Report to the Sonic security team",
+    "Report to the Stacks security team",
   ],
 };
 
@@ -179,7 +179,7 @@ export const mockSecurityRecommendations = [
   "Never share your private keys or seed phrases with anyone",
   "Be cautious of projects offering unrealistic returns",
   "Verify smart contract addresses before interacting",
-  "Report suspicious activities to the Sonic security team",
+  "Report suspicious activities to the Stacks security team",
   "Keep your software and firmware updated",
   "Use different passwords for different platforms",
   "Check token approvals regularly and revoke unnecessary ones",

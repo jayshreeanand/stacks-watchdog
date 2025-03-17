@@ -1,5 +1,5 @@
 /**
- * Test script to verify connection to Sonic network
+ * Test script to verify connection to Stacks network
  * Usage: node scripts/test-connection.js
  */
 
@@ -8,10 +8,10 @@ const { ethers } = require('ethers');
 
 async function main() {
   try {
-    console.log('Testing connection to Sonic network...');
+    console.log('Testing connection to Stacks network...');
     
     // Create provider
-    const provider = new ethers.JsonRpcProvider(process.env.SONIC_RPC_URL);
+    const provider = new ethers.JsonRpcProvider(process.env.STACK_RPC_URL);
     
     // Get network information
     const network = await provider.getNetwork();

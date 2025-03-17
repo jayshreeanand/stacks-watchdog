@@ -12,11 +12,11 @@ const SWatchdogRegistryArtifact = require("../artifacts/contracts/SWatchdogRegis
 
 async function main() {
   try {
-    console.log("Deploying Chain Shield contracts to testnet...");
+    console.log("Deploying Stacks Watchdog contracts to testnet...");
 
     // Create provider and wallet
     const provider = new ethers.JsonRpcProvider(
-      process.env.Sonic_TESTNET_RPC_URL
+      process.env.Stacks_TESTNET_RPC_URL
     );
     const network = await provider.getNetwork();
     console.log(`Connected to network: Chain ID ${network.chainId}`);
@@ -37,7 +37,7 @@ async function main() {
 
     if (balance === 0n) {
       throw new Error(
-        "Account has no Sonic (S) token. Please fund your account before deploying."
+        "Account has no Stacks (S) token. Please fund your account before deploying."
       );
     }
 
@@ -115,7 +115,7 @@ async function main() {
       walletDrainerDetector: walletDrainerDetectorAddress,
       registry: registryAddress,
       chainId: Number(network.chainId),
-      network: "sonic_testnet",
+      network: "stacks_testnet",
     };
 
     fs.writeFileSync(

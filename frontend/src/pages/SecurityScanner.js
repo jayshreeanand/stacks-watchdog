@@ -229,7 +229,7 @@ const SecurityScanner = () => {
       scanDate: new Date().toISOString(),
       securityScore: securityScore,
       networkInfo: {
-        name: "Sonic Mainnet",
+        name: "Stacks Mainnet",
         chainId: "1",
         lastActivity: new Date(
           Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
@@ -493,7 +493,7 @@ const SecurityScanner = () => {
         "Enable multi-signature for critical operations",
         "Regularly check for phishing attempts and suspicious websites",
         "Monitor your wallet activity with a blockchain explorer",
-        "Use a dedicated security tool like Chain Shield AI regularly",
+        "Use a dedicated security tool like Stacks Watchdog AI regularly",
         "Consider using a time-lock for large transactions",
         "Verify smart contract addresses before interacting with them",
         "Keep your private keys secure and never share them",
@@ -630,7 +630,7 @@ const SecurityScanner = () => {
 
       <Flex align="center" mb={6}>
         <Text color="gray.400">
-          Advanced security tools for the Sonic blockchain
+          Advanced security tools for the Stacks blockchain
         </Text>
         <BlockExplorerLink
           type="explorer"

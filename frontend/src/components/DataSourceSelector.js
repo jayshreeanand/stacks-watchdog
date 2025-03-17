@@ -130,7 +130,7 @@ const DataSourceSelector = () => {
               icon={<FiCode />}
             >
               <HStack>
-                <Text>Sonic Blaze Testnet</Text>
+                <Text>Stacks Testnet</Text>
                 <Badge colorScheme="green" size="sm">Recommended</Badge>
               </HStack>
             </MenuItem>
@@ -139,7 +139,7 @@ const DataSourceSelector = () => {
               onClick={() => handleSelect(DATA_SOURCES.MAINNET)}
               icon={<FiGlobe />}
             >
-              Sonic Mainnet
+              Stacks Mainnet
             </MenuItem>
           </VStack>
         </Box>

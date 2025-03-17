@@ -17,7 +17,7 @@ const theme = extendTheme({
       200: '#99c2ff',
       300: '#66a3ff',
       400: '#3385ff',
-      500: '#0066ff', // Sonic blue
+      500: '#0066ff', // Stacks blue
       600: '#0052cc',
       700: '#003d99',
       800: '#002966',
@@ -50,20 +50,20 @@ const validDataSources = ['mock', 'testnet', 'mainnet'];
 // If a valid data source is provided in the URL, use it
 if (dataSourceParam && validDataSources.includes(dataSourceParam)) {
   console.log(`Setting data source from URL parameter: ${dataSourceParam}`);
-  localStorage.setItem('sonic_watchdog_data_source', dataSourceParam);
-} else if (!localStorage.getItem('sonic_watchdog_data_source')) {
+  localStorage.setItem('stacks_watchdog_data_source', dataSourceParam);
+} else if (!localStorage.getItem('stacks_watchdog_data_source')) {
   // If no data source is set in localStorage, default to testnet
   console.log('No data source found in localStorage, defaulting to testnet');
-  localStorage.setItem('sonic_watchdog_data_source', 'testnet');
+  localStorage.setItem('stacks_watchdog_data_source', 'testnet');
 }
 
 // Get the current data source
-const currentDataSource = localStorage.getItem('sonic_watchdog_data_source') || 'testnet';
+const currentDataSource = localStorage.getItem('stacks_watchdog_data_source') || 'testnet';
 console.log(`Current data source: ${currentDataSource}`);
 
 // Listen for changes to the useRealAIAnalysis flag in localStorage
 window.addEventListener('storage', (event) => {
-  if (event.key === 'sonic_watchdog_use_real_ai') {
+  if (event.key === 'stacks_watchdog_use_real_ai') {
     const useRealAI = event.newValue === 'true';
     console.log(`Storage event: useRealAI changed to ${useRealAI}`);
     aiAnalyzer.setUseMockAI(!useRealAI);

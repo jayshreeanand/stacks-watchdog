@@ -57,7 +57,7 @@ const AddressAnalyzer = () => {
       let transactions = [];
       
       try {
-        // Try to fetch transactions from the Sonic API
+        // Try to fetch transactions from the Stacks API
         // This is a placeholder - you would need to implement the actual API call
         console.log('Fetching transactions for address:', address);
         
@@ -161,7 +161,7 @@ const AddressAnalyzer = () => {
       </Heading>
       
       <Text color="gray.400" mb={6}>
-        Analyze any Sonic address for suspicious activity and security risks.
+        Analyze any Stacks address for suspicious activity and security risks.
       </Text>
       
       <Box mb={6}>
@@ -190,7 +190,7 @@ const AddressAnalyzer = () => {
               Analyze
             </Button>
           </Flex>
-          <FormHelperText>Enter any Sonic address to analyze for suspicious activity</FormHelperText>
+          <FormHelperText>Enter any Stacks address to analyze for suspicious activity</FormHelperText>
         </FormControl>
       </Box>
       

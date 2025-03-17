@@ -96,7 +96,7 @@ const TelegramConnect = ({ onUpdate }) => {
       if (response.data && response.data.success) {
         setConnectionCode(response.data.code);
         setConnectionInstructions(response.data.instructions);
-        setBotUsername(response.data.botUsername || 'SonicWatchdogBot');
+        setBotUsername(response.data.botUsername || 'StacksWatchdogBot');
         setShowAlert(true);
         
         // Auto-refresh status after 1 minute

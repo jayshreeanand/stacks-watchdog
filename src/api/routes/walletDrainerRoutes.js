@@ -64,7 +64,7 @@ router.post('/analyze', async (req, res) => {
     }
     
     // Create provider
-    const provider = new ethers.JsonRpcProvider(process.env.Sonic_RPC_URL);
+    const provider = new ethers.JsonRpcProvider(process.env.Stacks_RPC_URL);
     
     // Analyze contract
     const analysis = await walletDrainerService.analyzeContractForDrainer(contractAddress, provider);

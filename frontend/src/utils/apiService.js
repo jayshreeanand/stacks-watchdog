@@ -88,20 +88,20 @@ const getMockData = (type) => {
       return [
         {
           address: '0x1234567890abcdef1234567890abcdef12345678',
-          name: `${mockPrefix} Fake Sonic Airdrop`,
+          name: `${mockPrefix} Fake Stacks Airdrop`,
           riskLevel: 'high',
           victims: 12,
           totalStolen: 45000,
           lastActive: '2025-03-05T12:30:45Z',
           isVerified: true,
-          description: `${mockPrefix} This contract pretends to be an official Sonic airdrop but steals user funds when they approve token transfers.`,
+          description: `${mockPrefix} This contract pretends to be an official Stacks airdrop but steals user funds when they approve token transfers.`,
           createdAt: '2025-02-28T10:15:30Z',
           verifiedBy: 'SecurityTeam',
           verificationNotes: 'Confirmed malicious behavior through code analysis and victim reports.',
         },
         {
           address: '0xabcdef1234567890abcdef1234567890abcdef12',
-          name: `${mockPrefix} Sonic Staking Scam`,
+          name: `${mockPrefix} Stacks Staking Scam`,
           riskLevel: 'critical',
           victims: 28,
           totalStolen: 120000,
@@ -129,7 +129,7 @@ const getMockData = (type) => {
     case 'drainerDetails':
       return {
         address: '0x1234567890abcdef1234567890abcdef12345678',
-        name: `${mockPrefix} Fake Sonic Airdrop`,
+        name: `${mockPrefix} Fake Stacks Airdrop`,
         riskLevel: 'high',
         victims: [
           {
@@ -148,7 +148,7 @@ const getMockData = (type) => {
         totalStolen: 45000,
         lastActive: '2025-03-05T12:30:45Z',
         isVerified: true,
-        description: `${mockPrefix} This contract pretends to be an official Sonic airdrop but steals user funds when they approve token transfers.`,
+        description: `${mockPrefix} This contract pretends to be an official Stacks airdrop but steals user funds when they approve token transfers.`,
         createdAt: '2025-02-28T10:15:30Z',
         verifiedBy: 'SecurityTeam',
         verificationNotes: 'Confirmed malicious behavior through code analysis and victim reports.',
@@ -216,11 +216,11 @@ const getMockData = (type) => {
             id: 1,
             token: {
               symbol: 'S',
-              name: 'Sonic',
+              name: 'Stacks',
               address: '0x4a8f5f96d5436e43112c2fbc6a9f70da9e4e16d4'
             },
             spender: {
-              name: 'SonicSwap',
+              name: 'StacksSwap',
               address: '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'
             },
             allowance: '1000000000000000000000',
@@ -252,12 +252,12 @@ const getMockData = (type) => {
           id: 1,
           token: {
             symbol: 'S',
-            name: 'Sonic',
+            name: 'Stacks',
             logo: 'https://cryptologos.cc/logos/sonic-s-logo.png',
             address: '0x4a8f5f96d5436e43112c2fbc6a9f70da9e4e16d4',
           },
           spender: {
-            name: 'SonicSwap',
+            name: 'StacksSwap',
             address: '0x7a250d5630b4cf539739df2c5dacb4c659f2488d',
             verified: true
           },
@@ -313,13 +313,13 @@ const getTestnetData = (type) => {
       return [
         {
           address: '0x2345678901abcdef2345678901abcdef23456789',
-          name: `${testnetPrefix} Sonic Fake Staking`,
+          name: `${testnetPrefix} Stacks Fake Staking`,
           riskLevel: 'high',
           victims: 8,
           totalStolen: 25000,
           lastActive: '2025-03-02T10:15:30Z',
           isVerified: true,
-          description: `${testnetPrefix} Fake staking contract on Sonic Blaze Testnet that steals user funds.`,
+          description: `${testnetPrefix} Fake staking contract on Stacks Testnet that steals user funds.`,
           createdAt: '2025-02-25T08:30:15Z',
           verifiedBy: 'TestnetTeam',
           verificationNotes: 'Verified on testnet for demonstration purposes.',
@@ -332,7 +332,7 @@ const getTestnetData = (type) => {
           totalStolen: 15000,
           lastActive: '2025-03-01T14:22:10Z',
           isVerified: true,
-          description: `${testnetPrefix} Wallet drainer contract deployed on Sonic Blaze Testnet for testing.`,
+          description: `${testnetPrefix} Wallet drainer contract deployed on Stacks Testnet for testing.`,
           createdAt: '2025-02-20T11:20:45Z',
           verifiedBy: 'TestnetTeam',
           verificationNotes: 'Verified on testnet for demonstration purposes.',
@@ -600,7 +600,7 @@ const apiService = {
         scanDate: new Date().toISOString(),
         securityScore: securityScore,
         networkInfo: {
-          name: CURRENT_DATA_SOURCE === 'testnet' ? 'Sonic Blaze Testnet' : 'Sonic Mainnet',
+          name: CURRENT_DATA_SOURCE === 'testnet' ? 'Stacks Testnet' : 'Stacks Mainnet',
           chainId: CURRENT_DATA_SOURCE === 'testnet' ? '57054' : '146',
           lastActivity: new Date().toISOString()
         },

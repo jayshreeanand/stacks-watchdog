@@ -1,5 +1,5 @@
 /**
- * Utility script to switch between Sonic mainnet and testnet
+ * Utility script to switch between Stacks mainnet and testnet
  * Usage: node scripts/switch-network.js [mainnet|testnet]
  */
 
@@ -29,13 +29,13 @@ if (!network || (network !== 'mainnet' && network !== 'testnet')) {
 
 // Update configuration based on network
 if (network === 'mainnet') {
-  console.log('Switching to Sonic Mainnet...');
-  envConfig.SONIC_RPC_URL = 'https://rpc.soniclabs.com';
+  console.log('Switching to Stacks Mainnet...');
+  envConfig.STACK_RPC_URL = 'https://rpc.soniclabs.com';
   envConfig.WEB3_PROVIDER_URL = 'https://rpc.soniclabs.com';
   envConfig.NETWORK_CHAIN_ID = '146';
 } else {
-  console.log('Switching to Sonic Blaze Testnet...');
-  envConfig.SONIC_RPC_URL = 'https://rpc.blaze.soniclabs.com';
+  console.log('Switching to Stacks Testnet...');
+  envConfig.STACK_RPC_URL = 'https://rpc.blaze.soniclabs.com';
   envConfig.WEB3_PROVIDER_URL = 'https://rpc.blaze.soniclabs.com';
   envConfig.NETWORK_CHAIN_ID = '57054';
 }
@@ -47,8 +47,8 @@ const envContent = Object.entries(envConfig)
 
 fs.writeFileSync(envPath, envContent);
 
-console.log(`Successfully switched to Sonic ${network === 'mainnet' ? 'Mainnet' : 'Blaze Testnet'}`);
+console.log(`Successfully switched to Stacks ${network === 'mainnet' ? 'Mainnet' : 'Blaze Testnet'}`);
 console.log('Configuration updated:');
-console.log(`- SONIC_RPC_URL: ${envConfig.SONIC_RPC_URL}`);
+console.log(`- STACK_RPC_URL: ${envConfig.STACK_RPC_URL}`);
 console.log(`- WEB3_PROVIDER_URL: ${envConfig.WEB3_PROVIDER_URL}`);
 console.log(`- NETWORK_CHAIN_ID: ${envConfig.NETWORK_CHAIN_ID}`); 

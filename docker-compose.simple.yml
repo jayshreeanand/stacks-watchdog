@@ -8,8 +8,8 @@ services:
     environment:
       - PORT=3000
       - SKIP_MONGODB=true
-      - SONIC_RPC_URL=https://rpc.blaze.soniclabs.com
-      - SONIC_TESTNET_RPC_URL=https://rpc.blaze.soniclabs.com
+      - STACK_RPC_URL=https://rpc.blaze.soniclabs.com
+      - STACK_TESTNET_RPC_URL=https://rpc.blaze.soniclabs.com
       - NETWORK_CHAIN_ID=57054
       - WEB3_PROVIDER_URL=https://rpc.blaze.soniclabs.com
     volumes:

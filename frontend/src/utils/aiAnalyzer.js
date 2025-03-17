@@ -1,7 +1,7 @@
 import axios from "axios";
 
 /**
- * AI-powered security analysis utilities for Chain Shield AI
+ * AI-powered security analysis utilities for Stacks Watchdog AI
  */
 class AIAnalyzer {
   constructor() {
@@ -199,7 +199,7 @@ class AIAnalyzer {
 
       // Prepare the prompt for the AI model
       const prompt = `
-        Analyze the following Sonic blockchain transaction for suspicious activity:
+        Analyze the following Stacks blockchain transaction for suspicious activity:
         
         Transaction Hash: ${transaction.hash}
         From: ${transaction.from}
@@ -319,7 +319,7 @@ class AIAnalyzer {
 
       // Prepare the prompt for the AI model
       const prompt = `
-        Analyze the following Sonic blockchain address for suspicious activity:
+        Analyze the following Stacks blockchain address for suspicious activity:
         
         Address: ${address}
         

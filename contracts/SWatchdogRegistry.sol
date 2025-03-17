@@ -8,7 +8,7 @@ import "./WalletDrainerDetector.sol";
 
 /**
  * @title SWatchdogRegistry
- * @dev Main registry contract for Chain Shield security monitoring system
+ * @dev Main registry contract for Stacks Watchdog security monitoring system
  */
 contract SWatchdogRegistry is Ownable {
     // Events

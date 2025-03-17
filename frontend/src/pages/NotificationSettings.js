@@ -237,7 +237,7 @@ const NotificationSettings = () => {
               {channels.browser && (
                 <Text>
                   You will receive notifications in your browser when you have
-                  the Chain Shield app open.
+                  the Stacks Watchdog app open.
                 </Text>
               )}
 

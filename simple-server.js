@@ -1,4 +1,4 @@
-// A simplified version of the Chain Shield AI server for testing
+// A simplified version of the Stacks Watchdog AI server for testing
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -29,7 +29,7 @@ const drainers = [];
 // Root route
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "Chain Shield AI API is running (Simple Mode)",
+    message: "Stacks Watchdog AI API is running (Simple Mode)",
     version: "1.0.0",
     mode: "in-memory",
   });
@@ -101,7 +101,7 @@ app.post("/api/walletdrainer", (req, res) => {
 // Start the server
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-  console.log(`Simple Chain Shield AI server running on port ${PORT}`);
+  console.log(`Simple Stacks Watchdog AI server running on port ${PORT}`);
   console.log("This is a simplified version for testing without MongoDB");
   console.log("Access the API at http://localhost:" + PORT);
 });

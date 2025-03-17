@@ -1,4 +1,4 @@
-# Chain Shield AI Setup Guide
+# Stacks Watchdog AI Setup Guide
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@
    - For Ubuntu: `sudo apt install mongodb`
    - For Windows: Download and install from https://www.mongodb.com/try/download/community
 
-3. **Sonic Wallet**
+3. **Stacks Wallet**
    - You need a wallet with testnet S for contract deployment
 
 ## Setup Steps

@@ -26,7 +26,7 @@ Rug pull routes for analyzing token contracts
 Wallet drainer routes for detecting malicious contracts
 
 
-The application provides a comprehensive security monitoring solution for the Sonic blockchain, with the following key features:
+The application provides a comprehensive security monitoring solution for the Stacks blockchain, with the following key features:
 Real-time Transaction Monitoring: Monitors blockchain transactions in real-time to detect suspicious activity
 AI-Powered Analysis: Uses AI to analyze transactions and contracts for potential security risks
 Rug-Pull Detection: Identifies potential rug-pull risks by analyzing token contract code
@@ -34,7 +34,7 @@ Wallet Drainer Detection: Detects malicious contracts that may drain user wallet
 Alert System: Sends real-time alerts through the API and WebSocket connections
 To use the application:
 Set up your environment variables in a .env file based on .env.example
-Deploy the smart contracts to the Sonic blockchain using npm run deploy
+Deploy the smart contracts to the Stacks blockchain using npm run deploy
 Start the backend server with npm start
 Connect to the API to monitor security alerts and analyze contracts
-This application provides a powerful security tool for the Sonic blockchain community, helping to protect users from scams, rug pulls, and wallet drainers.
+This application provides a powerful security tool for the Stacks blockchain community, helping to protect users from scams, rug pulls, and wallet drainers.

@@ -122,16 +122,16 @@ const handleMessage = async (message) => {
  */
 const handleStartCommand = async (chatId) => {
   const message = `
-<b>👋 Welcome to Chain Shield!</b>
+<b>👋 Welcome to Stacks Watchdog!</b>
 
-I'm your security assistant for the Sonic blockchain. I can send you alerts about:
+I'm your security assistant for the Stacks blockchain. I can send you alerts about:
 - Suspicious transactions
 - Potential rug pulls
 - Wallet drainers
 - Phishing attempts
 - Security vulnerabilities
 
-To connect your account, please use the connection code from the Chain Shield web app.
+To connect your account, please use the connection code from the Stacks Watchdog web app.
 
 Type /help for more information.
   `;
@@ -177,7 +177,7 @@ const handleConnectCommand = async (chatId, code, message) => {
     const successMessage = `
 <b>✅ Connection successful!</b>
 
-Your Telegram account is now connected to Chain Shield.
+Your Telegram account is now connected to Stacks Watchdog.
 You will receive security alerts in this chat.
 
 To test the connection, go to the Notification Settings page in the web app.
@@ -199,14 +199,14 @@ To test the connection, go to the Notification Settings page in the web app.
  */
 const handleHelpCommand = async (chatId) => {
   const message = `
-<b>🔍 Chain Shield Help</b>
+<b>🔍 Stacks Watchdog Help</b>
 
 Available commands:
 /start - Start the bot
 /connect [code] - Connect your account with a code from the web app
 /help - Show this help message
 
-For more information, visit the Chain Shield web app.
+For more information, visit the Stacks Watchdog web app.
   `;
 
   await telegramService.sendMessage(message, chatId);

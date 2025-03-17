@@ -127,7 +127,7 @@ const formatAlertMessage = (alert) => {
     ? `[${alert.riskLevel.toUpperCase()}] `
     : "";
 
-  let message = `${emoji} <b>${riskLevel}Chain Shield Alert</b>\n\n`;
+  let message = `${emoji} <b>${riskLevel}Stacks Watchdog Alert</b>\n\n`;
   message += `<b>Type:</b> ${formatAlertType(alert.type)}\n`;
 
   if (alert.targetAddress) {
@@ -211,7 +211,7 @@ const sendAlert = async (alert, chatId) => {
  */
 const testConnection = async (chatId = TELEGRAM_DEFAULT_CHAT_ID) => {
   const message = `
-<b>🔔 Chain Shield Telegram Bot Test</b>
+<b>🔔 Stacks Watchdog Telegram Bot Test</b>
 
 Your Telegram alerts are now set up correctly!
 You will receive security alerts in this chat.
@@ -286,14 +286,14 @@ const sendWalletScanAlert = async (scanData, chatId) => {
   const { walletAddress, scanTime, scanType } = scanData;
 
   const message = `
-<b>🔍 Chain Shield Wallet Scan Alert</b>
+<b>🔍 Stacks Watchdog Wallet Scan Alert</b>
 
 Your wallet has been scanned:
 <b>Address:</b> <code>${walletAddress}</code>
 <b>Scan Type:</b> ${scanType || "Security Scan"}
 <b>Time:</b> ${new Date(scanTime || Date.now()).toISOString()}
 
-This is an automated security alert from Chain Shield.
+This is an automated security alert from Stacks Watchdog.
   `;
 
   return sendMessage(message, chatId);

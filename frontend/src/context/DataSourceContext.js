@@ -20,15 +20,15 @@ export const useDataSource = () => {
 // Provider component
 export const DataSourceProvider = ({ children }) => {
   // Check if there's a data source in localStorage or use testnet as default
-  const savedDataSource = localStorage.getItem('sonic_watchdog_data_source');
+  const savedDataSource = localStorage.getItem('stacks_watchdog_data_source');
   const initialDataSource = savedDataSource || DATA_SOURCES.TESTNET;
   
   // Check if there's a useRealWalletData flag in localStorage or use true as default
-  const savedUseRealWalletData = localStorage.getItem('sonic_watchdog_use_real_wallet');
+  const savedUseRealWalletData = localStorage.getItem('stacks_watchdog_use_real_wallet');
   const initialUseRealWalletData = savedUseRealWalletData === null ? true : savedUseRealWalletData === 'true';
   
   // Check if there's a useRealAIAnalysis flag in localStorage or use true as default
-  const savedUseRealAIAnalysis = localStorage.getItem('sonic_watchdog_use_real_ai');
+  const savedUseRealAIAnalysis = localStorage.getItem('stacks_watchdog_use_real_ai');
   const initialUseRealAIAnalysis = savedUseRealAIAnalysis === null ? true : savedUseRealAIAnalysis === 'true';
   
   console.log(`DataSourceProvider initializing with data source: ${initialDataSource}`);
@@ -48,7 +48,7 @@ export const DataSourceProvider = ({ children }) => {
   // Update localStorage when data source changes
   useEffect(() => {
     console.log(`DataSourceProvider: Data source changed to ${dataSource}`);
-    localStorage.setItem('sonic_watchdog_data_source', dataSource);
+    localStorage.setItem('stacks_watchdog_data_source', dataSource);
     
     // Also update the API base URL when the data source changes
     setApiBaseUrl(dataSource);
@@ -57,13 +57,13 @@ export const DataSourceProvider = ({ children }) => {
   // Update localStorage when useRealWalletData changes
   useEffect(() => {
     console.log(`DataSourceProvider: useRealWalletData changed to ${useRealWalletData}`);
-    localStorage.setItem('sonic_watchdog_use_real_wallet', useRealWalletData);
+    localStorage.setItem('stacks_watchdog_use_real_wallet', useRealWalletData);
   }, [useRealWalletData]);
   
   // Update localStorage when useRealAIAnalysis changes
   useEffect(() => {
     console.log(`DataSourceProvider: useRealAIAnalysis changed to ${useRealAIAnalysis}`);
-    localStorage.setItem('sonic_watchdog_use_real_ai', useRealAIAnalysis);
+    localStorage.setItem('stacks_watchdog_use_real_ai', useRealAIAnalysis);
     
     // Update the aiAnalyzer
     aiAnalyzer.setUseMockAI(!useRealAIAnalysis);
@@ -79,7 +79,7 @@ export const DataSourceProvider = ({ children }) => {
       
       // Show a message to the user
       alert(`Switching to ${newSource === 'mock' ? 'Mock Data' : 
-             newSource === 'testnet' ? 'Sonic Blaze Testnet' : 'Sonic Mainnet'}`);
+             newSource === 'testnet' ? 'Stacks Testnet' : 'Stacks Mainnet'}`);
       
       // Reload the page to ensure all components update
       window.location.reload();
@@ -105,9 +105,9 @@ export const DataSourceProvider = ({ children }) => {
     if (dataSource === DATA_SOURCES.MOCK) {
       return 'Mock Data';
     } else if (dataSource === DATA_SOURCES.TESTNET) {
-      return 'Sonic Blaze Testnet';
+      return 'Stacks Testnet';
     } else {
-      return 'Sonic Mainnet';
+      return 'Stacks Mainnet';
     }
   };
   

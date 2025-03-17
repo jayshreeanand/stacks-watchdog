@@ -1,26 +1,26 @@
-# Chain Shield AI: AI agent for security monitoring
+# Stacks Watchdog AI: AI agent for security monitoring
 
-Chain Shield AI is an intelligent blockchain security monitoring agent. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Gamified Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
+Stacks Watchdog AI is an intelligent blockchain security monitoring agent. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Gamified Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
 
-Demo URL (frontend): [https://chain-shield.vercel.app/](https://chain-shield.vercel.app/)
+Demo URL (frontend): [https://stacks-watchdog.vercel.app/](https://stacks-watchdog.vercel.app/)
 
-Backend server URL (api server): [https://chain-shield-backend.up.railway.app/](https://chain-shield-backend.up.railway.app/)
+Backend server URL (api server): [https://stacks-watchdog-backend.up.railway.app/](https://stacks-watchdog-backend.up.railway.app/)
 
 <img width="1601" alt="Screenshot 2025-03-10 at 11 51 04 PM" src="https://github.com/user-attachments/assets/bea148b1-8a79-44c7-b080-a98080c43ca1" />
 
 **Motivation**
 
-The rise in cryptocurrency thefts, with over $2.2 billion stolen in 2024 alone [reuters.com](https://www.reuters.com/technology/losses-crypto-hacks-jump-22-bln-2024-report-says-2024-12-19/?utm_source=chatgpt.com) underscores the critical need for enhanced security in blockchain ecosystems. Recognizing the vulnerabilities with blockchain transactions, I developed Chain Shield AI to proactively address these challenges. The goal is to safeguard users' assets and bolster trust in the platform by providing real-time threat detection and comprehensive security education.
+The rise in cryptocurrency thefts, with over $2.2 billion stolen in 2024 alone [reuters.com](https://www.reuters.com/technology/losses-crypto-hacks-jump-22-bln-2024-report-says-2024-12-19/?utm_source=chatgpt.com) underscores the critical need for enhanced security in blockchain ecosystems. Recognizing the vulnerabilities with blockchain transactions, I developed Stacks Watchdog AI to proactively address these challenges. The goal is to safeguard users' assets and bolster trust in the platform by providing real-time threat detection and comprehensive security education.
 
 ## Architecture
 
-- **Smart Contracts**: Solidity contracts deployed on Sonic blockchain for on-chain monitoring and analysis
+- **Smart Contracts**: Solidity contracts deployed on Stacks blockchain for on-chain monitoring and analysis
 - **Backend API**: Node.js server with AI integration for transaction and contract analysis
 - **Frontend**: React-based dashboard built with Chakra UI for a modern, responsive interface
 - **Database**: MongoDB for storing historical data, analysis results, and user preferences
 - **AI Integration**: OpenAI API integration for advanced security analysis
 - **Notification System**: Multi-channel alert system for real-time security notifications
-- **Block Explorer Integration**: Direct integration with Sonic block explorer
+- **Block Explorer Integration**: Direct integration with Stacks block explorer
 
 ### Agent's Architecture Flow
 
@@ -32,7 +32,7 @@ The rise in cryptocurrency thefts, with over $2.2 billion stolen in 2024 alone [
 
 ### Core Security Features
 
-- **Real-time Transaction Monitoring**: Continuously monitors Sonic blockchain transactions to detect suspicious patterns and potential threats
+- **Real-time Transaction Monitoring**: Continuously monitors Stacks blockchain transactions to detect suspicious patterns and potential threats
 - **AI-Powered Analysis**: Leverages advanced AI models (GPT 4.5) to analyze contracts and transactions for security vulnerabilities
 - **Rug-Pull Detection**: Identifies potential rug-pull risks by analyzing token contract code, liquidity patterns, and ownership structures
 - **Wallet Drainer Detection**: Detects malicious contracts designed to drain user wallets through sophisticated techniques
@@ -54,7 +54,7 @@ The rise in cryptocurrency thefts, with over $2.2 billion stolen in 2024 alone [
 - **Customizable Notifications**: Configure how and when you want to be alerted about security events
 - **Multi-channel Alerts**: Receive notifications via email, browser, mobile app, or Telegram
 - **Responsive Design**: Seamless experience across desktop, tablet, and mobile devices
-- **Sonic Block Explorer Integration**: Direct links to the Sonic block explorer for transactions, addresses, and contracts
+- **Stacks Block Explorer Integration**: Direct links to the Stacks block explorer for transactions, addresses, and contracts
 
 ## Dashboard Sections
 
@@ -168,7 +168,7 @@ Learning progress tracker
 
 ## AI-Powered Security Features
 
-Chain Shield AI leverages advanced AI models to provide cutting-edge security analysis:
+Stacks Watchdog AI leverages advanced AI models to provide cutting-edge security analysis:
 
 ### Smart Contract Vulnerability Detection
 
@@ -209,11 +209,11 @@ The AI Transaction Analyzer monitors transactions for:
 
 ## Telegram Integration
 
-Chain Shield AI integrates with Telegram for real-time alerts and interactions:
+Stacks Watchdog AI integrates with Telegram for real-time alerts and interactions:
 
 ### Setup Instructions
 
-1. Find our bot: @SonicShieldBot
+1. Find our bot: @StacksWatchdogBot
 2. Start a chat and click "Start"
 3. Complete the authentication process
 4. Configure your alert preferences
@@ -244,17 +244,17 @@ Chain Shield AI integrates with Telegram for real-time alerts and interactions:
 
 ### Contract Address
 
-- Network: sonic_testnet (Chain RPC: [https://rpc.blaze.soniclabs.com)](https://rpc.blaze.soniclabs.com)) (Chain ID: 57054)
+- Network: stacks_testnet (Chain RPC: [https://rpc.blaze.soniclabs.com)](https://rpc.blaze.soniclabs.com)) (Chain ID: 57054)
 - TransactionMonitor deployed to: 0x5870daE1dA84864fBC2A7fbDF2B599aB3CEf2183
 - RugPullDetector deployed to: 0x151910d2B019d38623eE7DE0f7705b5F819792c8
 - WalletDrainerDetector deployed to: 0xc91bc914DF0C8b76b1DED07823e259c8B04b0Fd6
 - SWatchdogRegistry deployed to: 0x6e808c5A0A3ed300F3d8B3119D37d20d762E858f
 
-**Future Plans for Chain Shield AI:**
+**Future Plans for Stacks Watchdog AI:**
 
 - **Enhanced AI Capabilities:** Integrate machine learning models to improve threat detection accuracy and adapt to emerging security challenges.
 - **User Education:** Expand educational modules to include interactive tutorials and real-time alerts, fostering a more security-conscious user base.
 - **Community Engagement:** Establish forums and feedback channels to involve the community in identifying threats and suggesting improvements.
-- **Cross-Platform Integration:** Develop plugins and APIs to extend Chain Shield AI's security features to wallets, exchanges, and other platforms within the Sonic ecosystem.
+- **Cross-Platform Integration:** Develop plugins and APIs to extend Stacks Watchdog AI's security features to wallets, exchanges, and other platforms within the Stacks ecosystem.
 
-These initiatives aim to position Chain Shield AI as a comprehensive security solution, enhancing trust and safety within the Sonic blockchain community.
+These initiatives aim to position Stacks Watchdog AI as a comprehensive security solution, enhancing trust and safety within the Stacks blockchain community.

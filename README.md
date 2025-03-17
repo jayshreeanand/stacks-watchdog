@@ -2,9 +2,9 @@
 
 Stacks Watchdog is an intelligent AI agent for Real time blockchain security monitoring on the Stacks blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
 
-Demo URL (frontend): [https://chain-shield.vercel.app/](https://chain-shield.vercel.app/)
+Demo URL (frontend): [https://stacks-watchdog.vercel.app/](https://stacks-watchdog.vercel.app/)
 
-Backend server URL (api server): [https://chain-shield-backend.up.railway.app/](https://chain-shield-backend.up.railway.app/)
+Backend server URL (api server): [https://stacks-watchdog-backend.up.railway.app/](https://stacks-watchdog-backend.up.railway.app/)
 
 <img width="1601" alt="Screenshot 2025-03-10 at 11 51 04 PM" src="https://github.com/user-attachments/assets/bea148b1-8a79-44c7-b080-a98080c43ca1" />
 
@@ -295,7 +295,7 @@ Stacks Watchdog integrates with Telegram for real-time alerts and interactions:
 
 ### Setup Instructions
 
-1. Find our bot: @SonicShieldAIBot
+1. Find our bot: @StacksWatchdogAIBot
 2. Start a chat and click "Start"
 3. Complete the authentication process
 4. Configure your alert preferences
@@ -384,7 +384,7 @@ Stacks Watchdog provides a REST API for integration with other services:
 
 ### Contract Address
 
-- Network: sonic_testnet (Chain RPC: [https://rpc.blaze.soniclabs.com)](https://rpc.blaze.soniclabs.com)) (Chain ID: 57054)
+- Network: stacks_testnet (Chain RPC: [https://rpc.blaze.soniclabs.com)](https://rpc.blaze.soniclabs.com)) (Chain ID: 57054)
 - TransactionMonitor deployed to: 0x5870daE1dA84864fBC2A7fbDF2B599aB3CEf2183
 - RugPullDetector deployed to: 0x151910d2B019d38623eE7DE0f7705b5F819792c8
 - WalletDrainerDetector deployed to: 0xc91bc914DF0C8b76b1DED07823e259c8B04b0Fd6
@@ -395,7 +395,7 @@ Stacks Watchdog provides a REST API for integration with other services:
 The vulnerability scanner requires the following environment variables:
 
 ```env
-SONIC_TESTNET_RPC_URL=your_sonic_testnet_url
+STACK_TESTNET_RPC_URL=your_stacks_testnet_url
 MONGODB_URI=your_mongodb_connection_string
 API_KEY=your_api_key
 ```
@@ -404,7 +404,7 @@ To initialize the vulnerability scanner:
 
 1. Ensure all environment variables are properly set
 2. Start the server using `npm start`
-3. Monitor the logs for successful connection to the Sonic testnet
+3. Monitor the logs for successful connection to the Stacks testnet
 4. Verify the network ID and block number in the initialization logs
 
 ## 🚀 Getting Started
@@ -421,8 +421,8 @@ To initialize the vulnerability scanner:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/sonic-shield-ai.git
-   cd sonic-shield-ai
+   git clone https://github.com/yourusername/stacks-watchdog-ai.git
+   cd stacks-watchdog-ai
    ```
 
 2. Install dependencies:
@@ -452,7 +452,7 @@ To initialize the vulnerability scanner:
 
 #### With Mock Data (Default)
 
-This mode uses mock data and doesn't require a connection to the Sonic blockchain:
+This mode uses mock data and doesn't require a connection to the Stacks blockchain:
 
 ```bash
 ./start-app.sh --mock
@@ -460,7 +460,7 @@ This mode uses mock data and doesn't require a connection to the Sonic blockchai
 
 #### With Testnet Data
 
-This mode connects to the Sonic Blaze Testnet and uses real blockchain data:
+This mode connects to the Stacks Testnet and uses real blockchain data:
 
 ```bash
 ./start-app.sh --testnet
@@ -468,7 +468,7 @@ This mode connects to the Sonic Blaze Testnet and uses real blockchain data:
 
 #### With Mainnet Data
 
-This mode connects to the Sonic mainnet and uses real blockchain data:
+This mode connects to the Stacks mainnet and uses real blockchain data:
 
 ```bash
 ./start-app.sh --mainnet
@@ -481,8 +481,8 @@ You can also switch between data sources directly in the UI:
 1. Look for the "Data Source" dropdown in the top-right corner of the dashboard
 2. Select your preferred data source:
    - Mock Data: Uses locally generated mock data
-   - Sonic Blaze Testnet: Connects to the Sonic Blaze Testnet
-   - Sonic Mainnet: Connects to the Sonic mainnet
+   - Stacks Testnet: Connects to the Stacks Testnet
+   - Stacks Mainnet: Connects to the Stacks mainnet
 
 Note: Switching data sources in the UI will reload the page to refresh the data.
 
@@ -498,8 +498,8 @@ The application uses the following environment variables:
 
 ```
 # Blockchain Configuration
-SONIC_RPC_URL=https://rpc.soniclabs.com
-SONIC_TESTNET_RPC_URL=https://rpc.blaze.soniclabs.com
+STACK_RPC_URL=https://rpc.soniclabs.com
+STACK_TESTNET_RPC_URL=https://rpc.blaze.soniclabs.com
 PRIVATE_KEY=your_private_key_here
 NETWORK_CHAIN_ID=146
 
@@ -534,24 +534,24 @@ REACT_APP_USE_MOCK_AI=false
 
 ## 🧪 Running on Testnet
 
-To run Stacks Watchdog on the Sonic Blaze Testnet instead of mainnet, follow these steps:
+To run Stacks Watchdog on the Stacks Testnet instead of mainnet, follow these steps:
 
 1. Update your `.env` file to use testnet configuration:
 
    ```
    # Comment out mainnet URLs
-   # SONIC_RPC_URL=https://rpc.soniclabs.com
+   # STACK_RPC_URL=https://rpc.soniclabs.com
    # WEB3_PROVIDER_URL=https://rpc.soniclabs.com
 
    # Uncomment testnet URLs
-   SONIC_RPC_URL=https://rpc.blaze.soniclabs.com
+   STACK_RPC_URL=https://rpc.blaze.soniclabs.com
    WEB3_PROVIDER_URL=https://rpc.blaze.soniclabs.com
 
    # Set chain ID to testnet
    NETWORK_CHAIN_ID=57054
    ```
 
-2. Get testnet S from the Sonic Blaze Testnet faucet: https://testnet.soniclabs.com/account
+2. Get testnet S from the Stacks Testnet faucet: https://testnet.soniclabs.com/account
 
 3. Deploy the contracts to testnet:
 

@@ -75,7 +75,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           bgGradient="linear(to-r, blue.400, purple.500)"
           bgClip="text"
         >
-          Chain Shield AI
+          Stacks Watchdog AI
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
@@ -113,10 +113,10 @@ const Sidebar = ({ isOpen, onClose }) => {
         <Divider my={4} borderColor="gray.700" />
         <Box px={8} py={4}>
           <Text color="gray.400" fontSize="sm">
-            Chain Shield v0.1.0
+            Stacks Watchdog v0.1.0
           </Text>
           <Text color="gray.500" fontSize="xs" mt={1}>
-            Protecting the Sonic ecosystem
+            Protecting the Stacks ecosystem
           </Text>
         </Box>
       </VStack>

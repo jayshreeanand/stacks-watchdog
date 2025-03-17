@@ -264,7 +264,7 @@ const analyzeTransaction = async (tx, blockNumber) => {
 
 // Set up event listeners for contract events
 const setupEventListeners = () => {
-  console.log('Setting up event polling (filters disabled on Sonic RPC)');
+  console.log('Setting up event polling (filters disabled on Stacks RPC)');
   
   // Instead of using filters, we'll poll for events in each new block
   // This is a workaround for RPC providers that don't support eth_newFilter

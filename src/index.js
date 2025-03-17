@@ -80,7 +80,7 @@ app.get("/health", (req, res) => {
 // Root route for testing
 app.get("/", (req, res) => {
   res.status(200).json({
-    message: "Chain Shield AI API is running",
+    message: "Stacks Watchdog AI API is running",
     version: "1.0.0",
     mongodbConnected: mongoose.connection.readyState === 1,
   });
@@ -111,10 +111,10 @@ app.set("io", io);
 // Initialize vulnerability scanner with socket.io for real-time updates
 const initializeVulnerabilityScanner = async () => {
   try {
-    // Use Sonic testnet RPC URL from environment variables
-    const provider = process.env.SONIC_TESTNET_RPC_URL;
+    // Use Stacks testnet RPC URL from environment variables
+    const provider = process.env.STACK_TESTNET_RPC_URL;
     if (!provider) {
-      throw new Error("SONIC_TESTNET_RPC_URL not set in environment variables");
+      throw new Error("STACK_TESTNET_RPC_URL not set in environment variables");
     }
 
     const scanner = new VulnerabilityScanner(provider);
@@ -124,7 +124,7 @@ const initializeVulnerabilityScanner = async () => {
       io.to("vulnerability-scanner").emit("vulnerability-update", data);
     });
 
-    console.log("Vulnerability scanner initialized with Sonic testnet");
+    console.log("Vulnerability scanner initialized with Stacks testnet");
   } catch (error) {
     console.error("Failed to initialize scanner:", error);
   }
@@ -137,7 +137,7 @@ const startServer = () => {
     console.log(`Server running on port ${PORT}`);
 
     // Start blockchain monitoring
-    const provider = new ethers.JsonRpcProvider(process.env.SONIC_RPC_URL);
+    const provider = new ethers.JsonRpcProvider(process.env.STACK_RPC_URL);
     blockchainMonitor.startMonitoring(provider, app);
 
     // Initialize AI analyzer

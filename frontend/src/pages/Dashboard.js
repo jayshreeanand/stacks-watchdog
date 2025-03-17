@@ -119,9 +119,9 @@ const Dashboard = () => {
         <Alert status="info" mb={6} borderRadius="md">
           <AlertIcon />
           <Box>
-            <AlertTitle>Sonic Blaze Testnet</AlertTitle>
+            <AlertTitle>Stacks Testnet</AlertTitle>
             <AlertDescription>
-              You are viewing data from the Sonic Blaze Testnet. This is simulated data for testing purposes.
+              You are viewing data from the Stacks Testnet. This is simulated data for testing purposes.
             </AlertDescription>
           </Box>
         </Alert>

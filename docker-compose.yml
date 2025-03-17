@@ -9,8 +9,8 @@ services:
       - PORT=3000
       - MONGODB_URI=mongodb://mongo:27017/sonic-watchdog
       - SKIP_MONGODB=false
-      - SONIC_RPC_URL=https://rpc.blaze.soniclabs.com
-      - SONIC_TESTNET_RPC_URL=https://rpc.blaze.soniclabs.com
+      - STACK_RPC_URL=https://rpc.blaze.soniclabs.com
+      - STACK_TESTNET_RPC_URL=https://rpc.blaze.soniclabs.com
       - NETWORK_CHAIN_ID=57054
       - WEB3_PROVIDER_URL=https://rpc.blaze.soniclabs.com
     depends_on:

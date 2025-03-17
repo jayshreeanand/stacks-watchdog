@@ -15,23 +15,23 @@ done
 # Set environment variables based on data source
 if [ "$DATA_SOURCE" = "testnet" ]; then
   echo "========================================================"
-  echo "🚀 Starting with Sonic Blaze Testnet data (REAL DATA)..."
+  echo "🚀 Starting with Stacks Testnet data (REAL DATA)..."
   echo "========================================================"
-  export SONIC_WATCHDOG_DATA_SOURCE="testnet"
+  export STACK_WATCHDOG_DATA_SOURCE="testnet"
   # Use the testnet configuration
   npm run switch:testnet
 elif [ "$DATA_SOURCE" = "mainnet" ]; then
   echo "========================================================"
-  echo "🚀 Starting with Sonic Mainnet data (REAL DATA)..."
+  echo "🚀 Starting with Stacks Mainnet data (REAL DATA)..."
   echo "========================================================"
-  export SONIC_WATCHDOG_DATA_SOURCE="mainnet"
+  export STACK_WATCHDOG_DATA_SOURCE="mainnet"
   # Use the mainnet configuration
   npm run switch:mainnet
 else
   echo "========================================================"
   echo "🚀 Starting with Mock data (SIMULATED DATA)..."
   echo "========================================================"
-  export SONIC_WATCHDOG_DATA_SOURCE="mock"
+  export STACK_WATCHDOG_DATA_SOURCE="mock"
   # No need to switch network for mock data
 fi
 

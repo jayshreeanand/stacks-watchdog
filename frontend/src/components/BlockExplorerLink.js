@@ -5,7 +5,7 @@ import { getAddressUrl, getTransactionUrl, getTokenUrl, getExplorerUrl } from '.
 import { useDataSource } from '../context/DataSourceContext';
 
 /**
- * BlockExplorerLink component for linking to the Sonic block explorer
+ * BlockExplorerLink component for linking to the Stacks block explorer
  * 
  * @param {Object} props - Component props
  * @param {string} props.type - Type of link: 'address', 'transaction', 'token', or 'explorer'
@@ -57,7 +57,7 @@ const BlockExplorerLink = ({
   const networkName = dataSource === 'mainnet' ? 'Mainnet' : 'Testnet';
   
   return (
-    <Tooltip label={`View on Sonic ${networkName} Explorer`} hasArrow>
+    <Tooltip label={`View on Stacks ${networkName} Explorer`} hasArrow>
       <Flex align="center" display="inline-flex" {...rest}>
         <Link
           href={url}

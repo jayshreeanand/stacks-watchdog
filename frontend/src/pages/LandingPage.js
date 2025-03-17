@@ -286,13 +286,13 @@ const LandingPage = () => {
 
               <Heading
                 as="h1"
-                fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
+                fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
                 fontWeight="bold"
                 lineHeight="shorter"
                 mb={6}
               >
                 <Text as="span" color="blue.500">
-                  Chain Shield AI
+                  Stacks Watchdog AI
                 </Text>
                 <br />
                 <Text as="span">Protecting Your Digital Assets</Text>
@@ -303,7 +303,7 @@ const LandingPage = () => {
                 color={useColorModeValue("gray.600", "gray.400")}
                 mb={8}
               >
-                Chain Shield AI is an intelligent security agent for the Sonic
+                Stacks Watchdog AI is an intelligent security agent for the Stacks
                 blockchain, employing advanced AI algorithms to monitor
                 transactions, analyze smart contracts, and scan for
                 vulnerabilities in real-time. It also offers educational modules
@@ -465,7 +465,7 @@ const LandingPage = () => {
                 fontSize={{ base: "lg", md: "xl" }}
                 color={useColorModeValue("gray.600", "gray.400")}
               >
-                Chain Shield AI provides a comprehensive suite of security tools
+                Stacks Watchdog AI provides a comprehensive suite of security tools
                 to protect your blockchain assets.
               </Text>
             </Box>
@@ -697,7 +697,7 @@ const LandingPage = () => {
                 Simple Process
               </Badge>
               <Heading as="h2" fontSize={{ base: "3xl", md: "4xl" }} mb={4}>
-                How Chain Shield AI Works
+                How Stacks Watchdog AI Works
               </Heading>
               <Text
                 fontSize={{ base: "lg", md: "xl" }}
@@ -727,7 +727,7 @@ const LandingPage = () => {
                   Connect Your Wallet
                 </Heading>
                 <Text color={useColorModeValue("gray.600", "gray.400")}>
-                  Link your wallet to Chain Shield AI to enable comprehensive
+                  Link your wallet to Stacks Watchdog AI to enable comprehensive
                   security monitoring.
                 </Text>
               </VStack>
@@ -827,7 +827,7 @@ const LandingPage = () => {
               color="whiteAlpha.900"
               maxW="container.md"
             >
-              Join thousands of users who trust Chain Shield AI to secure their
+              Join thousands of users who trust Stacks Watchdog AI to secure their
               blockchain investments. Get started now and experience next-level
               security.
             </Text>
@@ -847,7 +847,7 @@ const LandingPage = () => {
               }}
               fontSize="xl"
             >
-              Launch Chain Shield AI
+              Launch Stacks Watchdog AI
             </Button>
           </VStack>
         </Container>
@@ -858,7 +858,7 @@ const LandingPage = () => {
         <Container maxW="container.xl">
           <SimpleGrid columns={{ base: 1, md: 4 }} spacing={8}>
             <VStack align="start" spacing={4}>
-              <Heading size="md">Chain Shield AI</Heading>
+              <Heading size="md">Stacks Watchdog AI</Heading>
               <Text color="whiteAlpha.700">
                 Next-generation blockchain security powered by artificial
                 intelligence.
@@ -916,7 +916,7 @@ const LandingPage = () => {
           <Divider my={8} borderColor="whiteAlpha.300" />
 
           <Text textAlign="center" color="whiteAlpha.600">
-            © {new Date().getFullYear()} Chain Shield AI. All rights reserved.
+            © {new Date().getFullYear()} Stacks Watchdog AI. All rights reserved.
           </Text>
         </Container>
       </Box>
