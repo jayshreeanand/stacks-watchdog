@@ -171,7 +171,7 @@ async function deployContract(contractName, contractPath, nonce) {
             fee,
             nonce: BigInt(nonce),
             sponsored: false,
-            clarityVersion: ClarityVersion.Clarity3,
+            clarityVersion: ClarityVersion.Clarity2,
             anchorMode: AnchorMode.Any,
             version: TransactionVersion.Testnet,
             senderAddress: process.env.SENDER_ADDRESS

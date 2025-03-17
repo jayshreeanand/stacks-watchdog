@@ -11,6 +11,7 @@
     "deploy:testnet": "NETWORK_CHAIN_ID=2147483648 node scripts/deploy.js",
     "deploy:mainnet": "NETWORK_CHAIN_ID=1 node scripts/deploy.js",
     "deploy:leather": "node scripts/deploy-leather.js",
+    "deploy:leather:simple": "node scripts/deploy-leather-simple.js",
     "test:connection": "node scripts/test-connection.js"
   },
   "keywords": [
