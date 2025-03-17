@@ -59,10 +59,10 @@ try {
   console.error('Error loading deployment info:', error);
   // Use placeholder addresses if deployment info is not available
   deploymentInfo = {
-    registry: process.env.REGISTRY_ADDRESS || "0x0000000000000000000000000000000000000000",
-    transactionMonitor: process.env.TRANSACTION_MONITOR_ADDRESS || "0x0000000000000000000000000000000000000000",
-    rugPullDetector: process.env.RUGPULL_DETECTOR_ADDRESS || "0x0000000000000000000000000000000000000000",
-    walletDrainerDetector: process.env.WALLETDRAINER_DETECTOR_ADDRESS || "0x0000000000000000000000000000000000000000"
+    registry: process.env.REGISTRY_ADDRESS || "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.stacks-watchdog-registry",
+    transactionMonitor: process.env.TRANSACTION_MONITOR_ADDRESS || "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.transaction-monitor",
+    rugPullDetector: process.env.RUGPULL_DETECTOR_ADDRESS || "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.rug-pull-detector",
+    walletDrainerDetector: process.env.WALLETDRAINER_DETECTOR_ADDRESS || "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.wallet-drainer-detector"
   };
   console.log('Using placeholder contract addresses. Please deploy contracts for full functionality.');
 }
@@ -125,7 +125,7 @@ const startMonitoring = async (_provider, _app) => {
     console.log(`Running on ${isTestnet ? 'testnet' : 'mainnet'}`);
     
     // Check if contracts are deployed with real addresses
-    const isPlaceholder = deploymentInfo.registry === "0x0000000000000000000000000000000000000000";
+    const isPlaceholder = deploymentInfo.registry.includes("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM");
     if (isPlaceholder) {
       console.log('WARNING: Using placeholder contract addresses. Some functionality will be limited.');
       console.log('To deploy contracts, run: npm run deploy:testnet');

@@ -62,7 +62,6 @@ The rise in cryptocurrency thefts, with over $2.2 billion stolen in 2024 alone [
 
 <img width="1669" alt="Screenshot 2025-03-17 at 8 36 21 PM" src="https://github.com/user-attachments/assets/0b952a62-5274-4a98-a8e4-992338ab5b0a" />
 
-
 The main dashboard provides an at-a-glance view of your security status, including:
 
 - Security score and risk assessment
@@ -89,7 +88,6 @@ The vulnerability scanner dashboard provides comprehensive contract security ana
 ### AI Smart Contract Analyzer
 
 <img width="1310" alt="Screenshot 2025-03-17 at 8 30 16 PM" src="https://github.com/user-attachments/assets/05cc436e-16b5-4724-bd31-c2523ace5594" />
-
 
 <img width="1124" alt="AI smart contract analyzer" src="https://github.com/user-attachments/assets/014dfdd1-c8c0-4e00-a1d5-fcf1a936d6e7" />
 
@@ -146,7 +144,6 @@ Customize your security alerts:
 - Choose alert frequency and risk level sensitivity
 - Enable/disable specific types of security alerts
 
-
 ### Gamified Learning modules
 
 <img width="1222" alt="interactive learning modules" src="https://github.com/user-attachments/assets/ee5eb8ad-5b04-45ec-bdb0-eb28801365e4" />
@@ -198,8 +195,6 @@ The AI Address Analyzer examines wallet addresses for:
 
 ### Transaction Analysis
 
-<img width="1677" alt="Screenshot 2025-03-11 at 12 46 25 AM" src="https://github.com/user-attachments/assets/45193f12-9aed-4737-a7e4-b2389c29baf6" />
-
 The AI Transaction Analyzer monitors transactions for:
 
 - **Unusual Transaction Amounts**: Identifies transactions with suspicious values
@@ -243,7 +238,60 @@ Stacks Watchdog AI integrates with Telegram for real-time alerts and interaction
 - Monthly activity reports
 - Custom report scheduling
 
-**Future Plans for Stacks Watchdog AI:**
+## AI-Powered Security Features
+
+Stacks Watchdog leverages advanced AI models to provide cutting-edge security analysis:
+
+### Smart Contract Vulnerability Detection
+
+The AI Smart Contract Analyzer can detect various vulnerabilities including:
+
+- **Reentrancy Vulnerabilities**: Identifies functions vulnerable to reentrancy attacks
+- **Access Control Issues**: Detects improper access controls and authorization flaws
+- **Integer Overflow/Underflow**: Finds potential arithmetic vulnerabilities
+- **Unchecked External Calls**: Identifies unsafe external calls without proper error handling
+- **Front-running Vulnerabilities**: Detects transactions vulnerable to front-running
+- **Logic Errors**: Identifies logical flaws in contract code
+- **Rug Pull Mechanisms**: Detects backdoors and mechanisms that could enable rug pulls
+- **Gas Optimization Issues**: Identifies inefficient code that could lead to high gas costs
+
+<img width="1116" alt="AI smart contract recommendations" src="https://github.com/user-attachments/assets/8ab6410c-e22b-4103-a4a5-057d6951b485" />
+
+### Address Analysis
+
+The AI Address Analyzer examines wallet addresses for:
+
+- **Suspicious Transaction Patterns**: Identifies unusual transaction behavior
+- **Connections to Known Malicious Addresses**: Detects interactions with known scammers
+- **Potential Wallet Drainer Behavior**: Identifies patterns consistent with wallet drainers
+- **Money Laundering Indicators**: Detects patterns that may indicate money laundering
+- **Risk Scoring**: Provides a comprehensive risk score and security assessment
+
+### Transaction Analysis
+
+<img width="1677" alt="Screenshot 2025-03-11 at 12 46 25 AM" src="https://github.com/user-attachments/assets/45193f12-9aed-4737-a7e4-b2389c29baf6" />
+
+The AI Transaction Analyzer monitors transactions for:
+
+- **Unusual Transaction Amounts**: Identifies transactions with suspicious values
+- **Suspicious Contract Interactions**: Detects interactions with potentially malicious contracts
+- **Phishing Indicators**: Identifies transactions that may be part of phishing attempts
+- **Scam Patterns**: Detects patterns consistent with known scams
+- **Real-time Alerts**: Provides immediate notifications for high-risk transactions
+
+### Smart Contract Vulnerability Scanner
+
+The vulnerability scanner provides real-time security analysis of smart contracts on the Stacks blockchain:
+
+#### Features
+
+- Dark theme UI for optimal visibility and reduced eye strain
+- Real-time contract scanning and analysis
+- Sample contract testing capabilities
+- Detailed vulnerability reporting
+- Interactive contract search interface
+
+  **Future Plans for Stacks Watchdog AI:**
 
 - **Enhanced AI Capabilities:** Integrate machine learning models to improve threat detection accuracy and adapt to emerging security challenges.
 - **User Education:** Expand educational modules to include interactive tutorials and real-time alerts, fostering a more security-conscious user base.
