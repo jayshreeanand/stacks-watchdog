@@ -60,7 +60,8 @@ The rise in cryptocurrency thefts, with over $2.2 billion stolen in 2024 alone [
 
 ### Main Dashboard
 
-<img width="1669" alt="Screenshot 2025-03-17 at 8 36 21 PM" src="https://github.com/user-attachments/assets/0b952a62-5274-4a98-a8e4-992338ab5b0a" />
+<img width="1680" alt="Screenshot 2025-03-17 at 9 12 54 PM" src="https://github.com/user-attachments/assets/04a9cd9f-1bcb-4c74-a4e1-509599ae6314" />
+
 
 The main dashboard provides an at-a-glance view of your security status, including:
 
@@ -87,7 +88,7 @@ The vulnerability scanner dashboard provides comprehensive contract security ana
 
 ### AI Smart Contract Analyzer
 
-<img width="1310" alt="Screenshot 2025-03-17 at 8 30 16 PM" src="https://github.com/user-attachments/assets/05cc436e-16b5-4724-bd31-c2523ace5594" />
+<img width="1368" alt="Screenshot 2025-03-17 at 9 15 11 PM" src="https://github.com/user-attachments/assets/b29d51f0-bcde-4841-8f86-3cdce6906a8f" />
 
 <img width="1124" alt="AI smart contract analyzer" src="https://github.com/user-attachments/assets/014dfdd1-c8c0-4e00-a1d5-fcf1a936d6e7" />
 
