@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { ethers } from 'ethers';
+import { STACKS_TESTNET, STACKS_MAINNET } from '@stacks/network';
+import { connect, disconnect, isConnected, getUserData } from '@stacks/connect-react';
 
 // Create context
 const WalletContext = createContext();
@@ -7,93 +8,50 @@ const WalletContext = createContext();
 // Provider component
 export const WalletProvider = ({ children }) => {
   const [account, setAccount] = useState('');
-  const [provider, setProvider] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [chainId, setChainId] = useState(null);
+  const [network, setNetwork] = useState(null);
   const [networkName, setNetworkName] = useState('');
 
-  // Initialize provider
+  // Initialize network
   useEffect(() => {
-    if (window.ethereum) {
-      const ethersProvider = new ethers.BrowserProvider(window.ethereum);
-      setProvider(ethersProvider);
-
-      // Check if already connected
-      const checkConnection = async () => {
-        try {
-          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-          if (accounts.length > 0) {
-            setAccount(accounts[0]);
-            
-            // Get network information
-            const network = await ethersProvider.getNetwork();
-            setChainId(network.chainId);
-            setNetworkName(network.name);
-          }
-        } catch (error) {
-          console.error('Error checking wallet connection:', error);
-        }
-      };
-
-      checkConnection();
-
-      // Listen for account changes
-      const handleAccountsChanged = (accounts) => {
-        if (accounts.length > 0) {
-          setAccount(accounts[0]);
-        } else {
-          setAccount('');
-        }
-      };
-
-      // Listen for chain changes
-      const handleChainChanged = async (chainIdHex) => {
-        window.location.reload();
-      };
-
-      window.ethereum.on('accountsChanged', handleAccountsChanged);
-      window.ethereum.on('chainChanged', handleChainChanged);
-
-      // Cleanup listeners
-      return () => {
-        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
-        window.ethereum.removeListener('chainChanged', handleChainChanged);
-      };
-    }
+    // Default to testnet for development
+    setNetwork(STACKS_TESTNET);
+    setNetworkName('Stacks Testnet');
   }, []);
 
   // Connect wallet
   const connectWallet = async () => {
-    if (!window.ethereum) {
-      console.error('MetaMask or compatible wallet not detected');
-      throw new Error('MetaMask or compatible wallet not detected. Please install MetaMask or another Ethereum-compatible wallet extension and refresh the page.');
-    }
-
     setIsConnecting(true);
 
     try {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      setAccount(accounts[0]);
-
-      // Get network information
-      if (provider) {
-        const network = await provider.getNetwork();
-        setChainId(network.chainId);
-        setNetworkName(network.name);
+      const userSession = await connect({
+        network,
+        appName: 'Stacks Watchdog',
+        appIcon: 'https://your-app-icon-url.com/icon.png',
+      });
+      
+      if (userSession) {
+        const userData = getUserData();
+        setAccount(userData.profile.stxAddress.mainnet);
       }
 
-      return accounts[0];
+      return account;
     } catch (error) {
       console.error('Error connecting wallet:', error);
-      throw error;
+      throw new Error('Failed to connect wallet. Please try again.');
     } finally {
       setIsConnecting(false);
     }
   };
 
-  // Disconnect wallet (for UI purposes only, doesn't actually disconnect MetaMask)
-  const disconnectWallet = () => {
-    setAccount('');
+  // Disconnect wallet
+  const disconnectWallet = async () => {
+    try {
+      await disconnect();
+      setAccount('');
+    } catch (error) {
+      console.error('Error disconnecting wallet:', error);
+    }
   };
 
   // Format address for display
@@ -105,9 +63,8 @@ export const WalletProvider = ({ children }) => {
   // Context value
   const value = {
     account,
-    provider,
     isConnecting,
-    chainId,
+    network,
     networkName,
     connectWallet,
     disconnectWallet,

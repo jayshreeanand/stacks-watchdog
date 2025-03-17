@@ -138,17 +138,17 @@ export const mockApiService = {
         ...drainer,
         victims: [
           {
-            address: "0xf5a3467b6bb35c9619310e213c413c7f614a1d33",
+            address: "ST1SJ3DTE5DN7X54YDH5D64R3BBS6PCCAB0EB0SF",
             amount: 12000,
             timestamp: "2025-03-05T12:30:45Z",
           },
           {
-            address: "0x3a2c7b4e3b3e3b3e3b3e3b3e3b3e3b3e3b3e3b3e",
+            address: "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG",
             amount: 8000,
             timestamp: "2025-03-04T09:22:15Z",
           },
           {
-            address: "0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b",
+            address: "ST3NBRSFKX28FQ2ZJ1MAKX58ZYHSYFR6ZP46F76P",
             amount: 25000,
             timestamp: "2025-03-01T14:45:33Z",
           },

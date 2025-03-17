@@ -87,7 +87,7 @@ const getMockData = (type) => {
     case 'drainers':
       return [
         {
-          address: '0x1234567890abcdef1234567890abcdef12345678',
+          address: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
           name: `${mockPrefix} Fake Stacks Airdrop`,
           riskLevel: 'high',
           victims: 12,
@@ -100,20 +100,20 @@ const getMockData = (type) => {
           verificationNotes: 'Confirmed malicious behavior through code analysis and victim reports.',
         },
         {
-          address: '0xabcdef1234567890abcdef1234567890abcdef12',
+          address: 'ST3NBRSFKX28FQ2ZJ1MAKX58ZYHSYFR6ZP46F76P',
           name: `${mockPrefix} Stacks Staking Scam`,
           riskLevel: 'critical',
           victims: 28,
           totalStolen: 120000,
           lastActive: '2025-03-04T18:15:22Z',
           isVerified: true,
-          description: `${mockPrefix} Fake staking platform that promises high returns but steals deposited S tokens.`,
+          description: `${mockPrefix} Fake staking platform that promises high returns but steals deposited STX tokens.`,
           createdAt: '2025-02-25T08:30:15Z',
           verifiedBy: 'SecurityTeam',
           verificationNotes: 'Multiple victim reports confirmed. Contract has backdoor functions.',
         },
         {
-          address: '0x9876543210fedcba9876543210fedcba98765432',
+          address: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
           name: `${mockPrefix} Phishing Dapp`,
           riskLevel: 'medium',
           victims: 8,
@@ -128,18 +128,18 @@ const getMockData = (type) => {
       ];
     case 'drainerDetails':
       return {
-        address: '0x1234567890abcdef1234567890abcdef12345678',
+        address: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
         name: `${mockPrefix} Fake Stacks Airdrop`,
         riskLevel: 'high',
         victims: [
           {
-            address: '0xabc123def456789012345678901234567890abcde',
+            address: 'ST1SJ3DTE5DN7X54YDH5D64R3BBS6PCCAB0EB0SF',
             amount: 5000,
             timestamp: '2025-03-04T15:30:22Z',
             txHash: '0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef1234'
           },
           {
-            address: '0xdef456789012345678901234567890abcdeabc123',
+            address: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
             amount: 7500,
             timestamp: '2025-03-03T12:15:45Z',
             txHash: '0xabcdef123456789abcdef123456789abcdef123456789abcdef123456789abcd'
@@ -158,11 +158,11 @@ const getMockData = (type) => {
           'Social engineering'
         ],
         code: 'contract FakeAirdrop {\n  // Malicious code here\n}',
-        explorerUrl: `${explorerUrl}address/0x1234567890abcdef1234567890abcdef12345678`
+        explorerUrl: `${explorerUrl}address/ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG`
       };
     case 'contractAnalysis':
       return {
-        address: '0x1234567890abcdef1234567890abcdef12345678',
+        address: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
         name: 'Test Contract',
         analysis: {
           score: 35,
@@ -190,7 +190,7 @@ const getMockData = (type) => {
       };
     case 'walletScan':
       return {
-        address: '0x1234567890abcdef1234567890abcdef12345678',
+        address: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
         securityScore: 65,
         riskLevel: 'medium',
         issues: [
@@ -200,7 +200,7 @@ const getMockData = (type) => {
             title: 'Interaction with Known Scam',
             description: 'Your wallet has interacted with a known scam contract in the last 30 days.',
             details: {
-              contractAddress: '0xabcdef1234567890abcdef1234567890abcdef12',
+              contractAddress: 'ST3NBRSFKX28FQ2ZJ1MAKX58ZYHSYFR6ZP46F76P',
               date: '2025-03-01T12:34:56Z',
               txHash: '0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef1234'
             },
@@ -215,13 +215,13 @@ const getMockData = (type) => {
           {
             id: 1,
             token: {
-              symbol: 'S',
+              symbol: 'STX',
               name: 'Stacks',
-              address: '0x4a8f5f96d5436e43112c2fbc6a9f70da9e4e16d4'
+              address: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG'
             },
             spender: {
               name: 'StacksSwap',
-              address: '0x7a250d5630b4cf539739df2c5dacb4c659f2488d'
+              address: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'
             },
             allowance: '1000000000000000000000',
             allowanceFormatted: '1000',
@@ -233,7 +233,7 @@ const getMockData = (type) => {
           {
             hash: '0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef1234',
             type: 'Transfer',
-            asset: 'S',
+            asset: 'STX',
             amount: '25.5',
             timestamp: '2025-03-05T14:22:10Z',
             status: 'success'
@@ -491,108 +491,46 @@ const apiService = {
       
       // Create a provider based on the current data source
       const providerUrl = CURRENT_DATA_SOURCE === 'testnet' 
-        ? 'https://rpc.blaze.soniclabs.com' 
-        : 'https://rpc.soniclabs.com';
+        ? 'https://stacks-node-api.testnet.stacks.co' 
+        : 'https://stacks-node-api.mainnet.stacks.co';
       
       console.log(`Using provider URL: ${providerUrl}`);
-      const provider = new ethers.JsonRpcProvider(providerUrl);
       
       // Get basic wallet information
       console.log(`Fetching basic wallet information for ${address}`);
-      const [balance, txCount, code] = await Promise.all([
-        provider.getBalance(address),
-        provider.getTransactionCount(address),
-        provider.getCode(address)
+      const [balance, txCount] = await Promise.all([
+        fetch(`${providerUrl}/extended/v1/address/${address}/balances`).then(res => res.json()),
+        fetch(`${providerUrl}/extended/v1/address/${address}/transactions`).then(res => res.json())
       ]);
       
-      // Check if this is a contract
-      const isContract = code !== '0x';
-      
       // Format the balance
-      const balanceInEth = ethers.formatEther(balance);
-      console.log(`Wallet balance: ${balanceInEth} S, Transaction count: ${txCount}, Is contract: ${isContract}`);
+      const stxBalance = balance.stx.balance / 1000000; // Convert microSTX to STX
+      console.log(`Wallet balance: ${stxBalance} STX, Transaction count: ${txCount.length}`);
       
       // Calculate a security score based on real data
       let securityScore = 80; // Start with a good score
       let securityIssues = [];
       
-      // Check if this is a new wallet with few transactions
-      if (txCount < 5) {
+      // Add security issues based on real data
+      if (stxBalance > 1000) {
+        securityIssues.push({
+          id: 'high_balance',
+          severity: 'medium',
+          title: 'High Balance',
+          description: 'Wallet contains a significant amount of STX. Consider using a hardware wallet for better security.'
+        });
         securityScore -= 10;
+      }
+      
+      if (txCount.length < 5) {
         securityIssues.push({
-          id: securityIssues.length + 1,
+          id: 'low_activity',
           severity: 'low',
-          title: 'New Wallet',
-          description: 'This wallet has very few transactions, which could indicate it\'s new or rarely used.',
-          recommendation: 'Start with small transactions to build history.'
+          title: 'Low Activity',
+          description: 'Wallet has limited transaction history. This could indicate a new or inactive account.'
         });
-      }
-      
-      // Check if this is a contract
-      if (isContract) {
         securityScore -= 5;
-        securityIssues.push({
-          id: securityIssues.length + 1,
-          severity: 'info',
-          title: 'Contract Address',
-          description: 'This address is a smart contract, not a regular wallet.',
-          recommendation: 'Ensure you understand the contract\'s purpose before interacting with it.'
-        });
       }
-      
-      // Check if balance is very low
-      if (parseFloat(balanceInEth) < 0.01) {
-        securityScore -= 5;
-        securityIssues.push({
-          id: securityIssues.length + 1,
-          severity: 'low',
-          title: 'Low Balance',
-          description: 'This wallet has a very low balance.',
-          recommendation: 'Ensure you have enough funds for gas fees.'
-        });
-      }
-      
-      // Try to fetch recent transactions (this is a simplified example)
-      let recentTransactions = [];
-      try {
-        // In a real implementation, you would use an API or indexer to get transaction history
-        console.log(`Attempting to fetch recent transactions for ${address}`);
-        
-        // For now, we'll just create a placeholder
-        recentTransactions = [
-          {
-            hash: '0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef1234',
-            type: 'Transfer',
-            asset: 'S',
-            amount: (Math.random() * 10).toFixed(2),
-            timestamp: new Date().toISOString(),
-            status: 'success',
-            risk: 'low'
-          }
-        ];
-      } catch (error) {
-        console.error('Error fetching recent transactions:', error);
-      }
-      
-      // Try to fetch token approvals (this would require ERC20 contract interaction)
-      let tokenApprovals = [];
-      try {
-        // In a real implementation, you would scan for ERC20 approvals
-        console.log(`Attempting to fetch token approvals for ${address}`);
-        
-        // For now, we'll just create a placeholder
-        tokenApprovals = [];
-      } catch (error) {
-        console.error('Error fetching token approvals:', error);
-      }
-      
-      // Create security recommendations based on the wallet analysis
-      const recommendations = [
-        'Regularly review and revoke unnecessary token approvals',
-        'Use a hardware wallet for large holdings',
-        'Enable two-factor authentication on exchanges',
-        'Be cautious of phishing attempts and verify contract addresses before interacting'
-      ];
       
       // Create a result object with real data
       const result = {
@@ -601,22 +539,32 @@ const apiService = {
         securityScore: securityScore,
         networkInfo: {
           name: CURRENT_DATA_SOURCE === 'testnet' ? 'Stacks Testnet' : 'Stacks Mainnet',
-          chainId: CURRENT_DATA_SOURCE === 'testnet' ? '57054' : '146',
+          chainId: CURRENT_DATA_SOURCE === 'testnet' ? '2147483648' : '1',
           lastActivity: new Date().toISOString()
         },
         balances: [
           { 
-            token: 'S', 
-            balance: balanceInEth,
-            value: (parseFloat(balanceInEth) * 10).toFixed(2) // Assuming 1 S = $10 USD
+            token: 'STX', 
+            balance: stxBalance,
+            value: (stxBalance * 10).toFixed(2) // Assuming 1 STX = $10 USD
           }
         ],
-        transactionCount: txCount,
-        isContract: isContract,
+        transactionCount: txCount.length,
         issues: securityIssues,
-        recentTransactions: recentTransactions,
-        tokenApprovals: tokenApprovals,
-        recommendations: recommendations,
+        recentTransactions: txCount.slice(0, 5).map(tx => ({
+          hash: tx.tx_id,
+          type: tx.tx_status,
+          asset: 'STX',
+          amount: (tx.amount / 1000000).toFixed(2),
+          timestamp: tx.burn_block_time_iso,
+          status: tx.tx_status
+        })),
+        recommendations: [
+          'Regularly review and revoke unnecessary token approvals',
+          'Use a hardware wallet for large holdings',
+          'Enable two-factor authentication on exchanges',
+          'Be cautious of phishing attempts and verify contract addresses before interacting'
+        ],
         source: CURRENT_DATA_SOURCE === 'testnet' ? '[TESTNET]' : '[MAINNET]'
       };
       

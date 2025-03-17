@@ -62,7 +62,6 @@ The rise in cryptocurrency thefts, with over $2.2 billion stolen in 2024 alone [
 
 <img width="1680" alt="Screenshot 2025-03-17 at 9 12 54 PM" src="https://github.com/user-attachments/assets/04a9cd9f-1bcb-4c74-a4e1-509599ae6314" />
 
-
 The main dashboard provides an at-a-glance view of your security status, including:
 
 - Security score and risk assessment
@@ -269,8 +268,6 @@ The AI Address Analyzer examines wallet addresses for:
 - **Risk Scoring**: Provides a comprehensive risk score and security assessment
 
 ### Transaction Analysis
-
-<img width="1677" alt="Screenshot 2025-03-11 at 12 46 25 AM" src="https://github.com/user-attachments/assets/45193f12-9aed-4737-a7e4-b2389c29baf6" />
 
 The AI Transaction Analyzer monitors transactions for:
 

@@ -48,7 +48,7 @@ const Navbar = () => {
   // View address in explorer
   const viewInExplorer = () => {
     if (account) {
-      window.open(`https://explorer.sonic.com/address/${account}`, '_blank');
+      window.open(`https://explorer.stacks.co/address/${account}`, '_blank');
     }
   };
 
@@ -58,7 +58,7 @@ const Navbar = () => {
       await connectWallet();
       toast({
         title: 'Wallet connected',
-        description: 'Your wallet has been connected successfully',
+        description: 'Your Stacks wallet has been connected successfully',
         status: 'success',
         duration: 3000,
         isClosable: true,
@@ -75,19 +75,29 @@ const Navbar = () => {
   };
 
   // Handle wallet disconnection
-  const handleDisconnectWallet = () => {
-    disconnectWallet();
-    toast({
-      title: 'Wallet disconnected',
-      status: 'info',
-      duration: 3000,
-      isClosable: true,
-    });
+  const handleDisconnectWallet = async () => {
+    try {
+      await disconnectWallet();
+      toast({
+        title: 'Wallet disconnected',
+        status: 'info',
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      toast({
+        title: 'Disconnection failed',
+        description: error.message || 'Failed to disconnect wallet',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   const handleViewOnExplorer = () => {
     if (!account) return;
-    window.open(`https://testnet.sonicscan.org/address/${account}`, '_blank');
+    window.open(`https://explorer.stacks.co/address/${account}`, '_blank');
   };
 
   return (

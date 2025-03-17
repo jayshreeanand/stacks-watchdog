@@ -345,7 +345,7 @@ const SmartContractAnalyzer = () => {
                     </HStack>
                   </Flex>
                   <Textarea 
-                    placeholder="Paste your Solidity contract code here..." 
+                    placeholder="Paste your Clarity contract code here..." 
                     value={contractCode}
                     onChange={(e) => setContractCode(e.target.value)}
                     minHeight="300px"

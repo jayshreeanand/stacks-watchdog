@@ -97,24 +97,11 @@ const SecurityScanner = () => {
     // Validate if we have an address to scan
     const addressToScan = account || customAddress;
 
-    // Check if MetaMask is installed if no custom address is provided
+    // Check if we have an address to scan
     if (!addressToScan) {
-      if (!window.ethereum && !customAddress) {
-        toast({
-          title: "Wallet not available",
-          description:
-            "MetaMask or compatible wallet not detected. Please install a wallet extension or enter a custom address to scan.",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-        return;
-      }
-
       toast({
         title: "No address provided",
-        description:
-          "Please connect your wallet or enter a custom address to scan",
+        description: "Please connect your wallet or enter a custom address to scan",
         status: "error",
         duration: 3000,
         isClosable: true,
