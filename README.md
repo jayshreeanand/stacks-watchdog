@@ -1,6 +1,6 @@
-# Chain Shield AI: AI agent for security monitoring
+# Stacks Watchdog: AI agent for security monitoring
 
-Chain Shield AI is an intelligent AI agent for Real time blockchain security monitoring. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
+Stacks Watchdog is an intelligent AI agent for Real time blockchain security monitoring on the Stacks blockchain. It uses advanced AI algorithms to detect suspicious transactions, wallet drainers, potential rug-pulls, and other security threats in real-time. It also analyses smart contracts using various AI models and scans the blockchain realtime for vulnerabilities. Learning modules are also included to educate users about common security issues. Real time alerts using telegram bots and email to keep users updated.
 
 Demo URL (frontend): [https://chain-shield.vercel.app/](https://chain-shield.vercel.app/)
 
@@ -8,16 +8,15 @@ Backend server URL (api server): [https://chain-shield-backend.up.railway.app/](
 
 <img width="1601" alt="Screenshot 2025-03-10 at 11 51 04 PM" src="https://github.com/user-attachments/assets/bea148b1-8a79-44c7-b080-a98080c43ca1" />
 
-
 ## 🏗️ Architecture
 
-- **Smart Contracts**: Solidity contracts deployed on Sonic blockchain for on-chain monitoring and analysis
+- **Smart Contracts**: Clarity contracts deployed on Stacks blockchain for on-chain monitoring and analysis
 - **Backend API**: Node.js server with AI integration for transaction and contract analysis
 - **Frontend**: React-based dashboard built with Chakra UI for a modern, responsive interface
 - **Database**: MongoDB for storing historical data, analysis results, and user preferences
 - **AI Integration**: OpenAI API integration for advanced security analysis
 - **Notification System**: Multi-channel alert system for real-time security notifications
-- **Block Explorer Integration**: Direct integration with Sonic block explorer
+- **Block Explorer Integration**: Direct integration with Stacks block explorer
 
 ### System Architecture Flow
 
@@ -25,7 +24,7 @@ Backend server URL (api server): [https://chain-shield-backend.up.railway.app/](
 
 1. **Smart Contract Monitoring**:
 
-   - Smart contracts emit events on the Sonic blockchain
+   - Smart contracts emit events on the Stacks blockchain
    - Backend continuously monitors for new transactions and events
    - Real-time updates are pushed through WebSocket connections
 
@@ -52,7 +51,7 @@ Backend server URL (api server): [https://chain-shield-backend.up.railway.app/](
 
 ### Core Security Features
 
-- **Real-time Transaction Monitoring**: Continuously monitors Sonic blockchain transactions to detect suspicious patterns and potential threats
+- **Real-time Transaction Monitoring**: Continuously monitors Stacks blockchain transactions to detect suspicious patterns and potential threats
 - **AI-Powered Analysis**: Leverages advanced AI models (GPT 4.5) to analyze contracts and transactions for security vulnerabilities
 - **Rug-Pull Detection**: Identifies potential rug-pull risks by analyzing token contract code, liquidity patterns, and ownership structures
 - **Wallet Drainer Detection**: Detects malicious contracts designed to drain user wallets through sophisticated techniques
@@ -74,7 +73,7 @@ Backend server URL (api server): [https://chain-shield-backend.up.railway.app/](
 - **Customizable Notifications**: Configure how and when you want to be alerted about security events
 - **Multi-channel Alerts**: Receive notifications via email, browser, mobile app, or Telegram
 - **Responsive Design**: Seamless experience across desktop, tablet, and mobile devices
-- **Sonic Block Explorer Integration**: Direct links to the Sonic block explorer for transactions, addresses, and contracts
+- **Stacks Block Explorer Integration**: Direct links to the Stacks block explorer for transactions, addresses, and contracts
 
 ## Dashboard Sections
 
@@ -188,7 +187,7 @@ Learning progress tracker
 
 ## AI-Powered Security Features
 
-Chain Shield AI leverages advanced AI models to provide cutting-edge security analysis:
+Stacks Watchdog leverages advanced AI models to provide cutting-edge security analysis:
 
 ### Smart Contract Vulnerability Detection
 
@@ -229,7 +228,7 @@ The AI Transaction Analyzer monitors transactions for:
 
 ### Smart Contract Vulnerability Scanner
 
-The vulnerability scanner provides real-time security analysis of smart contracts on the Sonic blockchain:
+The vulnerability scanner provides real-time security analysis of smart contracts on the Stacks blockchain:
 
 #### Features
 
@@ -254,9 +253,9 @@ The vulnerability scanner provides real-time security analysis of smart contract
 - Responsive design for all screen sizes
 - Clear error messaging and form validation
 
-## 📚 Learning Modules
+## �� Learning Modules
 
-Chain Shield AI includes comprehensive learning modules to help users understand blockchain security:
+Stacks Watchdog includes comprehensive learning modules to help users understand blockchain security:
 
 ### Smart Contract Security Basics
 
@@ -292,7 +291,7 @@ Chain Shield AI includes comprehensive learning modules to help users understand
 
 ## 🤖 Telegram Integration
 
-Chain Shield AI integrates with Telegram for real-time alerts and interactions:
+Stacks Watchdog integrates with Telegram for real-time alerts and interactions:
 
 ### Setup Instructions
 
@@ -356,7 +355,7 @@ Chain Shield AI integrates with Telegram for real-time alerts and interactions:
 
 1. Go to "Security Scanner" in the sidebar
 2. Use the "Address Analyzer" tab
-3. Enter a Sonic address
+3. Enter a Stacks address
 4. Click "Analyze"
 5. Review the security assessment:
 
@@ -376,7 +375,7 @@ The system automatically monitors transactions for suspicious activity:
 
 ## API Integration
 
-Chain Shield AI provides a REST API for integration with other services:
+Stacks Watchdog provides a REST API for integration with other services:
 
 - **Authentication**: JWT-based authentication for secure API access
 - **Endpoints**: Comprehensive endpoints for accessing security data
@@ -535,7 +534,7 @@ REACT_APP_USE_MOCK_AI=false
 
 ## 🧪 Running on Testnet
 
-To run Chain Shield AI on the Sonic Blaze Testnet instead of mainnet, follow these steps:
+To run Stacks Watchdog on the Sonic Blaze Testnet instead of mainnet, follow these steps:
 
 1. Update your `.env` file to use testnet configuration:
 
@@ -581,7 +580,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## ⚠️ Disclaimer
 
-Chain Shield AI is provided for informational purposes only. While we strive to provide accurate and up-to-date security information, we cannot guarantee the identification of all security threats. Always do your own research before making investment decisions or interacting with smart contracts on the Sonic blockchain.
+Stacks Watchdog is provided for informational purposes only. While we strive to provide accurate and up-to-date security information, we cannot guarantee the identification of all security threats. Always do your own research before making investment decisions or interacting with smart contracts on the Stacks blockchain.
 
 ## 📞 Support
 
@@ -592,4 +591,4 @@ If you encounter any issues or have questions, please:
 
 ---
 
-Built with ❤️ for the Sonic community
+Built with ❤️ for the Stacks community

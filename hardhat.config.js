@@ -5,19 +5,19 @@ require("dotenv").config();
 module.exports = {
   solidity: "0.8.20",
   networks: {
-    sonic: {
-      url: process.env.SONIC_RPC_URL || "https://rpc.soniclabs.com",
+    stacks: {
+      url: process.env.STACKS_RPC_URL || "https://stacks-node-api.mainnet.stacks.co",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      chainId: process.env.NETWORK_CHAIN_ID ? parseInt(process.env.NETWORK_CHAIN_ID) : 146
+      chainId: process.env.NETWORK_CHAIN_ID ? parseInt(process.env.NETWORK_CHAIN_ID) : 1
     },
-    sonic_testnet: {
-      url: process.env.SONIC_TESTNET_RPC_URL || "https://rpc.blaze.soniclabs.com",
+    stacks_testnet: {
+      url: process.env.STACKS_TESTNET_RPC_URL || "https://stacks-node-api.testnet.stacks.co",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      chainId: 57054
+      chainId: 2147483648
     },
     hardhat: {
       forking: {
-        url: process.env.SONIC_RPC_URL || "https://rpc.soniclabs.com",
+        url: process.env.STACKS_RPC_URL || "https://stacks-node-api.mainnet.stacks.co",
         blockNumber: process.env.FORK_BLOCK_NUMBER ? parseInt(process.env.FORK_BLOCK_NUMBER) : undefined
       }
     }
