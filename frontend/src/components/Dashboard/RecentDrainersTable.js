@@ -78,7 +78,7 @@ const RecentDrainersTable = ({ drainers, loading }) => {
           <Th color="gray.400">Name</Th>
           <Th color="gray.400">Risk Level</Th>
           <Th color="gray.400" isNumeric>Victims</Th>
-          <Th color="gray.400" isNumeric>Total Stolen (S)</Th>
+          <Th color="gray.400" isNumeric>Total Stolen (STX)</Th>
           <Th color="gray.400">Last Active</Th>
         </Tr>
       </Thead>

@@ -158,7 +158,7 @@ const WalletDrainers = () => {
                   <Th>Type</Th>
                   <Th>Risk Level</Th>
                   <Th isNumeric>Victims</Th>
-                  <Th color="gray.400" isNumeric>Total Stolen (S)</Th>
+                  <Th color="gray.400" isNumeric>Total Stolen (STX)</Th>
                   <Th>Actions</Th>
                 </Tr>
               </Thead>

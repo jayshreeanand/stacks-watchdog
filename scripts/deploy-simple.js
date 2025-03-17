@@ -37,7 +37,7 @@ async function main() {
 
     if (balance === 0n) {
       throw new Error(
-        "Account has no Stacks (S) token. Please fund your account before deploying."
+        "Account has no Stacks (STX) token. Please fund your account before deploying."
       );
     }
 

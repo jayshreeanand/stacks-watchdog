@@ -278,7 +278,7 @@ const WalletDrainerDetails = () => {
                 <Thead>
                   <Tr>
                     <Th color="gray.400">Address</Th>
-                    <Th color="gray.400" isNumeric>Amount (S)</Th>
+                    <Th color="gray.400" isNumeric>Amount (STX)</Th>
                     <Th color="gray.400">Date</Th>
                   </Tr>
                 </Thead>
