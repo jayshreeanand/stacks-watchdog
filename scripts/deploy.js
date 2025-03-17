@@ -1,45 +1,129 @@
 // We require the Hardhat Runtime Environment explicitly here. This is optional
 // but useful for running the script in a standalone fashion through `node <script>`.
-const hre = require("hardhat");
-const { StacksTestnetDevnet, StacksMainnet } = require('@stacks/network');
-const { StacksWallet } = require('@stacks/wallet-sdk');
-const { makeContractDeploy } = require('@stacks/transactions');
+const { StacksTestnet, StacksMainnet } = require('@stacks/network');
+const { 
+    makeContractDeploy,
+    AnchorMode,
+    PostConditionMode,
+    broadcastTransaction,
+    standardPrincipalCV,
+    bufferCV,
+    uintCV,
+    FungibleConditionCode,
+    makeStandardSTXPostCondition,
+    createStacksPrivateKey,
+    getAddressFromPrivateKey,
+    TransactionVersion
+} = require('@stacks/transactions');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
 // Determine network based on environment
 const isTestnet = process.env.NETWORK_CHAIN_ID === '2147483648';
-const network = isTestnet ? new StacksTestnetDevnet() : new StacksMainnet();
+const network = isTestnet ? new StacksTestnet() : new StacksMainnet();
 
-const senderKey = process.env.PRIVATE_KEY;
+const privateKey = process.env.PRIVATE_KEY;
 const senderAddress = process.env.SENDER_ADDRESS;
 
-if (!senderKey || !senderAddress) {
+if (!privateKey || !senderAddress) {
     throw new Error('PRIVATE_KEY and SENDER_ADDRESS must be set in .env file');
 }
 
-async function deployContract(contractName, contractPath) {
+console.log('Deploying with address:', senderAddress);
+
+function hexToDecimal(hex) {
+    return parseInt(hex, 16);
+}
+
+async function getAccountNonce(address) {
+    try {
+        const response = await fetch(`${network.getAccountApiUrl(address)}`);
+        const data = await response.json();
+        return data.nonce;
+    } catch (error) {
+        console.error('Error fetching nonce:', error);
+        return null;
+    }
+}
+
+async function checkBalance(address) {
+    try {
+        const response = await fetch(`${network.getAccountApiUrl(address)}`);
+        const data = await response.json();
+        console.log('Account data:', data);
+        const balance = hexToDecimal(data.balance);
+        console.log(`Balance in STX: ${balance / 1000000}`);
+        return balance;
+    } catch (error) {
+        console.error('Error fetching balance:', error);
+        return null;
+    }
+}
+
+async function deployContract(contractName, contractPath, nonce) {
     const contractContent = fs.readFileSync(contractPath, 'utf8');
     
+    // Check balance before deployment
+    const balance = await checkBalance(senderAddress);
+    if (!balance) {
+        throw new Error('Could not fetch balance');
+    }
+
+    const requiredAmount = 10000; // 0.01 STX in microSTX
+    if (balance < requiredAmount) {
+        throw new Error(`Insufficient balance. Current balance: ${balance / 1000000} STX, Required: ${requiredAmount / 1000000} STX`);
+    }
+
+    console.log(`Deploying ${contractName} with ${balance / 1000000} STX available... (nonce: ${nonce})`);
+
     const transaction = await makeContractDeploy({
-        contractName,
-        contractContent,
-        senderAddress,
-        senderKey,
-        network,
-        fee: 1000000,
-        nonce: 0,
+        codeBody: contractContent,
+        contractName: contractName,
+        senderKey: privateKey,
+        network: network,
+        anchorMode: AnchorMode.Any,
+        postConditionMode: PostConditionMode.Allow,
+        fee: requiredAmount,
+        nonce: nonce,
+        senderAddress: senderAddress,
+        version: TransactionVersion.Testnet,
+        memo: `Deploying ${contractName}`,
+        sponsored: false,
+        sponsoredAddress: undefined,
+        sponsoredNonce: undefined,
+        sponsoredFee: undefined,
+        sponsoredMemo: undefined
     });
 
-    console.log(`Deploying ${contractName} to ${isTestnet ? 'testnet' : 'mainnet'}...`);
-    const result = await network.broadcastTransaction(transaction);
+    console.log(`Broadcasting transaction for ${contractName}...`);
+    const result = await broadcastTransaction(transaction, network);
     console.log(`Deployment result for ${contractName}:`, result);
+    
+    if (result.error) {
+        throw new Error(`Failed to deploy ${contractName}: ${result.error} - ${result.reason}`);
+    }
+    
     return result;
 }
 
 async function deployAll() {
     try {
+        // Check initial balance
+        console.log('Checking initial balance...');
+        const initialBalance = await checkBalance(senderAddress);
+        if (!initialBalance) {
+            throw new Error('Could not fetch initial balance');
+        }
+        console.log(`Initial balance: ${initialBalance / 1000000} STX`);
+
+        // Get initial nonce
+        const initialNonce = await getAccountNonce(senderAddress);
+        if (initialNonce === null) {
+            throw new Error('Could not fetch initial nonce');
+        }
+        console.log(`Initial nonce: ${initialNonce}`);
+
         // Deploy contracts in order
         const contracts = [
             {
@@ -61,10 +145,12 @@ async function deployAll() {
         ];
 
         const deploymentInfo = {};
+        let currentNonce = initialNonce;
 
         for (const contract of contracts) {
-            const result = await deployContract(contract.name, contract.path);
-            deploymentInfo[contract.name] = result.contractAddress;
+            const result = await deployContract(contract.name, contract.path, currentNonce);
+            deploymentInfo[contract.name] = result.txId;
+            currentNonce++;
         }
 
         // Save deployment info
