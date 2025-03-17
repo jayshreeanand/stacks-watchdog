@@ -10,6 +10,7 @@
     "test": "jest",
     "deploy:testnet": "NETWORK_CHAIN_ID=2147483648 node scripts/deploy.js",
     "deploy:mainnet": "NETWORK_CHAIN_ID=1 node scripts/deploy.js",
+    "deploy:leather": "node scripts/deploy-leather.js",
     "test:connection": "node scripts/test-connection.js"
   },
   "keywords": [
@@ -22,10 +23,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@stacks/connect": "^7.10.2",
     "@stacks/network": "^6.4.0",
     "@stacks/transactions": "^6.4.0",
     "@stacks/wallet-sdk": "^7.0.0",
     "axios": "^1.6.0",
+    "bip39": "^3.1.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "mongoose": "^7.6.3",

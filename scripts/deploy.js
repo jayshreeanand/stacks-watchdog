@@ -13,27 +13,71 @@ const {
     makeStandardSTXPostCondition,
     createStacksPrivateKey,
     getAddressFromPrivateKey,
-    TransactionVersion
+    TransactionVersion,
+    StacksNetwork,
+    createStacksPublicKey,
+    getPublicKey,
+    privateKeyToString,
+    ClarityVersion
 } = require('@stacks/transactions');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
+const bip39 = require('bip39');
 
 // Determine network based on environment
 const isTestnet = process.env.NETWORK_CHAIN_ID === '2147483648';
-const network = isTestnet ? new StacksTestnet() : new StacksMainnet();
+const network = isTestnet ? new StacksTestnet({
+    url: 'https://api.testnet.hiro.so',
+    networkId: 2147483648,
+    chainId: 2147483648,
+    coreApiUrl: 'https://api.testnet.hiro.so',
+    broadcastApiUrl: 'https://api.testnet.hiro.so/v2/transactions',
+    accountApiUrl: 'https://api.testnet.hiro.so/v2/accounts'
+}) : new StacksMainnet();
 
 const privateKey = process.env.PRIVATE_KEY;
+const publicKey = process.env.PUBLIC_KEY;
 const senderAddress = process.env.SENDER_ADDRESS;
 
-if (!privateKey || !senderAddress) {
-    throw new Error('PRIVATE_KEY and SENDER_ADDRESS must be set in .env file');
+if (!privateKey || !publicKey || !senderAddress) {
+    throw new Error('PRIVATE_KEY, PUBLIC_KEY, and SENDER_ADDRESS must be set in .env file');
+}
+
+// Log the key details for debugging
+console.log('Key details:', {
+    privateKeyLength: privateKey.length,
+    publicKeyLength: publicKey.length,
+    privateKeyFirstChars: privateKey.substring(0, 10) + '...',
+    publicKeyFirstChars: publicKey.substring(0, 10) + '...'
+});
+
+// Validate key formats
+if (privateKey.length !== 66) {
+    throw new Error(`Invalid private key length: ${privateKey.length}. Expected 66 characters`);
+}
+
+if (publicKey.length !== 66) {
+    throw new Error(`Invalid public key length: ${publicKey.length}. Expected 66 characters`);
 }
 
 console.log('Deploying with address:', senderAddress);
+console.log('Using network:', network.coreApiUrl);
 
 function hexToDecimal(hex) {
     return parseInt(hex, 16);
+}
+
+async function getBlockHeight() {
+    try {
+        const response = await fetch(`${network.coreApiUrl}/v2/info`);
+        const data = await response.json();
+        console.log('Chain info:', data);
+        return data.stacks_tip_height;
+    } catch (error) {
+        console.error('Error fetching block height:', error);
+        return null;
+    }
 }
 
 async function getAccountNonce(address) {
@@ -53,58 +97,105 @@ async function checkBalance(address) {
         const data = await response.json();
         console.log('Account data:', data);
         const balance = hexToDecimal(data.balance);
+        const locked = hexToDecimal(data.locked);
+        const available = balance - locked;
         console.log(`Balance in STX: ${balance / 1000000}`);
-        return balance;
+        console.log(`Locked in STX: ${locked / 1000000}`);
+        console.log(`Available in STX: ${available / 1000000}`);
+        return available;
     } catch (error) {
         console.error('Error fetching balance:', error);
         return null;
     }
 }
 
+async function checkPendingTransactions() {
+    try {
+        const response = await fetch(`${network.coreApiUrl}/v2/mempool/transactions`);
+        const data = await response.json();
+        console.log('Pending transactions:', data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching pending transactions:', error);
+        return null;
+    }
+}
+
+async function getNetworkFee() {
+    // Use a higher fee to ensure transaction goes through
+    return 5000; // 0.005 STX
+}
+
+async function createWalletFromMnemonic(mnemonic) {
+    if (!mnemonic) {
+        throw new Error('MNEMONIC is required in .env file');
+    }
+    const seed = await bip39.mnemonicToSeed(mnemonic);
+    // Take only the first 32 bytes of the seed
+    const privateKeyBuffer = seed.slice(0, 32);
+    const privateKey = createStacksPrivateKey(privateKeyBuffer.toString('hex'));
+    const address = getAddressFromPrivateKey(privateKey.data);
+    
+    console.log('Wallet created with address:', address);
+    return {
+        address,
+        privateKey: privateKey.data
+    };
+}
+
 async function deployContract(contractName, contractPath, nonce) {
-    const contractContent = fs.readFileSync(contractPath, 'utf8');
-    
-    // Check balance before deployment
-    const balance = await checkBalance(senderAddress);
-    if (!balance) {
-        throw new Error('Could not fetch balance');
+    try {
+        const contractContent = fs.readFileSync(contractPath, 'utf8');
+        
+        // Get the private key
+        const privateKeyString = process.env.PRIVATE_KEY;
+        
+        // Log the private key format for debugging (without revealing the actual key)
+        console.log('Private key format:', {
+            length: privateKeyString.length,
+            firstChars: privateKeyString.substring(0, 2) + '...',
+            lastChars: '...' + privateKeyString.substring(privateKeyString.length - 2)
+        });
+        
+        // Try to handle the 66-character private key
+        // If it's 66 characters, we'll try to use it directly
+        const fee = BigInt(5500);
+
+        const txOptions = {
+            contractName,
+            codeBody: contractContent,
+            senderKey: privateKeyString,
+            network,
+            postConditionMode: PostConditionMode.Deny,
+            postConditions: [],
+            fee,
+            nonce: BigInt(nonce),
+            sponsored: false,
+            clarityVersion: ClarityVersion.Clarity3,
+            anchorMode: AnchorMode.Any,
+            version: TransactionVersion.Testnet,
+            senderAddress: process.env.SENDER_ADDRESS
+        };
+
+        console.log(`Deploying ${contractName} with fee ${fee} microSTX and nonce ${nonce}`);
+        console.log('Sender address:', process.env.SENDER_ADDRESS);
+        
+        const transaction = await makeContractDeploy(txOptions);
+
+        console.log('Transaction details:', {
+            fee: transaction.auth?.spendingCondition?.fee?.toString(),
+            nonce: transaction.auth?.spendingCondition?.nonce?.toString(),
+            sender: transaction.auth?.spendingCondition?.senderAddress,
+            contractName
+        });
+
+        const result = await broadcastTransaction(transaction, network);
+        console.log('Broadcast result:', result);
+        return result;
+    } catch (error) {
+        console.error('Deployment error:', error);
+        throw error;
     }
-
-    const requiredAmount = 10000; // 0.01 STX in microSTX
-    if (balance < requiredAmount) {
-        throw new Error(`Insufficient balance. Current balance: ${balance / 1000000} STX, Required: ${requiredAmount / 1000000} STX`);
-    }
-
-    console.log(`Deploying ${contractName} with ${balance / 1000000} STX available... (nonce: ${nonce})`);
-
-    const transaction = await makeContractDeploy({
-        codeBody: contractContent,
-        contractName: contractName,
-        senderKey: privateKey,
-        network: network,
-        anchorMode: AnchorMode.Any,
-        postConditionMode: PostConditionMode.Allow,
-        fee: requiredAmount,
-        nonce: nonce,
-        senderAddress: senderAddress,
-        version: TransactionVersion.Testnet,
-        memo: `Deploying ${contractName}`,
-        sponsored: false,
-        sponsoredAddress: undefined,
-        sponsoredNonce: undefined,
-        sponsoredFee: undefined,
-        sponsoredMemo: undefined
-    });
-
-    console.log(`Broadcasting transaction for ${contractName}...`);
-    const result = await broadcastTransaction(transaction, network);
-    console.log(`Deployment result for ${contractName}:`, result);
-    
-    if (result.error) {
-        throw new Error(`Failed to deploy ${contractName}: ${result.error} - ${result.reason}`);
-    }
-    
-    return result;
 }
 
 async function deployAll() {
@@ -167,3 +258,8 @@ async function deployAll() {
 
 // Run deployment
 deployAll();
+
+// Export the deployment function
+module.exports = {
+    deployContract
+};

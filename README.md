@@ -75,6 +75,35 @@ Backend server URL (api server): [https://chain-shield-backend.up.railway.app/](
 - **Responsive Design**: Seamless experience across desktop, tablet, and mobile devices
 - **Stacks Block Explorer Integration**: Direct links to the Stacks block explorer for transactions, addresses, and contracts
 
+## Deploying Contracts
+
+### Option 1: Deploy with Private Key
+
+To deploy contracts using a private key:
+
+1. Set up your environment variables in `.env` file (copy from `.env.example`)
+2. Run the deployment script:
+   ```
+   npm run deploy:testnet  # For testnet deployment
+   npm run deploy:mainnet  # For mainnet deployment
+   ```
+
+### Option 2: Deploy with Leather Wallet (Recommended)
+
+To deploy contracts using the Leather Wallet browser extension:
+
+1. Install the [Leather Wallet](https://leather.io/) browser extension
+2. Make sure you have STX tokens in your wallet (use the [Stacks Testnet Faucet](https://explorer.stacks.co/sandbox/faucet?chain=testnet) for testnet)
+3. Run the deployment server:
+   ```
+   npm run deploy:leather
+   ```
+4. Open the URL shown in the terminal (usually http://localhost:3000)
+5. Connect your Leather wallet when prompted
+6. Click "Deploy All Contracts" to deploy the contracts
+7. Approve each transaction in the Leather wallet popup
+8. Deployment results will be saved to `deployment-info-testnet.json` or `deployment-info.json`
+
 ## Dashboard Sections
 
 ### Main Dashboard
@@ -252,42 +281,6 @@ The vulnerability scanner provides real-time security analysis of smart contract
 - Hover effects for interactive elements
 - Responsive design for all screen sizes
 - Clear error messaging and form validation
-
-## �� Learning Modules
-
-Stacks Watchdog includes comprehensive learning modules to help users understand blockchain security:
-
-### Smart Contract Security Basics
-
-- Introduction to common vulnerabilities
-- Best practices for secure contract development
-- Interactive examples of vulnerable code
-- Guided walkthroughs of security fixes
-- Quizzes to test understanding
-
-### Security Best Practices
-
-- Wallet security fundamentals
-- Safe transaction practices
-- Token approval management
-- Identifying scam patterns
-- Emergency response procedures
-
-### Hands-on Training
-
-- Practice with sample vulnerable contracts
-- Interactive vulnerability detection exercises
-- Real-world case studies
-- Guided security auditing practice
-- Custom vulnerability creation for learning
-
-### Progress Tracking
-
-- Completion certificates for modules
-- Progress indicators for each section
-- Achievement badges for skills mastered
-- Personal learning dashboard
-- Recommended next steps
 
 ## 🤖 Telegram Integration
 
