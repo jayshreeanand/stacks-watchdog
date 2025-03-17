@@ -312,7 +312,7 @@ const SmartContractAnalyzer = () => {
                 <FormControl mb={4}>
                   <FormLabel color="white">Contract Address (Optional)</FormLabel>
                   <Input 
-                    placeholder="0x..." 
+                    placeholder="ST..." 
                     value={contractAddress}
                     onChange={(e) => setContractAddress(e.target.value)}
                     bg="gray.700"
@@ -321,7 +321,7 @@ const SmartContractAnalyzer = () => {
                     _hover={{ borderColor: 'sonic.400' }}
                     _focus={{ borderColor: 'sonic.400', boxShadow: '0 0 0 1px var(--chakra-colors-sonic-400)' }}
                   />
-                  <FormHelperText>If you provide an address, it will be included in the analysis report</FormHelperText>
+                  <FormHelperText>Enter a Stacks contract address to include in the analysis report</FormHelperText>
                 </FormControl>
                 
                 <FormControl mb={4}>

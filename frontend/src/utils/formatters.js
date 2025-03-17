@@ -1,11 +1,12 @@
 /**
- * Format an Ethereum address to a shortened form
- * @param {string} address - The Ethereum address to format
+ * Format a Stacks address to a shortened form
+ * @param {string} address - The Stacks address to format
  * @returns {string} The formatted address
  */
 export const formatAddress = (address) => {
   if (!address) return '';
-  return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+  // For Stacks addresses, show first 4 and last 4 characters
+  return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
 };
 
 /**

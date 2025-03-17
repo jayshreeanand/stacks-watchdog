@@ -169,7 +169,7 @@ const AddressAnalyzer = () => {
           <FormLabel color="white">Wallet Address</FormLabel>
           <Flex>
             <Input 
-              placeholder="0x..." 
+              placeholder="ST..." 
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               bg="gray.700"

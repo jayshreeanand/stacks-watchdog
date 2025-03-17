@@ -99,7 +99,7 @@ export const WalletProvider = ({ children }) => {
   // Format address for display
   const formatAddress = (address) => {
     if (!address) return '';
-    return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+    return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
   };
 
   // Context value

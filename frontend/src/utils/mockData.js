@@ -7,7 +7,7 @@
 export const mockWalletDrainers = [
   {
     id: 1,
-    address: "0x1234567890abcdef1234567890abcdef12345678",
+    address: "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG",
     name: "[MOCK] Fake Stacks Airdrop",
     type: "Approval Drainer",
     riskLevel: "high",
@@ -27,7 +27,7 @@ export const mockWalletDrainers = [
   },
   {
     id: 2,
-    address: "0xabcdef1234567890abcdef1234567890abcdef12",
+    address: "ST3NBRSFKX28FQ2ZJ1MAKX58ZYHSYFR6ZP46F76P",
     name: "[MOCK] S Staking Scam",
     type: "Phishing Site",
     riskLevel: "critical",
@@ -36,7 +36,7 @@ export const mockWalletDrainers = [
     lastActive: "2025-03-07T08:45:12Z",
     isVerified: true,
     description:
-      "Fake staking platform that promises high returns but steals deposited S tokens.",
+      "Fake staking platform that promises high returns but steals deposited STX tokens.",
     createdAt: "2025-01-15T14:22:10Z",
     verifiedBy: "SecurityTeam",
     techniques: [
@@ -46,7 +46,7 @@ export const mockWalletDrainers = [
     ],
   },
   {
-    address: "0x7890abcdef1234567890abcdef1234567890abcd",
+    address: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
     name: "Fake DEX Frontend",
     riskLevel: "medium",
     victims: 5,
@@ -58,7 +58,7 @@ export const mockWalletDrainers = [
     createdAt: "2025-03-01T11:20:45Z",
   },
   {
-    address: "0x567890abcdef1234567890abcdef1234567890ab",
+    address: "ST2PABAF9FTAJYNFZH93XENAJ8FVY99RRM4D2JG2N",
     name: "Stacks Token Bridge Scam",
     riskLevel: "high",
     victims: 9,
@@ -73,7 +73,7 @@ export const mockWalletDrainers = [
       "Contract analysis shows no actual bridge functionality.",
   },
   {
-    address: "0x90abcdef1234567890abcdef1234567890abcdef",
+    address: "ST3AM1AABAKER29ETW2HZYEAML0Q0XXR4C2A3X3H",
     name: "Fake Wallet App",
     riskLevel: "low",
     victims: 2,
@@ -97,7 +97,7 @@ export const mockDashboardStats = {
 
 // Mock contract analysis result
 export const mockContractAnalysis = {
-  address: "0x1234567890abcdef1234567890abcdef12345678",
+  address: "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG",
   riskLevel: "high",
   riskScore: 85,
   name: "Suspicious Token Contract",

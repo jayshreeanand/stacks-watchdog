@@ -23,7 +23,7 @@ import BlockExplorerLink from '../BlockExplorerLink';
 // Helper function to format address
 const formatAddress = (address) => {
   if (!address) return '';
-  return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+  return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
 };
 
 // Helper function to format date

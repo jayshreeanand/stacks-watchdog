@@ -150,8 +150,8 @@ const Dashboard = () => {
           loading={loading}
         />
         <StatCard
-          title="Total S Lost"
-          value={`${stats.totalLost.toLocaleString()} S`}
+          title="Total STX Lost"
+          value={`${stats.totalLost.toLocaleString()} STX`}
           icon={FiDollarSign}
           color="purple.500"
           loading={loading}

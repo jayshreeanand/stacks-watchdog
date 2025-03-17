@@ -738,8 +738,8 @@ const apiService = {
       try {
         // Create a provider based on the current data source
         const providerUrl = CURRENT_DATA_SOURCE === 'testnet' 
-          ? 'https://rpc.blaze.soniclabs.com' 
-          : 'https://rpc.soniclabs.com';
+          ? 'https://stacks-node-api.testnet.stacks.co' 
+          : 'https://stacks-node-api.mainnet.stacks.co';
         
         console.log(`Using provider URL: ${providerUrl}`);
         const provider = new ethers.JsonRpcProvider(providerUrl);
@@ -748,8 +748,8 @@ const apiService = {
         contractCode = await provider.getCode(contractAddress);
         console.log(`Retrieved contract code for ${contractAddress}, length: ${contractCode.length}`);
         
-        // If the contract code is just "0x", it's not a contract
-        if (contractCode === '0x') {
+        // If the contract code is empty, it's not a contract
+        if (!contractCode) {
           console.log(`${contractAddress} is not a contract`);
           return {
             address: contractAddress,
@@ -767,7 +767,7 @@ const apiService = {
       }
       
       // If we have the contract code and AI analyzer, use it directly
-      if (contractCode && contractCode !== '0x' && aiAnalyzer) {
+      if (contractCode && aiAnalyzer) {
         try {
           console.log('Using AI analyzer for contract analysis');
           const aiResult = await aiAnalyzer.analyzeSmartContract(contractCode, contractAddress, false);
