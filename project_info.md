@@ -6,7 +6,7 @@ Demo URL (frontend): [https://stacks-watchdog.vercel.app/](https://stacks-watchd
 
 Backend server URL (api server): [https://stacks-watchdog-backend.vercel.app/](https://stacks-watchdog-backend.vercel.app/)
 
-<img width="1601" alt="Screenshot 2025-03-10 at 11 51 04 PM" src="https://github.com/user-attachments/assets/bea148b1-8a79-44c7-b080-a98080c43ca1" />
+<img width="1610" alt="Screenshot 2025-03-17 at 8 21 41 PM" src="https://github.com/user-attachments/assets/ebfd20d3-c8bd-47d9-9c42-ecf3adb1a0d6" />
 
 **Motivation**
 
@@ -60,7 +60,8 @@ The rise in cryptocurrency thefts, with over $2.2 billion stolen in 2024 alone [
 
 ### Main Dashboard
 
-<img width="1672" alt="Screenshot 2025-03-11 at 12 46 10 AM" src="https://github.com/user-attachments/assets/e5b3cc56-f527-4bf3-9b4c-e71ac19abe91" />
+<img width="1669" alt="Screenshot 2025-03-17 at 8 36 21 PM" src="https://github.com/user-attachments/assets/0b952a62-5274-4a98-a8e4-992338ab5b0a" />
+
 
 The main dashboard provides an at-a-glance view of your security status, including:
 
@@ -87,7 +88,8 @@ The vulnerability scanner dashboard provides comprehensive contract security ana
 
 ### AI Smart Contract Analyzer
 
-<img width="1350" alt="Load sample contract" src="https://github.com/user-attachments/assets/d6d88489-c76f-4b63-8e4e-bc2b3caeacbd" />
+<img width="1310" alt="Screenshot 2025-03-17 at 8 30 16 PM" src="https://github.com/user-attachments/assets/05cc436e-16b5-4724-bd31-c2523ace5594" />
+
 
 <img width="1124" alt="AI smart contract analyzer" src="https://github.com/user-attachments/assets/014dfdd1-c8c0-4e00-a1d5-fcf1a936d6e7" />
 
@@ -135,7 +137,7 @@ The token approvals manager helps you:
 
 ### Notification Settings
 
-<img width="1249" alt="NOTIFICATION settings" src="https://github.com/user-attachments/assets/824739cf-e88a-4dae-9435-981c17b45937" />
+<img width="1091" alt="Screenshot 2025-03-17 at 8 40 14 PM" src="https://github.com/user-attachments/assets/02503664-ba85-414c-b94d-ae8d500d78d0" />
 
 Customize your security alerts:
 
@@ -144,7 +146,6 @@ Customize your security alerts:
 - Choose alert frequency and risk level sensitivity
 - Enable/disable specific types of security alerts
 
-<img width="200" alt="Telegram bot alerts" src="https://github.com/user-attachments/assets/6812b858-d40b-4ffe-a9ee-44ebdaa3e694" />
 
 ### Gamified Learning modules
 
